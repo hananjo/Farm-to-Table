@@ -13,3 +13,4 @@ class Product(db.Model):
     ownerId = db.Column(db.Integer, ForeignKey('users.id'))
 
     owner = db.relationship("User", back_populates="products")
+    cart = db.relationship("Cart", back_populates="products")
