@@ -11,3 +11,4 @@ class Products(db.Model):
     price = db.Column(db.Float, nullable=False)
     rating = db.Column(db.Integer)
     ownerId = db.Column(db.Integer, ForeignKey('usesrs.id'))
+
