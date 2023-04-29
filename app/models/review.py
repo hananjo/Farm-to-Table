@@ -15,3 +15,4 @@ class Review(db.Model):
     productId = db.Column(db.Integer, ForeignKey("product.id"))
 
     owner = db.relationship("User", back_populates="review")
+    product = db.relationship("Product", back_populates='review')
