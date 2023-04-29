@@ -4,8 +4,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String
-from .user import User
-from .product import Product
 
 Base = declarative_base()
 

@@ -2,8 +2,6 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String
-from .user import User
-from .product import Product
 
 class Review(db.Model):
     __tablename__ = "reviews"

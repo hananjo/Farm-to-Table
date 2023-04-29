@@ -4,10 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String
-from .user import User
 from .cart_item import cart_items
-from .review import Review
-from .image import Image
+
 
 class Product(db.Model):
     __tablename__ = 'products'
