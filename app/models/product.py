@@ -17,7 +17,7 @@ class Product(db.Model):
     description = db.Column(db.String(50))
     price = db.Column(db.Float, nullable=False)
     rating = db.Column(db.Integer)
-    ownerId = db.Column(db.Integer, ForeignKey('users.id'))
+    owner_id = db.Column(db.Integer, ForeignKey('users.id'))
 
     owner = db.relationship("User", secondary=cart_items, back_populates="product")
     # cart = db.relationship("Cart", back_populates="product")

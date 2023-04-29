@@ -12,7 +12,7 @@ class Review(db.Model):
     review = db.Column(db.String(2000))
     rating = db.Column(db.Integer, nullable=False)
     userId = db.Column(db.Integer, ForeignKey("user.id"))
-    productId = db.Column(db.Integer, ForeignKey("product.id"))
+    product_id = db.Column(db.Integer, ForeignKey("product.id"))
 
     owner = db.relationship("User", back_populates="review")
     product = db.relationship("Product", back_populates='review')

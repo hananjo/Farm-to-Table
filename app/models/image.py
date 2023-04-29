@@ -9,7 +9,7 @@ class Image(db.Model):
     __tablename__ = "images"
 
     id = db.Column(db.Integer, primary_key=True)
-    imageurl = db.Column(db.String(2000), nullable=False)
-    productId = db.Column(db.Integer, ForeignKey("products.id"))
+    image_url = db.Column(db.String(2000), nullable=False)
+    product_id = db.Column(db.Integer, ForeignKey("products.id"))
 
     product = db.relationship("Product", back_populates='image')
