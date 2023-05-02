@@ -9,7 +9,7 @@ Base = declarative_base()
 
 cart_items = Table(
     "cart_items",
-    Base.metadata,
+    db.metadata,
     db.Column("product_id", db.ForeignKey(add_prefix_for_prod("products.id")), primary_key=True),
     db.Column("user_id", db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True)
 )
