@@ -7,8 +7,11 @@ from sqlalchemy.types import Integer, String
 class Image(db.Model):
     __tablename__ = "images"
 
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(2000), nullable=False)
-    product_id = db.Column(db.Integer, ForeignKey("products.id"))
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")))
 
     product = db.relationship("Product", back_populates='image')

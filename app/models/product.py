@@ -10,13 +10,16 @@ from .cart_item import cart_items
 class Product(db.Model):
     __tablename__ = 'products'
 
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
     description = db.Column(db.String(50))
     price = db.Column(db.Float, nullable=False)
     # rating = db.Column(db.Integer)
     type = db.Column(db.String, nullable=False)
-    owner_id = db.Column(db.Integer, ForeignKey('users.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
     owner = db.relationship("User", secondary=cart_items, back_populates="product")
     # cart = db.relationship("Cart", back_populates="product")

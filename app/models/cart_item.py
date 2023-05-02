@@ -9,7 +9,10 @@ Base = declarative_base()
 
 cart_items = Table(
     "cart_items",
-    Base.metadata,
-    db.Column("product_id", ForeignKey("products.id"), primary_key=True),
-    db.Column("user_id", ForeignKey("users.id"), primary_key=True)
+    db.metadata,
+    db.Column("product_id", db.ForeignKey(add_prefix_for_prod("products.id")), primary_key=True),
+    db.Column("user_id", db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True)
 )
+
+if environment == "production":
+        __table_args__ = {'schema': SCHEMA}

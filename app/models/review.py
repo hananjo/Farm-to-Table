@@ -6,11 +6,14 @@ from sqlalchemy.types import Integer, String
 class Review(db.Model):
     __tablename__ = "reviews"
 
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     review = db.Column(db.String(2000))
     rating = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, ForeignKey("user.id"))
-    product_id = db.Column(db.Integer, ForeignKey("product.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")))
 
     owner = db.relationship("User", back_populates="review")
     product = db.relationship("Product", back_populates='review')
