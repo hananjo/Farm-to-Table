@@ -34,8 +34,8 @@ export const removeReview = (reviewId) => ({
 // THUNKS
 
 // load Reviews thunk
-export const loadReviews = () => async dispatch => {
-    let res = await fetch('/api/reviews') // probably needs to be /api/products/:productId/reviews
+export const loadReviews = (productId) => async dispatch => {
+    let res = await fetch(`/api/products/${productId}/reviews`)
     if(res.ok) {
         res = await res.json()
         dispatch(load(res))
@@ -44,7 +44,7 @@ export const loadReviews = () => async dispatch => {
 
 // add Review thunk
 export const createReview = (review) => async dispatch => {
-    let res = await fetch('/api/reviews', { // probably change to /api/products/{review.productId}/reviews
+    let res = await fetch(`/api/products/${review.productId}/reviews`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
