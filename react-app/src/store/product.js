@@ -1,8 +1,14 @@
 const LOAD = "/products/LOAD";
+const LOAD_DETAILS = "/products/LOAD_DETAILS";
 
 const load = (list) => ({
   type: LOAD,
   list,
+});
+
+const loadDetails = (id) => ({
+    type: LOAD_DETAILS,
+    id,
 });
 
 export const getAllProducts = () => async (dispatch) => {
@@ -15,6 +21,13 @@ export const getAllProducts = () => async (dispatch) => {
   }
 };
 
+export const getProductDetails = (id) => async (dispatch) => {
+    const response = await fetch(`/api/products/${id}`);
+    if (response.ok) {
+        const product = await response.json();
+        dispatch(loadDetails(product));
+    }
+}
 const initialState = {};
 
 const productReducer = (state = initialState, action) => {
@@ -27,6 +40,8 @@ const productReducer = (state = initialState, action) => {
       return {
         ...newState,
       };
+      case LOAD_DETAILS:
+        return { ...state, details: action.id}
     default:
       return state;
   }
