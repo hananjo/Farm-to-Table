@@ -38,3 +38,20 @@ def add_review():
     db.session.commit()
 
     return jsonify(review.to_dict())
+
+
+@review_routes.route('/reviews/<int:id>', methods=["DELETE"])
+@login_required
+def delete_review(id):
+
+    user_id = current_user.id
+
+    review = Review.query.get(id)
+
+    if not review or review.user_id != user_id:
+        return jsonify(error='Review not found or unauthorized', 404)
+
+    db.session.delete(review)
+    db.session.commit()
+
+    return jsonify(success=True)
