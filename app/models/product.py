@@ -4,8 +4,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String
-from .cart_item import cart_items
-
 
 class Product(db.Model):
     __tablename__ = 'products'
@@ -21,7 +19,7 @@ class Product(db.Model):
     type = db.Column(db.String, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
-    owner = db.relationship("User", secondary=cart_items, back_populates="product")
-    # cart = db.relationship("Cart", back_populates="product")
+    owner = db.relationship("User", secondary="cart_items", back_populates="product")
+    cart = db.relationship("Cart_Item", back_populates="product")
     review = db.relationship("Review", back_populates="product")
     image = db.relationship("Image", back_populates="product")

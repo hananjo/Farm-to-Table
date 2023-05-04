@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import User
+from app.models import User, Cart_Item, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,3 +23,30 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+
+@user_routes.route('/<int:userId>/cart')
+# @login_required
+def cart(userId):
+    products = Cart_Item.query.filter(Cart_Item.user_id == id).all
+    cartProducts = []
+    for product in products.items():
+        res = product.to_dict()
+        cartProducts.append(res.product_id)
+
+    return cartProducts
+
+
+# This is going to be a button on the product detail page where a user can click and add that product to the cart
+@user_routes.route('/<int:id>/cart/<int:prodId>', methods=['POST'])
+def addToCart(id, prodId):
+
+    # Creating the cart relationship
+    cartRel = Cart_Item(product_id=prodId, user_id=id)
+
+    # Add the cart relationship to the table
+    db.session.add(cartRel)
+    db.session.commit()
+
+    # Return success message
+    return cartRel.to_dict();
