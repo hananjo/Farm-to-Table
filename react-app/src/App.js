@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
+import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,8 +26,9 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/" component={Products}></Route>
-          <Route exact path="/products/:id" component={ProductDetails}></Route>
+          <Route exact path="/" component={Products} />
+          <Route exact path="/products/:id" component={ProductDetails} />
+          <Route exact path="/new" component={CreateProductForm} />
         </Switch>
       )}
     </>

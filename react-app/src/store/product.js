@@ -1,4 +1,5 @@
 const LOAD = "/products/LOAD";
+const ADD_PRODUCT = "/products/ADD_PRODUCT";
 const LOAD_DETAILS = "/products/LOAD_DETAILS";
 
 const load = (list) => ({
@@ -7,8 +8,13 @@ const load = (list) => ({
 });
 
 const loadDetails = (id) => ({
-    type: LOAD_DETAILS,
-    id,
+  type: LOAD_DETAILS,
+  id,
+});
+
+const addProduct = (product) => ({
+  type: ADD_PRODUCT,
+  product,
 });
 
 export const getAllProducts = () => async (dispatch) => {
@@ -21,13 +27,29 @@ export const getAllProducts = () => async (dispatch) => {
   }
 };
 
+export const addNewProduct = (data) => async (dispatch) => {
+  const response = await fetch("/api/products", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+  //   console.log(response, "RESPONSE");
+  let product;
+  if (response.ok) {
+    product = await response.json();
+    console.log(product, "PRODUCT");
+    dispatch(addProduct(product));
+  }
+  return product;
+};
+
 export const getProductDetails = (id) => async (dispatch) => {
-    const response = await fetch(`/api/products/${id}`);
-    if (response.ok) {
-        const product = await response.json();
-        dispatch(loadDetails(product));
-    }
-}
+  const response = await fetch(`/api/products/${id}`);
+  if (response.ok) {
+    const product = await response.json();
+    dispatch(loadDetails(product));
+  }
+};
+
 const initialState = {};
 
 const productReducer = (state = initialState, action) => {
@@ -40,8 +62,10 @@ const productReducer = (state = initialState, action) => {
       return {
         ...newState,
       };
-      case LOAD_DETAILS:
-        return { ...state, details: action.id}
+    case ADD_PRODUCT:
+      return { ...state, [action.product.id]: action.product };
+    case LOAD_DETAILS:
+      return { ...state, details: action.id };
     default:
       return state;
   }

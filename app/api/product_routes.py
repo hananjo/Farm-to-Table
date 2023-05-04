@@ -42,7 +42,7 @@ def create_product():
     # print(form, 'FORM')
     # print('hello')
     # print(form.price.data, form.type.data, 'TESTING')
-
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         print('hello2')
         name = form.name.data
@@ -50,7 +50,7 @@ def create_product():
         price = form.price.data
         type = form.type.data
         owner_id = form.owner_id.data
-        print(name, 'name***')
+
         new_product = Product(
             name=name,
             description=description,
@@ -62,6 +62,6 @@ def create_product():
         db.session.add(new_product)
         db.session.commit()
         # return redirect(url_for('get_product_details', id=new_product.id))
-    return jsonify({'message': 'Product created successfully!'}), 201
+        return new_product.to_dict()
 
     # return jsonify({'message': 'Invalid data'}), 404
