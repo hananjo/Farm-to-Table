@@ -1,7 +1,7 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
+from flask import Blueprint, jsonify, session
+from flask_login import login_required, current_user
 from app.models import Review, db
-
+from app.forms.review_form import ReviewForm
 
 review_routes = Blueprint('reviews', __name__)
 
@@ -16,28 +16,25 @@ def reviews():
 @review_routes.route('/products/<id>/reviews', methods=["POST"])
 @login_required
 def add_review():
-    user_id = current_user.id
+    form = ReviewForm()
 
-    data = request.json
-    review_text = data.get('review', '')
-    rating = data.get('rating', '')
+    review = form.review.data
+    rating = form.rating.data
+    user_id = form.user_id.data
+    product_id = form.product_id.data
 
-    product = Product.query.get(id)
 
-    if not product:
-        return jsonify(error='Product not found', 404)
-
-    review = Review(
-        review=review_text,
+    new_review = Review(
+        review=review
         rating=rating,
         user_id=user_id,
-        product_id=product.id
+        product_id=product_id
     )
 
-    db.session.add(review)
+    db.session.add(new_review)
     db.session.commit()
 
-    return jsonify(review.to_dict())
+    return jsonify({"message": "Review posted!"}, 201)
 
 
 @review_routes.route('/reviews/<int:id>', methods=["DELETE"])
@@ -49,7 +46,7 @@ def delete_review(id):
     review = Review.query.get(id)
 
     if not review or review.user_id != user_id:
-        return jsonify(error='Review not found or unauthorized', 404)
+        return jsonify({'error':'Review not found or unauthorized'}, 404)
 
     db.session.delete(review)
     db.session.commit()
