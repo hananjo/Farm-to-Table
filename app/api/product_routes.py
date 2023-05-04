@@ -1,7 +1,10 @@
-from flask import Blueprint, jsonify, session, request, abort
+from flask import Blueprint, jsonify, session, request, abort, redirect, url_for
 from app.models import Product, db
+from app.forms.product_form import ProductForm
 
-product_routes = Blueprint('products', __name__)
+product_routes = Blueprint('products', __name__,
+# url_prefix='/products'
+)
 
 @product_routes.route('/')
 def get_all_products():
@@ -31,3 +34,34 @@ def get_product_details(id):
                     price=product.price,
                     type=product.type,
                     owner_id=product.owner_id)
+
+
+@product_routes.route('/', methods=['POST'])
+def create_product():
+    form = ProductForm()
+    # print(form, 'FORM')
+    # print('hello')
+    # print(form.price.data, form.type.data, 'TESTING')
+
+    if form.validate_on_submit():
+        print('hello2')
+        name = form.name.data
+        description = form.description.data
+        price = form.price.data
+        type = form.type.data
+        owner_id = form.owner_id.data
+        print(name, 'name***')
+        new_product = Product(
+            name=name,
+            description=description,
+            price=price,
+            type=type,
+            owner_id=owner_id
+        )
+
+        db.session.add(new_product)
+        db.session.commit()
+        # return redirect(url_for('get_product_details', id=new_product.id))
+    return jsonify({'message': 'Product created successfully!'}), 201
+
+    # return jsonify({'message': 'Invalid data'}), 404
