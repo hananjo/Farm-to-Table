@@ -25,7 +25,7 @@ def add_review():
 
 
     new_review = Review(
-        review=review
+        review=review,
         rating=rating,
         user_id=user_id,
         product_id=product_id
