@@ -5,14 +5,23 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.types import Integer, String
 
-Base = declarative_base()
+class Cart_Item(db.Model):
+    __tablename__ = "cart_items"
 
-cart_items = Table(
-    "cart_items",
-    db.metadata,
-    db.Column("product_id", db.ForeignKey(add_prefix_for_prod("products.id")), primary_key=True),
-    db.Column("user_id", db.ForeignKey(add_prefix_for_prod("users.id")), primary_key=True)
-)
-
-if environment == "production":
+    if environment == "production":
         __table_args__ = {'schema': SCHEMA}
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+
+    product = db.relationship("Product", back_populates='cart')
+    user = db.relationship("User", back_populates='cart')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'product_id': self.product_id,
+            'product': self.product
+        }
