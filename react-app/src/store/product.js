@@ -33,13 +33,12 @@ export const addNewProduct = (data) => async (dispatch) => {
     body: JSON.stringify(data),
   });
   //   console.log(response, "RESPONSE");
-  let product;
   if (response.ok) {
-    product = await response.json();
+    const product = await response.json();
     console.log(product, "PRODUCT");
     dispatch(addProduct(product));
+    return product;
   }
-  return product;
 };
 
 export const getProductDetails = (id) => async (dispatch) => {
@@ -50,6 +49,17 @@ export const getProductDetails = (id) => async (dispatch) => {
   }
 };
 
+export const updateProduct = (id, data) => async (dispatch) => {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+  if (response.ok) {
+    const product = await response.json();
+    dispatch(addProduct(product));
+    return product;
+  }
+};
 const initialState = {};
 
 const productReducer = (state = initialState, action) => {
