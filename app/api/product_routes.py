@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, session, request, abort, redirect, url_for
-from app.models import Product, db
+from app.models import Product, db, Review
 from app.forms.product_form import ProductForm
+from app.forms.review_form import ReviewForm
+from flask_login import login_required, current_user
 
 product_routes = Blueprint('products', __name__,
 # url_prefix='/products'
@@ -89,3 +91,32 @@ def update_product(id):
         db.session.commit()
 
         return product.to_dict()
+
+@product_routes.route('/<int:id>/reviews', methods={"POST"})
+@login_required
+def add_review():
+    form = ReviewForm()
+
+    review = form.review.data
+    rating = form.rating.data
+    user_id = form.user_id.data
+    product_id = form.product_id.data
+
+    new_review = Review(
+        review=review,
+        rating=rating,
+        user_id=user_id,
+        product_id=product_id
+    )
+
+    db.session.add(new_review)
+    ad.session.commit()
+
+    return jsonify({"message": "Review posted!"}, 201)
+
+
+@product_routes.route('/<int:id>/reviews', methods=["GET"])
+
+def reviews(id):
+    reviews = Review.query.filter_by(product_id=id).all()
+    return jsonify([review.to_dict() for review in reviews])
