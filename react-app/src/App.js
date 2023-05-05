@@ -5,9 +5,11 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+
 import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
