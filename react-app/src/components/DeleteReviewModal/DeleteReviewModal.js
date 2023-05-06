@@ -29,3 +29,5 @@ const DeleteReviewModal = ({reviewId, productId}) => {
         </div>
     )
 }
+
+export default DeleteReviewModal;

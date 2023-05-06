@@ -105,7 +105,7 @@ const reviews = (state=initialState, action) => {
 
         case REMOVE_REVIEW:
             const deleteState = {...state};
-            delete deleteState[action.reviewId.id]
+            delete deleteState[action.reviewId]
             return deleteState;
         default:
             return state

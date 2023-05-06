@@ -16,22 +16,27 @@ const ProductDetails = () => {
   const product = useSelector((state) => {
     return state?.product.details;
   });
-  console.log(product, "PRODUCTDeT");
+  // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
+    dispatch(loadReviews(id))
   }, [dispatch, id]);
+
+
+  const products = useSelector(state => state.product)
+  console.log(products, "PRODUCTS")
+  // console.log(products.details.owner_id)
 
   const {setModalContent} = useModal();
   const [showModal, setShowModal] = useState(false);
 
-  const productz = useSelector(state => state.products[id])
-
   // Grabs all reviews
   const reviews = useSelector(state => state.reviews);
-
+  console.log(reviews)
   // Grabs reviews based on product id only
-  const filteredReviews = Object.values(reviews).filter((review) => review?.productId === productz?.id)
+  const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
 
+  // console.log(filteredReviews)
   // Grab current logged-in user
   const sessionUser = useSelector(state => state.session.user);
 
@@ -39,7 +44,7 @@ const ProductDetails = () => {
   const sessionUserId = useSelector(state => state.session.user?.id);
 
   // Checks if product-owner is also the logged-in user
-  const isOwner = productz?.owner_id === sessionUserId;
+  const isOwner = products?.details.owner_id === sessionUserId;
 
   // Checks if logged-in user has at least 1 review for a product
   const hasReviewed = filteredReviews.some((review) => review.userId === sessionUserId)
@@ -54,7 +59,7 @@ const ProductDetails = () => {
 
   // Delete Review
   const handleDeleteReview = async () => {
-    setModalContent(<DeleteReviewModal reviewId={reviewId} id={id} />)
+    setModalContent(<DeleteReviewModal id={id} />)
     openModal();
   }
 
@@ -79,8 +84,6 @@ const ProductDetails = () => {
           <div>
             <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
 
-
-
             <button
             onClick={handleAddReview}
             disabled={!sessionUser || isOwner || hasReviewed}
@@ -90,7 +93,7 @@ const ProductDetails = () => {
             {filteredReviews && (filteredReviews).map(review => (
 
             <div key={review?.id}>
-            <p>{review?.User.username}</p>
+            <p>{review?.User}</p>
             <p>{review?.review}</p>
             <p>{review?.stars}</p>
 
