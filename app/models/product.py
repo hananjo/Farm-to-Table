@@ -20,9 +20,9 @@ class Product(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 
     owner = db.relationship("User", secondary="cart_items", back_populates="product")
-    cart = db.relationship("Cart_Item", back_populates="product")
-    review = db.relationship("Review", back_populates="product")
-    image = db.relationship("Image", back_populates="product")
+    cart = db.relationship("Cart_Item", back_populates="product", cascade="all, delete-orphan")
+    review = db.relationship("Review", back_populates="product", cascade="all, delete-orphan")
+    image = db.relationship("Image", back_populates="product", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

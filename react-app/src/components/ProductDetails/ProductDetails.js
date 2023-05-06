@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductDetails } from "../../store/product";
@@ -22,10 +22,17 @@ const ProductDetails = () => {
       <h2>Groceries delivered right to your door!</h2>
       {product && (
         <div>
-          <p>{product.name}</p>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
-          <p></p>
+          <div>
+            <p>{product.name}</p>
+            <p>{product.description}</p>
+            <p>{product.price}</p>
+          </div>
+          <div>
+            <NavLink to={`/products/${id}/update`}>
+              <button>Update</button>
+            </NavLink>
+            <button>Delete</button>
+          </div>
         </div>
       )}
     </div>
