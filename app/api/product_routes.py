@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request, abort, redirect, url_for
-from app.models import Product, db, Review
+from app.models import Product, db, Review, Image
 from app.forms.product_form import ProductForm
 from app.forms.review_form import ReviewForm
 from flask_login import login_required, current_user
@@ -92,10 +92,12 @@ def update_product(id):
 
         return product.to_dict()
 
+# ADD Review
 @product_routes.route('/<int:id>/reviews', methods={"POST"})
 @login_required
 def add_review():
     form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     review = form.review.data
     rating = form.rating.data
@@ -115,8 +117,57 @@ def add_review():
     return jsonify({"message": "Review posted!"}, 201)
 
 
+# GET Product Reviews
 @product_routes.route('/<int:id>/reviews', methods=["GET"])
-
-def reviews(id):
+def get_reviews(id):
     reviews = Review.query.filter_by(product_id=id).all()
     return jsonify([review.to_dict() for review in reviews])
+
+
+# ADD Image
+@product_routes.route('/<int:id>/images', methods=["POST"])
+@login_required
+def add_image(productId):
+    form = ImageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    productId = Product.query.get(id)
+    if not productId:
+        return jsonify({"error": "Product not found"}, 404)
+
+    image_url = form.image_url.data
+    product_id = form.product_id.data
+
+    new_image = Image(
+        image_url=image_url,
+        product_id=product_id
+    )
+
+    db.session.add(new_image)
+    db.session.commit()
+
+    return jsonify({"message": "Image posted"}, 201)
+
+
+# DELETE Image
+@product_routes.route('/<int:id>/images', methods=["DELETE"])
+@login_required
+def delete_image(id):
+
+    user_id = current_user.id
+
+    image = Image.query.get(id)
+
+    if not image or image.product.user_id != user_id:
+        return jsonify({'error': "Image not found or unauthorized"}, 404)
+
+    db.session.delete(image)
+    db.session.commit()
+
+    return jsonify({"message": "Image successfully deleted"}, 200)
+
+# GET images
+@product_routes.route('/<int:id>/images', methods=["GET"])
+def get_images(id):
+    images = Image.query.filter_by(product_id=id).all()
+    return jsonify([image.to_dict() for image in images])
