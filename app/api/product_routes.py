@@ -150,7 +150,6 @@ def add_image(id):
 
     image_url = form.image_url.data
 
-
     new_image = Image(
         image_url=image_url,
         product_id=product.id
