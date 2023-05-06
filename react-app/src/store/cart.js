@@ -7,9 +7,9 @@ const LOAD_CART = 'user/LOAD_CART'
 // Delete a product from the cart
 // const DELETE_CART = 'user/DELETE_CART'
 
-const addCartProd = (prodId) => ({
+const addCartProd = (prod) => ({
     type: ADD_CART,
-    prodId
+    prod
 })
 
 const loadCart = (list) => ({
@@ -19,9 +19,20 @@ const loadCart = (list) => ({
 
 const initialState = { cart: null };
 
+export const addToCart = (userId, prodId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
+        method: 'POST'
+    })
 
-export const getCart = (id) => async (dispatch) => {
-    const res = await fetch(`users/${id}/cart`)
+    if(res.ok) {
+        const newCartProd = await res.json()
+
+        dispatch(addCartProd(newCartProd))
+    }
+}
+
+export const getCart = () => async (dispatch) => {
+    const res = await fetch('/api/users/cart')
 
     if (res.ok) {
         const products = await res.json()
@@ -30,13 +41,18 @@ export const getCart = (id) => async (dispatch) => {
     }
 }
 
+
+
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
         case ADD_CART:
+            const newState = {...initialState}
 
-            return {cart: state}
+            newState.cart = [...newState.cart, action.prod]
+
+            return newState
 		case LOAD_CART:
-			return { cart: action.payload }
+			return { cart: action.list }
 		default:
 			return state;
 	}

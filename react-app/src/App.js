@@ -9,7 +9,11 @@ import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
+
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
+
+import Cart from "./components/Cart";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
