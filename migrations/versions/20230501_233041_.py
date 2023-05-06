@@ -50,10 +50,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('cart_items',
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'])
+    sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id']),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id']),
+    sa.PrimaryKeyConstraint('id')
     )
 
 
