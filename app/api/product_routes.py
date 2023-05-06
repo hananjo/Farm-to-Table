@@ -47,7 +47,7 @@ def create_product():
     # print(form.price.data, form.type.data, 'TESTING')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        print('hello2')
+        print('hello2', '&*******')
         name = form.name.data
         description = form.description.data
         price = form.price.data
@@ -92,6 +92,18 @@ def update_product(id):
         db.session.commit()
 
         return product.to_dict()
+    else:
+        return None
+
+@product_routes.route('/<int:id>', methods=['DELETE'])
+def delete_product(id):
+    product = Product.query.get(id)
+    print(product, 'PRINT PRODUCT *********')
+    if product:
+        db.session.delete(product)
+        db.session.commit()
+        return jsonify({'message': 'Successfully deleted product'})
+
 
 # ADD Review
 @product_routes.route('/<int:id>/reviews', methods={"POST"})

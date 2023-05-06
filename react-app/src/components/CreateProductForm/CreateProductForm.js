@@ -2,17 +2,22 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { addNewProduct } from "../../store/product";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CreateProductForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Fruit");
+
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const user = useSelector((state) => {
+    return state.session.user.id;
+  });
 
   useEffect(() => {
     const validationErrors = [];
@@ -40,12 +45,14 @@ const CreateProductForm = () => {
         description,
         price,
         type,
+        owner_id: user,
       };
+      console.log(type, "TYPE");
       let addedNewProduct;
       addedNewProduct = await dispatch(addNewProduct(productFormInput));
 
       if (addedNewProduct) {
-        history.push(`/api/products/${addedNewProduct.id}`);
+        history.push(`/products/${addedNewProduct.id}`);
       }
     }
 
@@ -98,6 +105,7 @@ const CreateProductForm = () => {
       <h3>How much does your product cost?</h3>
       <input
         type="number"
+        step="0.01"
         name="price"
         value={price}
         placeholder="0"

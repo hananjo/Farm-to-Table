@@ -14,9 +14,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    product = db.relationship("Product", secondary="cart_items", back_populates="owner")
-    cart = db.relationship("Cart_Item", back_populates="user")
-    review = db.relationship("Review", back_populates="owner" )
+    product = db.relationship("Product", secondary="cart_items", back_populates="owner", cascade="all")
+    cart = db.relationship("Cart_Item", back_populates="user", cascade="all, delete-orphan")
+    review = db.relationship("Review", back_populates="owner", cascade="all, delete-orphan" )
 
     @property
     def password(self):
