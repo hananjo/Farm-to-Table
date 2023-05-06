@@ -4,11 +4,10 @@ import { useEffect } from "react";
 
 function Cart() {
     const dispatch = useDispatch()
-    const userId = useSelector(state => state.user.id)
 
     useEffect(() => {
-        dispatch(getCart(userId));
-    }, [dispatch, userId])
+        dispatch(getCart());
+    }, [dispatch])
 
     const cart = useSelector(state => state.cart)
     console.log(cart && cart);
@@ -17,7 +16,7 @@ function Cart() {
         <div>
             <h1>Your Shopping Cart </h1>
             <p>
-                {cart}
+                {/* {cart} */}
             </p>
         </div>
     )

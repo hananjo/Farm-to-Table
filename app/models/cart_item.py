@@ -14,6 +14,7 @@ class Cart_Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
 
     product = db.relationship("Product", back_populates='cart')
     user = db.relationship("User", back_populates='cart')
@@ -23,5 +24,6 @@ class Cart_Item(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'product_id': self.product_id,
-            'product': self.product
+            'product_id': self.product.to_dict(),
+            'quantity': self.quantity
         }
