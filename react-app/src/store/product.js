@@ -1,6 +1,7 @@
 const LOAD = "/products/LOAD";
 const ADD_PRODUCT = "/products/ADD_PRODUCT";
 const LOAD_DETAILS = "/products/LOAD_DETAILS";
+const REMOVE_PRODUCT = "/products/REMOVE_PRODUCT";
 
 const load = (list) => ({
   type: LOAD,
@@ -17,6 +18,10 @@ const addProduct = (product) => ({
   product,
 });
 
+const removeProduct = (product) => ({
+  type: REMOVE_PRODUCT,
+  product,
+});
 export const getAllProducts = () => async (dispatch) => {
   const response = await fetch("/api/products");
 
@@ -28,13 +33,26 @@ export const getAllProducts = () => async (dispatch) => {
 };
 
 export const addNewProduct = (data) => async (dispatch) => {
-  const response = await fetch("/api/products", {
+  const { owner_id, price, description, name, type } = data;
+  console.log(data, "*****");
+  console.log(typeof data.price === "string");
+  console.log(data.type);
+  //   data.price = parseFloat(data.price);
+
+  const response = await fetch("/api/products/", {
     method: "POST",
-    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      price: Number(price),
+      description,
+      name,
+      type,
+      owner_id,
+    }),
   });
-  //   console.log(response, "RESPONSE");
+  let product;
   if (response.ok) {
-    const product = await response.json();
+    product = await response.json();
     console.log(product, "PRODUCT");
     dispatch(addProduct(product));
     return product;
@@ -50,14 +68,33 @@ export const getProductDetails = (id) => async (dispatch) => {
 };
 
 export const updateProduct = (id, data) => async (dispatch) => {
+  const { owner_id, name, description, type, price } = data;
+  console.log(data, "DATA****");
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify({
+      name,
+      description,
+      price: Number(price),
+      type,
+      owner_id,
+    }),
   });
   if (response.ok) {
     const product = await response.json();
+
     dispatch(addProduct(product));
     return product;
+  }
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+  const response = await fetch(`/api/products/${id}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const product = await response.json();
+    dispatch(removeProduct(product));
   }
 };
 const initialState = {};
@@ -76,6 +113,10 @@ const productReducer = (state = initialState, action) => {
       return { ...state, [action.product.id]: action.product };
     case LOAD_DETAILS:
       return { ...state, details: action.id };
+    case REMOVE_PRODUCT:
+      const deleteNewState = { ...state };
+      delete deleteNewState.product[action.product.id];
+      return deleteNewState;
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
-
+import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,8 +29,9 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route exact path="/" component={Products} />
+          <Route exact path="/products/new" component={CreateProductForm} />
           <Route exact path="/products/:id" component={ProductDetails} />
-          <Route exact path="/new" component={CreateProductForm} />
+          <Route exact path="/products/:id/update" component={UpdateProduct} />
         </Switch>
       )}
     </>
