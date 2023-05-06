@@ -24,6 +24,6 @@ class Cart_Item(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'product_id': self.product_id,
-            'product_id': self.product.to_dict(),
+            'product': self.product.to_dict(),
             'quantity': self.quantity
         }

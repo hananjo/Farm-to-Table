@@ -26,13 +26,13 @@ def user(id):
     return user.to_dict()
 
 
-@user_routes.route('/cart')
+@user_routes.route('<int:id>/cart')
 # @login_required
-def cart():
+def cart(id):
     # Get the current user
-    currUser = current_user.to_dict().id
+    # currUser = current_user.to_dict().id
 
-    products_query = Cart_Item.query.filter(Cart_Item.user_id == currUser)
+    products_query = Cart_Item.query.filter(Cart_Item.user_id == id)
     # print("**********", products_query)
     products = products_query.all()
     # print('----------', products)

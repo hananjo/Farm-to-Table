@@ -31,8 +31,8 @@ export const addToCart = (userId, prodId) => async (dispatch) => {
     }
 }
 
-export const getCart = () => async (dispatch) => {
-    const res = await fetch('/api/users/cart')
+export const getCart = (id) => async (dispatch) => {
+    const res = await fetch(`/api/users/${id}/cart`)
 
     if (res.ok) {
         const products = await res.json()
@@ -43,16 +43,22 @@ export const getCart = () => async (dispatch) => {
 
 
 
-export default function reducer(state = initialState, action) {
+export default function cartReducer(state = initialState, action) {
 	switch (action.type) {
+        case LOAD_CART:
+            const loadState = {}
+
+            action.list.forEach((cartRel) => {
+                loadState[cartRel.id] = cartRel;
+              });
+
+			return {...loadState}
         case ADD_CART:
-            const newState = {...initialState}
+            const newState = {...state}
 
             newState.cart = [...newState.cart, action.prod]
 
             return newState
-		case LOAD_CART:
-			return { cart: action.list }
 		default:
 			return state;
 	}
