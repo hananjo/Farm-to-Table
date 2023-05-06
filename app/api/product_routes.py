@@ -89,6 +89,8 @@ def update_product(id):
         db.session.commit()
 
         return product.to_dict()
+    else:
+        return None
 
 @product_routes.route('/<int:id>', methods=['DELETE'])
 def delete_product(id):
