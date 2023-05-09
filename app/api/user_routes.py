@@ -32,14 +32,14 @@ def cart(id):
     # Get the current user
     # currUser = current_user.to_dict().id
 
-    products_query = Cart_Item.query.filter(Cart_Item.user_id == id)
+    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == id)
     # print("**********", products_query)
-    products = products_query.all()
+    cartRels = cartRel_query.all()
     # print('----------', products)
     cartProducts = []
-    if (len(products) > 0):
-        for product in products:
-            res = product.to_dict()
+    if (len(cartRels) > 0):
+        for rel in cartRels:
+            res = rel.to_dict()
             cartProducts.append(res)
     else:
         cartProducts.append("Your cart is empty")
@@ -96,4 +96,4 @@ def deleteFromCart(userId, prodId):
 
     db.session.delete(cartRel)
 
-    return {'Product Successfully Deleted'}
+    return cartRel.to_dict()
