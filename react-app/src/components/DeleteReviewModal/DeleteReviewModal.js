@@ -11,9 +11,9 @@ const DeleteReviewModal = ({reviewId, productId}) => {
 
     const removeReview = async(e) => {
         e.preventDefault();
-        await dispatch(deleteReview(reviewId));
+        await dispatch(deleteReview(reviewId && reviewId));
         await dispatch(getProductDetails(productId));
-        await dispatch(loadReviews(productId));
+        // await dispatch(loadReviews(productId));
         closeModal();
     }
 

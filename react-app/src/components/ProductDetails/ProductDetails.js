@@ -22,9 +22,11 @@ const ProductDetails = () => {
     dispatch(loadReviews(id))
   }, [dispatch, id]);
 
+  // console.log(product.description)
+
 
   const products = useSelector(state => state.product)
-  console.log(products, "PRODUCTS")
+  // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
 
   const {setModalContent} = useModal();
@@ -32,19 +34,22 @@ const ProductDetails = () => {
 
   // Grabs all reviews
   const reviews = useSelector(state => state.reviews);
-  console.log(reviews)
+  // console.log(reviews)
   // Grabs reviews based on product id only
   const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
 
-  // console.log(filteredReviews)
+
+
   // Grab current logged-in user
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(state => state?.session.user);
+  // console.log(sessionUser)
 
   // Grabs current logged-in user's id
   const sessionUserId = useSelector(state => state.session.user?.id);
 
   // Checks if product-owner is also the logged-in user
-  const isOwner = products?.details.owner_id === sessionUserId;
+  const isOwner = product && product.owner_id === sessionUserId;
+  // console.log(isOwner)
 
   // Checks if logged-in user has at least 1 review for a product
   const hasReviewed = filteredReviews.some((review) => review.userId === sessionUserId)
@@ -58,8 +63,8 @@ const ProductDetails = () => {
   }
 
   // Delete Review
-  const handleDeleteReview = async () => {
-    setModalContent(<DeleteReviewModal id={id} />)
+  const handleDeleteReview = async (e) => {
+    setModalContent(<DeleteReviewModal id={e.target.id} productId={id} />)
     openModal();
   }
 
@@ -86,7 +91,7 @@ const ProductDetails = () => {
 
             <button
             onClick={handleAddReview}
-            disabled={!sessionUser || isOwner || hasReviewed}
+            // disabled={!sessionUser || isOwner || hasReviewed}
             >Post a Review
             </button>
 
@@ -98,8 +103,9 @@ const ProductDetails = () => {
             <p>{review?.stars}</p>
 
             <button
+            id={review?.id}
             onClick={handleDeleteReview}
-            disabled={!sessionUser}
+            // disabled={!sessionUser}
             >Delete Review
             </button>
 

@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addReview, createReview, loadReviews } from "../../store/review";
 
 
-const AddReviewModal = ({reviews, productId}) => {
+const AddReviewModal = ({reviews, id}) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user.id);
+    const sessionUser = useSelector((state) => state.session.user);
+    const {productId} = useParams();
 
+    const product = useSelector(state => state.product)
 
     const [review, setReview] = useState("");
-    const [stars, setStars] = useState(0);
+    const [rating, setRating] = useState(0);
     const [error, setError] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
     const {closeModal} = useModal();
@@ -25,20 +27,15 @@ const AddReviewModal = ({reviews, productId}) => {
         e.preventDefault();
 
         const newReviewInput = {
-            ...reviews,
-            productId: productId,
+            user_id: sessionUser.id,
+            product_id: id,
             review: review,
-            stars: stars,
+            rating: rating,
         };
 
-        let newReview;
-        newReview = await dispatch(createReview(newReviewInput));
+        console.log(newReviewInput)
 
-        if(newReview) {
-            await dispatch(addReview(newReview));
-            await dispatch(loadReviews(productId));
-            // history.go(`/products/${productId}`);
-        }
+        dispatch(createReview(newReviewInput, id));
 
         closeModal();
     };
@@ -59,10 +56,10 @@ const AddReviewModal = ({reviews, productId}) => {
                 <div>Rating</div>
                 <input
                     type="number"
-                    value={stars}
+                    value={rating}
                     min={1}
                     max={5}
-                    onChange={(e) => setStars(e.target.value)}
+                    onChange={(e) => setRating(e.target.value)}
                 ></input>
             </label>
 

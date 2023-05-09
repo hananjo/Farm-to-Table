@@ -114,7 +114,7 @@ def add_review(id):
 
     review = form.review.data
     rating = form.rating.data
-    user_id = current_user.id
+    user_id = form.user_id.data
     product_id = id
 
     new_review = Review(
@@ -125,9 +125,9 @@ def add_review(id):
     )
 
     db.session.add(new_review)
-    ad.session.commit()
+    db.session.commit()
 
-    return jsonify({"message": "Review posted!"}, 201)
+    return new_review.to_dict();
 
 
 # GET Product Reviews
