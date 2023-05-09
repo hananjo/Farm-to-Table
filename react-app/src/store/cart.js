@@ -3,7 +3,7 @@ const ADD_CART = 'product/ADD_CART'
 // Show a list of items in the cart
 const LOAD_CART = 'user/LOAD_CART'
 // Editing the quantity of items in the cart
-// const UPDATE_CART = 'user/UPDATE_CART'
+const UPDATE_CART = 'user/UPDATE_CART'
 // Delete a product from the cart
 const DELETE_CART = 'user/DELETE_CART'
 
@@ -20,6 +20,11 @@ const loadCart = (list) => ({
 const deleteCartProd = (id) => ({
     type: DELETE_CART,
     id
+})
+
+const updateCartQty = (cartRel) => ({
+    type: UPDATE_CART,
+    cartRel
 })
 
 const initialState = {};
@@ -44,6 +49,18 @@ export const getCart = (id) => async (dispatch) => {
         const products = await res.json()
 
         dispatch(loadCart(products))
+    }
+}
+
+export const updateQty = (userId, prodId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
+        method: 'UPDATE'
+    })
+
+    if (res.ok) {
+        const updatedCartRel = await res.json()
+
+        dispatch(updateCartQty(updatedCartRel))
     }
 }
 
@@ -76,6 +93,12 @@ export default function cartReducer(state = initialState, action) {
 
             return { ...newState }
         case ADD_CART:
+            newState = { ...state }
+
+            newState[action.cartRel.id] = action.cartRel
+
+            return newState
+        case UPDATE_CART:
             newState = { ...state }
 
             newState[action.cartRel.id] = action.cartRel
