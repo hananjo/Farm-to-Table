@@ -34,9 +34,9 @@ export const getAllProducts = () => async (dispatch) => {
 
 export const addNewProduct = (data) => async (dispatch) => {
   const { owner_id, price, description, name, type } = data;
-  console.log(data, "*****");
-  console.log(typeof data.price === "string");
-  console.log(data.type);
+  //   console.log(data, "*****");
+  //   console.log(typeof data.price === "string");
+  //   console.log(data.type);
   //   data.price = parseFloat(data.price);
 
   const response = await fetch("/api/products/", {
@@ -72,6 +72,7 @@ export const updateProduct = (id, data) => async (dispatch) => {
   console.log(data, "DATA****");
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name,
       description,
@@ -92,6 +93,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   const response = await fetch(`/api/products/${id}`, {
     method: "DELETE",
   });
+  console.log(response, "DELETE RESPONSE");
   if (response.ok) {
     const product = await response.json();
     dispatch(removeProduct(product));
