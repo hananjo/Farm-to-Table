@@ -4,16 +4,17 @@ import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 import { deleteReview, load, loadReviews } from "../../store/review";
 
-const DeleteReviewModal = ({reviewId, productId}) => {
+const DeleteReviewModal = ({id, productId}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const {closeModal} = useModal();
 
+
     const removeReview = async(e) => {
         e.preventDefault();
-        await dispatch(deleteReview(reviewId && reviewId));
+        await dispatch(deleteReview(id && id));
         await dispatch(getProductDetails(productId));
-        // await dispatch(loadReviews(productId));
+        await dispatch(loadReviews(productId))
         closeModal();
     }
 

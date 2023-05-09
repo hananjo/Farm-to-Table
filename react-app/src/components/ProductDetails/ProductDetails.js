@@ -63,8 +63,9 @@ const ProductDetails = () => {
   }
 
   // Delete Review
-  const handleDeleteReview = async (e) => {
-    setModalContent(<DeleteReviewModal id={e.target.id} productId={id} />)
+  const handleDeleteReview = async (reviewId) => {
+    console.log(reviewId, "67")
+    setModalContent(<DeleteReviewModal id={reviewId} productId={id} />)
     openModal();
   }
 
@@ -104,7 +105,7 @@ const ProductDetails = () => {
 
             <button
             id={review?.id}
-            onClick={handleDeleteReview}
+            onClick={() => handleDeleteReview(review.id, product.id)}
             // disabled={!sessionUser}
             >Delete Review
             </button>

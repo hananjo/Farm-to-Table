@@ -81,7 +81,6 @@ export const createReview = (review, product_id) => async dispatch => {
 
 // delete Review thunk
 export const deleteReview = (reviewId) => async dispatch => {
-    console.log(reviewId)
     const res = await fetch(`/api/reviews/${reviewId}`, { // may have to adjust route
         method: "DELETE"
     });
