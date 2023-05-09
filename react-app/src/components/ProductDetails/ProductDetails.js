@@ -9,6 +9,9 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const user = useSelector((state) => {
+    return state?.session.user;
+  });
   const product = useSelector((state) => {
     return state?.product.details;
   });
@@ -55,34 +58,38 @@ const ProductDetails = () => {
             <p>{product.price}</p>
             <p>{product.type}</p>
           </div>
-          <div>
-            <NavLink to={`/products/${id}/update`}>
-              <button>Update</button>
-            </NavLink>
+          {user && product && user.id === product.owner_id ? (
+            <div>
+              <NavLink to={`/products/${id}/update`}>
+                <button>Update</button>
+              </NavLink>
 
-            <button onClick={openMenu}>Delete</button>
-            {showMenu && (
-              //   <OpenModalButton>
-              <div className="delete-modal">
-                <div className="delete-title">
-                  <h3> Confirm Delete</h3>
-                </div>
-                <div className="delete-question">
-                  <p> Are you sure you want to remove this group?</p>
-                </div>
-                <div className="confirmation-delete-buttons">
-                  <button className="delete-button" onClick={handleDelete}>
-                    Yes (Delete Group)
-                  </button>
+              <button onClick={openMenu}>Delete</button>
+              {showMenu && (
+                //   <OpenModalButton>
+                <div className="delete-modal">
+                  <div className="delete-title">
+                    <h3> Confirm Delete</h3>
+                  </div>
+                  <div className="delete-question">
+                    <p> Are you sure you want to remove this group?</p>
+                  </div>
+                  <div className="confirmation-delete-buttons">
+                    <button className="delete-button" onClick={handleDelete}>
+                      Yes (Delete Group)
+                    </button>
 
-                  <button className="keep-button" onClick={closeMenu}>
-                    No (Keep Group)
-                  </button>
+                    <button className="keep-button" onClick={closeMenu}>
+                      No (Keep Group)
+                    </button>
+                  </div>
                 </div>
-              </div>
-              //   </OpenModalButton>
-            )}
-          </div>
+                //   </OpenModalButton>
+              )}
+            </div>
+          ) : (
+            <br />
+          )}
         </div>
       )}
     </div>
