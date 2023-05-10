@@ -72,15 +72,15 @@ const ProductDetails = () => {
                     <h3> Confirm Delete</h3>
                   </div>
                   <div className="delete-question">
-                    <p> Are you sure you want to remove this group?</p>
+                    <p> Are you sure you want to remove this product?</p>
                   </div>
                   <div className="confirmation-delete-buttons">
                     <button className="delete-button" onClick={handleDelete}>
-                      Yes (Delete Group)
+                      Yes (Delete Product)
                     </button>
 
                     <button className="keep-button" onClick={closeMenu}>
-                      No (Keep Group)
+                      No (Keep Product)
                     </button>
                   </div>
                 </div>
