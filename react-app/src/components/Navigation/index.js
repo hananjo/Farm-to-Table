@@ -13,7 +13,12 @@ function Navigation({ isLoaded }) {
         <div className="home-button">
           <li>
             <NavLink exact to="/">
-              Home
+              <img
+                src={
+                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683750387/Screen_Shot_2023-05-10_at_1.26.11_PM_ulaidt.png"
+                }
+                style={{ width: "150px" }}
+              />
             </NavLink>
           </li>
         </div>

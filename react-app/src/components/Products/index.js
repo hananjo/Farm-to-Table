@@ -26,7 +26,7 @@ const Products = () => {
     <div>
       <div className="category-container">
         <div className="categories-title">
-          <h2>Farm-to-Table. Groceries delivered right to your door!</h2>
+          <h2>Groceries delivered fresh right to your door!</h2>
         </div>
         <div className="categories-and-names">
           <div className="category">
