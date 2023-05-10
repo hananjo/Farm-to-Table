@@ -43,17 +43,20 @@ export const loadReviews = (productId) => async dispatch => {
 }
 
 // add Review thunk
-export const createReview = (review) => async dispatch => {
-    let res = await fetch(`/api/products/${review.productId}/reviews`, {
+export const createReview = (review, product_id) => async dispatch => {
+    console.log(review, "47")
+    let res = await fetch(`/api/products/${product_id}/reviews`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(review)
     });
+    console.log("55")
 
     if(res.ok) {
         const newReview = await res.json();
+        console.log(newReview, '58')
         dispatch(addReview(newReview));
         return newReview;
     }
@@ -105,7 +108,7 @@ const reviews = (state=initialState, action) => {
 
         case REMOVE_REVIEW:
             const deleteState = {...state};
-            delete deleteState[action.reviewId.id]
+            delete deleteState[action.reviewId]
             return deleteState;
         default:
             return state

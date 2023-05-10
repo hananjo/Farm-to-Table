@@ -37,7 +37,7 @@ review_routes = Blueprint('reviews', __name__)
 #     return jsonify({"message": "Review posted!"}, 201)
 
 
-@review_routes.route('/reviews/<int:id>', methods=["DELETE"])
+@review_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_review(id):
 
@@ -51,4 +51,4 @@ def delete_review(id):
     db.session.delete(review)
     db.session.commit()
 
-    return jsonify(success=True)
+    return jsonify({"message":"Successfully Deleted"})

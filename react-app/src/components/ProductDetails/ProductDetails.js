@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 import React from "react";
-import { deleteProduct, getProductDetails } from "../../store/product";
+import { getProductDetails, deleteProduct } from "../../store/product";
+import { useModal } from "../../context/Modal";
+import AddReviewModal from "../AddReviewModal/AddReviewModal";
+import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
+import { loadReviews } from "../../store/review";
+
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -15,10 +20,58 @@ const ProductDetails = () => {
   const product = useSelector((state) => {
     return state?.product.details;
   });
-  console.log(product, "PRODUCTDeT");
+  // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
+    dispatch(loadReviews(id))
   }, [dispatch, id]);
+
+  // console.log(product.description)
+
+
+  const products = useSelector(state => state.product)
+  // console.log(products, "PRODUCTS")
+  // console.log(products.details.owner_id)
+
+  const {setModalContent} = useModal();
+  const [showModal, setShowModal] = useState(false);
+
+  // Grabs all reviews
+  const reviews = useSelector(state => state.reviews);
+  // console.log(reviews)
+  // Grabs reviews based on product id only
+  const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
+
+
+
+  // Grab current logged-in user
+  const sessionUser = useSelector(state => state?.session.user);
+  // console.log(sessionUser)
+
+  // Grabs current logged-in user's id
+  const sessionUserId = useSelector(state => state.session.user?.id);
+
+  // Checks if product-owner is also the logged-in user
+  const isOwner = product && product.owner_id === sessionUserId;
+  // console.log(isOwner)
+
+  // Checks if logged-in user has at least 1 review for a product
+  const hasReviewed = filteredReviews.some((review) => review.userId === sessionUserId)
+
+  const openModal = () => { setShowModal(true) };
+
+  // Add Review
+  const handleAddReview = async () => {
+    setModalContent(<AddReviewModal id={id} />)
+    openModal();
+  }
+
+  // Delete Review
+  const handleDeleteReview = async (reviewId) => {
+    console.log(reviewId, "67")
+    setModalContent(<DeleteReviewModal id={reviewId} productId={id} />)
+    openModal();
+  }
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -58,6 +111,41 @@ const ProductDetails = () => {
             <p>{product.price}</p>
             <p>{product.type}</p>
           </div>
+          <div>
+            <NavLink to={`/products/${id}/update`}>
+              <button>Update</button>
+            </NavLink>
+            <button>Delete</button>
+          </div>
+
+          <div>
+            <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
+
+            <button
+            onClick={handleAddReview}
+            // disabled={!sessionUser || isOwner || hasReviewed}
+            >Post a Review
+            </button>
+
+            {filteredReviews && (filteredReviews).map(review => (
+
+            <div key={review?.id}>
+            <p>{review?.User}</p>
+            <p>{review?.review}</p>
+            <p>{review?.stars}</p>
+
+            <button
+            id={review?.id}
+            onClick={() => handleDeleteReview(review.id, product.id)}
+            // disabled={!sessionUser}
+            >Delete Review
+            </button>
+
+            </div>
+            ))}
+
+          </div>
+
           {user && product && user.id === product.owner_id ? (
             <div>
               <NavLink to={`/products/${id}/update`}>
