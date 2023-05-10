@@ -11,11 +11,11 @@ function Cart() {
     const [save, setSave] = useState("hidden")
     const user = useSelector(state => state.session.user.id)
 
-    // const updateQty = (e) => {
-    //     setDisplay("")
-    //     // setQty(e.target.value)
-    //     dispatch()
-    // };
+    // const handleDeleteReview = async (reviewId) => {
+    //     console.log(reviewId, "67")
+    //     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />)
+    //     openModal();
+    // }
 
     useEffect(() => {
         dispatch(getCart(user));
@@ -33,9 +33,12 @@ function Cart() {
         dispatch(deleteFromCart(user, e.target.id))
     }
 
+
     const handleEdit = (e) => {
-        setDisplay("hidden")
-        setSave("")
+        // setModalContent(<CartQtyForm id={reviewId} productId={id} />)
+        // openModal();
+        // setDisplay("hidden")
+        // setSave("")
     }
 
     return (
@@ -43,7 +46,14 @@ function Cart() {
             <h1>Your Shopping Cart </h1>
             <ul>
                 {/* {cartArr > 0 ? isLoaded && cartArr?.map(prod => {return <li>{prod.id}</li>}) : <li>Shopping Cart is empty</li>} */}
-                {isLoaded && cartArr?.map(prod => { return <li key={prod.id}>{prod.product.name} {prod.quantity} <button className={display} onClick={handleEdit}>Edit</button> <CartQtyForm key={prod.id} prod={prod} cls={save}/> <button id={prod.product.id} onClick={onDelete}>Delete</button> <button className={save}>Save</button> </li> })}
+                {isLoaded && cartArr?.map(prod => {
+                    return (
+                        <li key={prod.id}>{prod.product.name} {prod.quantity}
+                            <button className={display} onClick={handleEdit}>Edit</button>
+                            <CartQtyForm key={prod.id} prod={prod} cls={save} fCls={"update"} />
+                            <button id={prod.product.id} onClick={onDelete}>Delete</button>
+                        </li>)
+                })}
             </ul>
         </div>
     )

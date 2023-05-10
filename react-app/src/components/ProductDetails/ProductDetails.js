@@ -4,10 +4,12 @@ import { NavLink, useHistory, useParams } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductDetails, deleteProduct } from "../../store/product";
+// import { addToCart } from "../../store/cart"
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import { loadReviews } from "../../store/review";
+import CartQtyForm from "../CartQtyForm";
 
 const ProductDetails = () => {
   const history = useHistory();
@@ -99,6 +101,12 @@ const ProductDetails = () => {
     setShowMenu(false);
     history.push("/");
   };
+
+  const handleAddtoCart = () => {
+    setModalContent(<CartQtyForm prod={product} cls={id} fCls={"add"}/>)
+    openModal();
+  }
+
   return (
     <div>
       <h1>DHT</h1>
@@ -112,11 +120,14 @@ const ProductDetails = () => {
             <p>{product.type}</p>
           </div>
           <div>
+            <button onClick={handleAddtoCart}>Add to Cart</button>
+          </div>
+          {/* <div>
             <NavLink to={`/products/${id}/update`}>
               <button>Update</button>
             </NavLink>
             <button>Delete</button>
-          </div>
+          </div> */}
 
           <div>
             <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>

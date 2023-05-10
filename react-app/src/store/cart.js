@@ -29,9 +29,18 @@ const updateCartQty = (cartRel) => ({
 
 const initialState = {};
 
-export const addToCart = (userId, prodId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
-        method: 'POST'
+export const addProdToCart = (cartRel) => async (dispatch) => {
+    console.log(cartRel);
+    const {prodId, user, qty} = cartRel
+
+    const res = await fetch(`/api/users/${user}/cart/${prodId}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            product_id: prodId,
+            user_id: user,
+            quantity: qty
+        })
     })
 
     if (res.ok) {
@@ -52,9 +61,19 @@ export const getCart = (id) => async (dispatch) => {
     }
 }
 
-export const updateQty = (userId, prodId) => async (dispatch) => {
-    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
-        method: 'UPDATE'
+export const updateQty = (cartRel) => async (dispatch) => {
+    const {prodId, user, qty} = cartRel
+
+    console.log("cart to update", cartRel);
+
+    const res = await fetch(`/api/users/${user}/cart/${prodId}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            product_id: prodId,
+            user_id: user,
+            quantity: qty
+        })
     })
 
     if (res.ok) {
