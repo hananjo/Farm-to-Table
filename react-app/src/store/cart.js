@@ -3,36 +3,47 @@ const ADD_CART = 'product/ADD_CART'
 // Show a list of items in the cart
 const LOAD_CART = 'user/LOAD_CART'
 // Editing the quantity of items in the cart
-// const UPDATE_CART = 'user/UPDATE_CART'
+const UPDATE_CART = 'user/UPDATE_CART'
 // Delete a product from the cart
-// const DELETE_CART = 'user/DELETE_CART'
+const DELETE_CART = 'user/DELETE_CART'
 
-const addCartProd = (prod) => ({
+const addCartProd = (cartRel) => ({
     type: ADD_CART,
-    prod
+    cartRel
 })
 
 const loadCart = (list) => ({
-	type: LOAD_CART,
-	list
+    type: LOAD_CART,
+    list
 });
 
-const initialState = { cart: null };
+const deleteCartProd = (id) => ({
+    type: DELETE_CART,
+    id
+})
+
+const updateCartQty = (cartRel) => ({
+    type: UPDATE_CART,
+    cartRel
+})
+
+const initialState = {};
 
 export const addToCart = (userId, prodId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
         method: 'POST'
     })
 
-    if(res.ok) {
-        const newCartProd = await res.json()
+    if (res.ok) {
+        const newCartRel = await res.json()
 
-        dispatch(addCartProd(newCartProd))
+        dispatch(addCartProd(newCartRel))
     }
 }
 
-export const getCart = () => async (dispatch) => {
-    const res = await fetch('/api/users/cart')
+export const getCart = (id) => async (dispatch) => {
+    const res = await fetch(`/api/users/${id}/cart`)
+    console.log(res.url);
 
     if (res.ok) {
         const products = await res.json()
@@ -41,19 +52,66 @@ export const getCart = () => async (dispatch) => {
     }
 }
 
+export const updateQty = (userId, prodId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
+        method: 'UPDATE'
+    })
+
+    if (res.ok) {
+        const updatedCartRel = await res.json()
+
+        dispatch(updateCartQty(updatedCartRel))
+    }
+}
+
+export const deleteFromCart = (userId, prodId) => async (dispatch) => {
+    const res = await fetch(`/api/users/${userId}/cart/${prodId}`, {
+        method: 'DELETE'
+    })
+    console.log('user id is', userId);
+    console.log(res.url);
+
+    if (res.ok) {
+        console.log('hit');
+        const cartRel = await res.json()
+        console.log('relId is ', cartRel.id);
+        dispatch(deleteCartProd(cartRel.id))
+    }
+}
 
 
-export default function reducer(state = initialState, action) {
-	switch (action.type) {
+
+export default function cartReducer(state = initialState, action) {
+    let newState;
+    switch (action.type) {
+        case LOAD_CART:
+            newState = { ...state }
+
+            action.list.forEach((cartRel) => {
+                newState[cartRel.id] = cartRel;
+            });
+
+            return { ...newState }
         case ADD_CART:
-            const newState = {...initialState}
+            newState = { ...state }
 
-            newState.cart = [...newState.cart, action.prod]
+            newState[action.cartRel.id] = action.cartRel
 
             return newState
-		case LOAD_CART:
-			return { cart: action.list }
-		default:
-			return state;
-	}
+        case UPDATE_CART:
+            newState = { ...state }
+
+            newState[action.cartRel.id] = action.cartRel
+
+            return newState
+        case DELETE_CART:
+            // newState = Object.values(state).filter(rel => rel.id !== action.id)
+
+            newState = { ...state }
+            delete newState[action.id]
+
+            return newState
+        default:
+            return state;
+    }
 }
