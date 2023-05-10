@@ -10,6 +10,7 @@ import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import { loadReviews } from "../../store/review";
 import CartQtyForm from "../CartQtyForm";
+import CartAddForm from "../CartAddForm"
 
 const ProductDetails = () => {
   const history = useHistory();
@@ -103,8 +104,8 @@ const ProductDetails = () => {
   };
 
   const handleAddtoCart = () => {
-    setModalContent(<CartQtyForm prod={product} cls={id} fCls={"add"}/>)
-    openModal();
+    setModalContent(<CartAddForm id={product.id} fCls={"add"} />)
+        openModal();
   }
 
   return (
@@ -120,7 +121,7 @@ const ProductDetails = () => {
             <p>{product.type}</p>
           </div>
           <div>
-            <button onClick={handleAddtoCart}>Add to Cart</button>
+            <button onClick={() => handleAddtoCart()}>Add to Cart</button>
           </div>
           {/* <div>
             <NavLink to={`/products/${id}/update`}>

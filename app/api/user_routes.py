@@ -99,5 +99,6 @@ def deleteFromCart(userId, prodId):
     cartRel = cartRel_query.one()
 
     db.session.delete(cartRel)
+    db.session.commit()
 
     return cartRel.to_dict()
