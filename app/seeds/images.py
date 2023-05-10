@@ -53,7 +53,6 @@ def seed_images():
     db.session.add(milk_image)
     db.session.add(cheese_image)
     db.session.add(yogurt_image)
-
     db.session.commit()
  ## fruit, veg, dairy, meat, bakery
 
