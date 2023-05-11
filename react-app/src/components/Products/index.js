@@ -45,69 +45,69 @@ const Products = () => {
         </div>
         <div className="categories-and-names">
           {/* <NavLink> */}
-            <div className="category">
-              <img
-                src={
-                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
-                }
-                style={{
-                  clipPath: "circle(38%)",
-                  width: "310px",
-                }}
-                alt="image1"
-                className="image-categories"
-              />
-              <div className="category-names">
-                <p>Fruits</p>
-              </div>
+          <div className="category">
+            <img
+              src={
+                "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
+              }
+              style={{
+                clipPath: "circle(38%)",
+                width: "310px",
+              }}
+              alt="image1"
+              className="image-categories"
+            />
+            <div className="category-names">
+              <p>Fruits</p>
             </div>
+          </div>
           {/* </NavLink>
           <NavLink> */}
-            <div className="category">
-              <img
-                src={
-                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/vegetables_2_qhyckt.jpg"
-                }
-                style={{ clipPath: "circle(38%)" }}
-                alt="image2"
-                className="image-categories"
-              />
-              <div className="category-names">
-                <p>Vegetables</p>
-              </div>
+          <div className="category">
+            <img
+              src={
+                "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/vegetables_2_qhyckt.jpg"
+              }
+              style={{ clipPath: "circle(38%)" }}
+              alt="image2"
+              className="image-categories"
+            />
+            <div className="category-names">
+              <p>Vegetables</p>
             </div>
+          </div>
           {/* </NavLink>
           <NavLink> */}
-            <div className="category">
-              <div className="image-meat">
-                <img
-                  src={
-                    "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/meat_products_jfojgq.jpg"
-                  }
-                  style={{ clipPath: "circle(30%)", width: "400px" }}
-                  alt="image3"
-                  className="image-categories"
-                />
-              </div>
-              <div className="category-name-meat">
-                <p>Meat</p>
-              </div>
-            </div>
-          {/* </NavLink>
-          <NavLink> */}
-            <div className="category">
+          <div className="category">
+            <div className="image-meat">
               <img
                 src={
-                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/dairy_g1nr3q.jpg"
+                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/meat_products_jfojgq.jpg"
                 }
-                style={{ clipPath: "circle(38%)" }}
-                alt="image4"
+                style={{ clipPath: "circle(30%)", width: "400px" }}
+                alt="image3"
                 className="image-categories"
               />
-              <div className="category-names">
-                <p>Dairy</p>
-              </div>
             </div>
+            <div className="category-name-meat">
+              <p>Meat</p>
+            </div>
+          </div>
+          {/* </NavLink>
+          <NavLink> */}
+          <div className="category">
+            <img
+              src={
+                "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/dairy_g1nr3q.jpg"
+              }
+              style={{ clipPath: "circle(38%)" }}
+              alt="image4"
+              className="image-categories"
+            />
+            <div className="category-names">
+              <p>Dairy</p>
+            </div>
+          </div>
           {/* </NavLink> */}
         </div>
       </div>
@@ -138,10 +138,10 @@ const Products = () => {
                 <div className="product-pricing-images">
                   ${product.price.toFixed(2)}
                 </div>
-                <div className="product-add-buttons">
-                  <button onClick={() => handleAddtoCart(product.id)}><i class="fa-solid fa-plus"></i></button>
-                </div>
               </NavLink>
+              <div className="product-add-buttons">
+                <button onClick={() => handleAddtoCart(product.id)}><i class="fa-solid fa-plus"></i></button>
+              </div>
             </div>
           );
         })}
