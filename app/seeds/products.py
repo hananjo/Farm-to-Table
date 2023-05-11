@@ -15,15 +15,15 @@ def seed_products():
     strawberry = Product(
         name='strawberry', description='Get ready for a burst of bold and sweet flavor with our luscious strawberries! Whether you enjoy them on your own, or in a refreshing smoothie, these strawberries will delight your senses', price=5.00, type='Fruit', owner_id=1)
     tomato = Product(
-        name='tomato', description='Plump, juicy, and bursting with flavor, our tomatoes are the perfect addition to any dish.', price=1.50, type='Vegatable', owner_id=2)
+        name='tomato', description='Plump, juicy, and bursting with flavor, our tomatoes are the perfect addition to any dish.', price=1.50, type='Vegetable', owner_id=2)
     onion = Product(
-        name='onion', description='Our onions are the perfect combination of pungent and sweet flavors. Whether you\'re looking to carmelize them for soup or use fresh in a salad, our onions are the perfect addition to your cooking needs! **10lb bag**', price=5.00, type='Vegatable', owner_id=2)
+        name='onion', description='Our onions are the perfect combination of pungent and sweet flavors. Whether you\'re looking to carmelize them for soup or use fresh in a salad, our onions are the perfect addition to your cooking needs! **10lb bag**', price=5.00, type='Vegetable', owner_id=2)
     garlic = Product(
-        name='garlic', description='Known for its bold and aromatic flavor, our garlic is the perfect ingredient for any dish. With a unique and pungent taste, our garlic is perfect for adding depth to soups, sauces, and marinades. Also packed with antioxidants that support good health. **Comes as a pack of 10 garlic cloves**', price=3.00, type='Vegatable', owner_id=2)
+        name='garlic', description='Known for its bold and aromatic flavor, our garlic is the perfect ingredient for any dish. With a unique and pungent taste, our garlic is perfect for adding depth to soups, sauces, and marinades. Also packed with antioxidants that support good health. **Comes as a pack of 10 garlic cloves**', price=3.00, type='Vegetable', owner_id=2)
     cucumber = Product(
-        name='cucumber', description='Crisp, refreshing, and packed with hydration, our cucumbers are te perfect summer snack.', price=3.50, type='Vegatable', owner_id=2)
+        name='cucumber', description='Crisp, refreshing, and packed with hydration, our cucumbers are te perfect summer snack.', price=3.50, type='Vegetable', owner_id=2)
     lettuce = Product(
-        name='lettuce', description='With its crisp texture and refreshing flavor, our lettuce is the perfect base for any salad. Whether you\'re looking to add some crunch to your sandwihc or create a gourmet salad, our lettuce is the perfect choice!', price=2.50, type='Vegatable', owner_id=2)
+        name='lettuce', description='With its crisp texture and refreshing flavor, our lettuce is the perfect base for any salad. Whether you\'re looking to add some crunch to your sandwihc or create a gourmet salad, our lettuce is the perfect choice!', price=2.50, type='Vegetable', owner_id=2)
     beef = Product(
         name='beef', description='Our beef is tender, juicy, and full of flavor. Raised on grass-fed diets and free from antibiotics and hormones, our beef is a healthy and delicious choice!', price=5.00, type='Meat', owner_id=3)
     chicken = Product(

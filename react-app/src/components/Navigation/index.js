@@ -34,11 +34,13 @@ function Navigation({ isLoaded }) {
               Cart
             </NavLink>
           </li>
-          <li>
-            <NavLink exact to="/products/new">
-              Post your product
-            </NavLink>
-          </li>
+          {sessionUser && (
+            <li>
+              <NavLink exact to="/products/new">
+                Post your product
+              </NavLink>
+            </li>
+          )}
         </div>
       </div>
     </ul>
