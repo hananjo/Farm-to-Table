@@ -16,6 +16,7 @@ const DeleteReviewModal = ({id, productId}) => {
         await dispatch(getProductDetails(productId));
         await dispatch(loadReviews(productId))
         closeModal();
+        
     }
 
     return (
