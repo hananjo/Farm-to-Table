@@ -54,8 +54,10 @@ def addToCart(userId, prodId):
 
     form = CartForm()
 
+    # print("************", form.quantity.data, form.user_id.data)
+
     # Creating the cart relationship
-    cartRel = Cart_Item(product_id=form.product_id.data, user_id=form.user_id.data, quantity=form.quantity.data)
+    cartRel = Cart_Item(product_id=prodId, user_id=userId, quantity=form.quantity.data)
 
     # Add the cart relationship to the table
     db.session.add(cartRel)
@@ -72,18 +74,20 @@ def addToCart(userId, prodId):
         # }
 
 # Edit the quantity of a certain product in the cart
-@user_routes.route('/cart/<int:prodId>', methods=['UPDATE'])
-def updateCart(prodId):
+@user_routes.route('<int:userId>/cart/<int:prodId>', methods=['PUT'])
+def updateCart(userId, prodId):
     # currUser = current_user.id
 
     form = CartForm()
 
-    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == form.user_id, Cart_Item.product_id == prodId)
+    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
     cartRel = cartRel_query.one()
 
     cartRel.quantity = form.quantity.data
 
     db.session.commit()
+
+    print("-----------", cartRel.to_dict())
 
     return cartRel.to_dict()
 
@@ -95,5 +99,6 @@ def deleteFromCart(userId, prodId):
     cartRel = cartRel_query.one()
 
     db.session.delete(cartRel)
+    db.session.commit()
 
     return cartRel.to_dict()
