@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request, abort, redirect, url_for
 from app.models import Product, db, Review, Image
 from app.forms.product_form import ProductForm
-
+# from sqlalchemy.orm import joinedload
 from app.forms.review_form import ReviewForm
 from flask_login import login_required, current_user
 
@@ -14,14 +14,7 @@ def get_all_products():
     products = Product.query.all()
     product_list = []
     for product in products:
-        product_dict = {
-            'id': product.id,
-            'name': product.name,
-            'description': product.description,
-            'price': product.price,
-            'type': product.type,
-            'owner_id': product.owner_id
-        }
+        product_dict = product.to_dict()
         product_list.append(product_dict)
 
     return jsonify({'products': product_list})

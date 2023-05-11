@@ -67,6 +67,13 @@ export const getProductDetails = (id) => async (dispatch) => {
   }
 };
 
+// export const getProductImage = (id) => async (dispatch) => {
+//   const response = await fetch(`/api/products/${id}/images`);
+//   if (response.ok) {
+//     const product = await response.json();
+//     dispatch(loadDetails(product));
+//   }
+// };
 export const updateProduct = (id, data) => async (dispatch) => {
   const { owner_id, name, description, type, price } = data;
   console.log(data, "DATA****");
