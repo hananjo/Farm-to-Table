@@ -5,3 +5,22 @@
 .hidden {
   display: none;
 }
+
+.nav-right {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  margin-right: 20px;
+}
+
+li {
+  list-style: none
+}
+
+.home-button {
+  margin-bottom: -70px;
+  /* top: -40px; */
+}

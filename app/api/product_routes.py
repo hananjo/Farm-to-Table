@@ -14,14 +14,7 @@ def get_all_products():
     products = Product.query.all()
     product_list = []
     for product in products:
-        product_dict = {
-            'id': product.id,
-            'name': product.name,
-            'description': product.description,
-            'price': product.price,
-            'type': product.type,
-            'owner_id': product.owner_id
-        }
+        product_dict = product.to_dict()
         product_list.append(product_dict)
 
     return jsonify({'products': product_list})

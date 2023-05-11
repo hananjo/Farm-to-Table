@@ -4,10 +4,13 @@ import { NavLink, useHistory, useParams } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductDetails, deleteProduct } from "../../store/product";
+// import { addToCart } from "../../store/cart"
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import { loadReviews } from "../../store/review";
+import CartQtyForm from "../CartQtyForm";
+import CartAddForm from "../CartAddForm"
 
 const ProductDetails = () => {
   const history = useHistory();
@@ -99,6 +102,12 @@ const ProductDetails = () => {
     setShowMenu(false);
     history.push("/");
   };
+
+  const handleAddtoCart = () => {
+    setModalContent(<CartAddForm id={product.id} fCls={"add"} />)
+        openModal();
+  }
+
   return (
     <div>
       <h1>DHT</h1>
@@ -112,11 +121,14 @@ const ProductDetails = () => {
             <p>{product.type}</p>
           </div>
           <div>
+            <button onClick={() => handleAddtoCart()}>Add to Cart</button>
+          </div>
+          {/* <div>
             <NavLink to={`/products/${id}/update`}>
               <button>Update</button>
             </NavLink>
             <button>Delete</button>
-          </div>
+          </div> */}
 
           <div>
             <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
@@ -160,15 +172,15 @@ const ProductDetails = () => {
                     <h3> Confirm Delete</h3>
                   </div>
                   <div className="delete-question">
-                    <p> Are you sure you want to remove this group?</p>
+                    <p> Are you sure you want to remove this product?</p>
                   </div>
                   <div className="confirmation-delete-buttons">
                     <button className="delete-button" onClick={handleDelete}>
-                      Yes (Delete Group)
+                      Yes (Delete Product)
                     </button>
 
                     <button className="keep-button" onClick={closeMenu}>
-                      No (Keep Group)
+                      No (Keep Product)
                     </button>
                   </div>
                 </div>

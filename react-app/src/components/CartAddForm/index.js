@@ -1,16 +1,15 @@
 import { useState } from "react"
 import { addProdToCart, updateQty } from "../../store/cart"
 import { useDispatch, useSelector } from "react-redux";
-import "./cartForm.css"
 import { useModal } from "../../context/Modal";
 
-export default function CartQtyForm({ prod, fCls }) {
+export default function CartQtyForm({ id, fCls }) {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user.id)
-    const [qty, setQty] = useState(prod.quantity)
+    const [qty, setQty] = useState(1)
     const {closeModal} = useModal()
     // console.log(prod.product_id, "product");
-    console.log(fCls);
+    // console.log(fCls);
     console.log(qty, "quantity");
 
     const updateFQty = (e) => {
@@ -23,7 +22,7 @@ export default function CartQtyForm({ prod, fCls }) {
         e.preventDefault();
 
         const newCartRel = {
-            prodId: prod.product_id,
+            prodId: id,
             user,
             qty
         }
