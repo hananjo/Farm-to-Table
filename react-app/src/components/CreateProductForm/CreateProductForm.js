@@ -64,6 +64,7 @@ const CreateProductForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="form-title-banner"></div>
       <div className="form-container">
         <div className="form-title">
           <h1>Farm-to-Table</h1>

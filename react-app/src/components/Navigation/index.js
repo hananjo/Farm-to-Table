@@ -8,7 +8,7 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
+    <ul className="navbar">
       <div className="nav-bar-container">
         <div className="home-button">
           <li>
@@ -28,19 +28,26 @@ function Navigation({ isLoaded }) {
               <ProfileButton user={sessionUser} />
             </li>
           )}
-
-          <li>
-            <NavLink exact to="/cart">
-              Cart
-            </NavLink>
-          </li>
-          {sessionUser && (
+          <div className="cart-label">
             <li>
-              <NavLink exact to="/products/new">
-                Post your product
+              <NavLink exact to="/cart">
+                Cart
               </NavLink>
             </li>
-          )}
+          </div>
+          <div className="post-product-label">
+            {sessionUser && (
+              <li>
+                <NavLink
+                  className="post-product-label2"
+                  exact
+                  to="/products/new"
+                >
+                  Post your product
+                </NavLink>
+              </li>
+            )}
+          </div>
         </div>
       </div>
     </ul>

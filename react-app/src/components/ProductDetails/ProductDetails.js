@@ -11,7 +11,7 @@ import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import { loadReviews } from "../../store/review";
 import CartQtyForm from "../CartQtyForm";
 import CartAddForm from "../CartAddForm";
-
+import "./ProductDetails.css";
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const ProductDetails = () => {
   const product = useSelector((state) => {
     return state?.product.details;
   });
+
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -40,11 +41,25 @@ const ProductDetails = () => {
 
   // Grabs all reviews
   const reviews = useSelector((state) => state.reviews);
+
+  // stars average
+  //   const calculateAverageRating = () => {
+  //     let totalRating = 0;
+  //     for (let i = 0; i < reviews.length; i++) {
+  //       totalRating += reviews[i].rating;
+  //     }
+  //     const averageRating = totalRating / reviews.length;
+  //     return averageRating.toFixed(1);
+  //   }}
+
+  // const averageRating = calculateAverageRating()
   // console.log(reviews)
   // Grabs reviews based on product id only
-  const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
+  const filteredReviews = Object.values(reviews).filter(
+    (review) => review?.product_id === products?.id
+  );
 
- console.log(filteredReviews, "48")
+  console.log(filteredReviews, "48");
 
   // const reviewUserId = reviews[1].userId
 
@@ -114,20 +129,76 @@ const ProductDetails = () => {
   };
 
   return (
-    <div>
-      <h1>DHT</h1>
-      <h2>Groceries delivered right to your door!</h2>
+    <div className="detail-page-container">
       {product && (
         <div>
-          <div>
-            <p>{product.name}</p>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
-            <p>{product.type}</p>
+          <div className="product-image-and-info-container">
+            <div className="product-image-detail">
+              <img
+                src={product && product.images && product?.images[0]?.image_url}
+                style={{ width: "450px", height: "400px" }}
+              />
+            </div>
+            <div className="product-detail-information">
+              <div className="product-detail-price">
+                <p>${product.price.toFixed(2)}</p>
+              </div>
+              <div className="product-detail-name">
+                <p>{product.name}</p>
+              </div>
+              <div className="product-detail-description">
+                <p>{product.description}</p>
+              </div>
+
+              <p>Product type: {product.type}</p>
+              {user && product && user.id === product.owner_id ? (
+                <div>
+                  <NavLink to={`/products/${id}/update`}>
+                    <button className="update-detail-button">Update</button>
+                  </NavLink>
+
+                  <button className="delete-detail-button" onClick={openMenu}>
+                    Delete
+                  </button>
+                  {showMenu && (
+                    //   <OpenModalButton>
+                    <div className="delete-modal">
+                      <div className="delete-title">
+                        <h3> Confirm Delete</h3>
+                      </div>
+                      <div className="delete-question">
+                        <p> Are you sure you want to remove this product?</p>
+                      </div>
+                      <div className="confirmation-delete-buttons">
+                        <button
+                          className="delete-button"
+                          onClick={handleDelete}
+                        >
+                          Yes (Delete Product)
+                        </button>
+
+                        <button className="keep-button" onClick={closeMenu}>
+                          No (Keep Product)
+                        </button>
+                      </div>
+                    </div>
+                    //   </OpenModalButton>
+                  )}
+                </div>
+              ) : (
+                <br />
+              )}
+              <div className="add-to-cart-button">
+                <button
+                  className="add-to-cart"
+                  onClick={() => handleAddtoCart()}
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
           </div>
-          <div>
-            <button onClick={() => handleAddtoCart()}>Add to Cart</button>
-          </div>
+
           {/* <div>
             <NavLink to={`/products/${id}/update`}>
               <button>Update</button>
@@ -135,72 +206,42 @@ const ProductDetails = () => {
             <button>Delete</button>
           </div> */}
 
-          <div>
-            <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
+          <div className="review-container">
+            <div className="review-title">
+              <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
+              {/* <h2> Average Rating: {averageRating}</h2> */}
+            </div>
 
             <button
-            onClick={handleAddReview}
-            // disabled={!sessionUser || isOwner || hasReviewed}
-            >Post a Review
+              className="review-button"
+              onClick={handleAddReview}
+              // disabled={!sessionUser || isOwner || hasReviewed}
+            >
+              Post a Review
             </button>
 
-            {filteredReviews && (filteredReviews).map(review => (
+            {filteredReviews &&
+              filteredReviews.map((review) => (
+                <div key={review?.id}>
+                  <p>{review?.User}</p>
+                  <p className="review-comment">{review?.review}</p>
+                  <p>{review?.stars}</p>
 
-            <div key={review?.id}>
-            <p>{review?.User}</p>
-            <p>{review?.review}</p>
-            <p>{review?.stars}</p>
-
-            {user && reviews && user.id === review.userId ? (
-
-              <button
-              id={review?.id}
-              onClick={() => handleDeleteReview(review.id, product.id)}
-              // disabled={!sessionUser}
-              >Delete Review
-            </button>
-              ):(
-                <br/>
-              )}
-
-            </div>
-            ))}
-
-          </div>
-
-
-          {user && product && user.id === product.owner_id ? (
-            <div>
-              <NavLink to={`/products/${id}/update`}>
-                <button>Update</button>
-              </NavLink>
-
-              <button onClick={openMenu}>Delete</button>
-              {showMenu && (
-                //   <OpenModalButton>
-                <div className="delete-modal">
-                  <div className="delete-title">
-                    <h3> Confirm Delete</h3>
-                  </div>
-                  <div className="delete-question">
-                    <p> Are you sure you want to remove this product?</p>
-                  </div>
-                  <div className="confirmation-delete-buttons">
-                    <button className="delete-button" onClick={handleDelete}>
-                      Yes (Delete Product)
+                  {user && reviews && user.id === review.userId ? (
+                    <button
+                      className="delete-button"
+                      id={review?.id}
+                      onClick={() => handleDeleteReview(review.id, product.id)}
+                      // disabled={!sessionUser}
+                    >
+                      Delete Review
                     </button>
-
-                    <button className="keep-button" onClick={closeMenu}>
-                      No (Keep Product)
-                    </button>
-                  </div>
+                  ) : (
+                    <br />
+                  )}
                 </div>
-                //   </OpenModalButton>
-              )}
-            </div>
-          ) : (
-            <br />
-          )}
+              ))}
+          </div>
         </div>
       )}
     </div>

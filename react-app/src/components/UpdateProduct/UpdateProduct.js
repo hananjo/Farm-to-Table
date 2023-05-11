@@ -64,10 +64,9 @@ const UpdateProductForm = () => {
 
   return products ? (
     <form onSubmit={handleSubmit}>
+      <div className="form-title-banner"></div>
       <div className="form-container">
-        <div className="form-title">
-          <h2>Edit your product</h2>
-        </div>
+        <h2 className="title">Edit your product</h2>
         <ul className="errors">
           {errors.map((error) => (
             <li key={error}>{error}</li>
