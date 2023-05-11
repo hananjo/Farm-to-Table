@@ -33,7 +33,7 @@ function Cart() {
     const onDelete = (e) => {
         console.log('delete', e.target.id);
         dispatch(deleteFromCart(user, e.target.id))
-        dispatch(getCart(user));
+        // dispatch(getCart(user));
     }
 
     const {setModalContent} = useModal();

@@ -97,6 +97,8 @@ const initialState = {}
 const reviews = (state=initialState, action) => {
     switch(action.type) {
         case LOAD_REVIEWS:
+            const loadState = {};
+            // action.reviews.forEach(review => loadState[review.id] = review);
             return {...state, ...action.reviews}
 
         case ADD_REVIEW:
@@ -108,7 +110,7 @@ const reviews = (state=initialState, action) => {
 
         case REMOVE_REVIEW:
             const deleteState = {...state};
-            delete deleteState[action.reviewId]
+            delete deleteState[action.reviewId.id]
             return deleteState;
         default:
             return state

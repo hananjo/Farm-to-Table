@@ -87,7 +87,7 @@ def updateCart(userId, prodId):
 
     db.session.commit()
 
-    print("-----------", cartRel.to_dict())
+    # print("-----------", cartRel.to_dict())
 
     return cartRel.to_dict()
 
@@ -95,10 +95,13 @@ def updateCart(userId, prodId):
 def deleteFromCart(userId, prodId):
     # currUser = current_user.id
 
-    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
-    cartRel = cartRel_query.one()
+    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId).one()
+    # cartRel = cartRel_query.one()
 
-    db.session.delete(cartRel)
+    test1 = cartRel_query.to_dict() # print(cartRel.to_dict(), "101")
+    db.session.delete(cartRel_query)
+
     db.session.commit()
-
-    return cartRel.to_dict()
+    # test2 = cartRel.to_dict()
+    # print(cartRel.to_dict(), "104")
+    return test1

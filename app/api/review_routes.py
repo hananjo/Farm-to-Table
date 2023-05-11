@@ -51,4 +51,4 @@ def delete_review(id):
     db.session.delete(review)
     db.session.commit()
 
-    return jsonify({"message":"Successfully Deleted"})
+    return review.to_dict()

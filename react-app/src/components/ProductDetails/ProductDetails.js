@@ -42,9 +42,11 @@ const ProductDetails = () => {
   const reviews = useSelector((state) => state.reviews);
   // console.log(reviews)
   // Grabs reviews based on product id only
-  const filteredReviews = Object.values(reviews).filter(
-    (review) => review?.product_id === products?.id
-  );
+  const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
+
+ console.log(filteredReviews, "48")
+
+  // const reviewUserId = reviews[1].userId
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
@@ -137,31 +139,35 @@ const ProductDetails = () => {
             <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
 
             <button
-              onClick={handleAddReview}
-              // disabled={!sessionUser || isOwner || hasReviewed}
-            >
-              Post a Review
+            onClick={handleAddReview}
+            // disabled={!sessionUser || isOwner || hasReviewed}
+            >Post a Review
             </button>
 
-            <div>
-              {filteredReviews &&
-                filteredReviews.map((review) => (
-                  <div key={review?.id}>
-                    <p>{review?.User}</p>
-                    <p>{review?.review}</p>
-                    <p>{review?.stars}</p>
+            {filteredReviews && (filteredReviews).map(review => (
 
-                    <button
-                      id={review?.id}
-                      onClick={() => handleDeleteReview(review.id, product.id)}
-                      // disabled={!sessionUser}
-                    >
-                      Delete Review
-                    </button>
-                  </div>
-                ))}
+            <div key={review?.id}>
+            <p>{review?.User}</p>
+            <p>{review?.review}</p>
+            <p>{review?.stars}</p>
+
+            {user && reviews && user.id === review.userId ? (
+
+              <button
+              id={review?.id}
+              onClick={() => handleDeleteReview(review.id, product.id)}
+              // disabled={!sessionUser}
+              >Delete Review
+            </button>
+              ):(
+                <br/>
+              )}
+
             </div>
+            ))}
+
           </div>
+
 
           {user && product && user.id === product.owner_id ? (
             <div>
