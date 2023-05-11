@@ -99,7 +99,9 @@ const Products = () => {
               >
                 <div className="product-image-listing">
                   <img
-                    src={product?.images[0]?.image_url}
+                    src={
+                      product && product.images && product?.images[0]?.image_url
+                    }
                     style={{
                       // width: "200px",
                       // marginLeft: "400px",
