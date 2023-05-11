@@ -93,7 +93,7 @@ export const deleteFromCart = (userId, prodId) => async (dispatch) => {
     if (res.ok) {
         console.log('hit');
         const cartRel = await res.json()
-        console.log('relId is ', cartRel.id);
+        console.log('relId is ', cartRel);
         dispatch(deleteCartProd(cartRel.id))
     }
 }

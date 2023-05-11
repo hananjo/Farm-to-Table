@@ -98,7 +98,9 @@ def deleteFromCart(userId, prodId):
     cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
     cartRel = cartRel_query.one()
 
+    test1 = cartRel.to_dict() # print(cartRel.to_dict(), "101")
     db.session.delete(cartRel)
     db.session.commit()
-
+    test2 = cartRel.to_dict()
+    # print(cartRel.to_dict(), "104")
     return cartRel.to_dict()
