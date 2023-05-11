@@ -4,20 +4,18 @@ import { useModal } from "../../context/Modal";
 import { useHistory } from "react-router-dom";
 import { deleteReview, load, loadReviews } from "../../store/review";
 
-const DeleteReviewModal = ({id, productId}) => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const {closeModal} = useModal();
+const DeleteReviewModal = ({ id, productId }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
-
-    const removeReview = async(e) => {
-        e.preventDefault();
-        await dispatch(deleteReview(id && id));
-        await dispatch(getProductDetails(productId));
-        await dispatch(loadReviews(productId))
-        closeModal();
-        
-    }
+  const removeReview = async (e) => {
+    e.preventDefault();
+    await dispatch(deleteReview(id && id));
+    // await dispatch(getProductDetails(productId));
+    // await dispatch(loadReviews(productId))
+    closeModal();
+  };
 
     return (
         <div className="confirm-delete-container" >

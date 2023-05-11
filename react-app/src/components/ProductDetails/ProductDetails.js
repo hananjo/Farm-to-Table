@@ -10,7 +10,7 @@ import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import { loadReviews } from "../../store/review";
 import CartQtyForm from "../CartQtyForm";
-import CartAddForm from "../CartAddForm"
+import CartAddForm from "../CartAddForm";
 
 const ProductDetails = () => {
   const history = useHistory();
@@ -26,21 +26,20 @@ const ProductDetails = () => {
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
-    dispatch(loadReviews(id))
+    dispatch(loadReviews(id));
   }, [dispatch, id]);
 
   // console.log(product.description)
 
-
-  const products = useSelector(state => state.product)
+  const products = useSelector((state) => state.product);
   // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
 
-  const {setModalContent} = useModal();
+  const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
 
   // Grabs all reviews
-  const reviews = useSelector(state => state.reviews);
+  const reviews = useSelector((state) => state.reviews);
   // console.log(reviews)
   // Grabs reviews based on product id only
   const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
@@ -50,33 +49,37 @@ const ProductDetails = () => {
   // const reviewUserId = reviews[1].userId
 
   // Grab current logged-in user
-  const sessionUser = useSelector(state => state?.session.user);
+  const sessionUser = useSelector((state) => state?.session.user);
   // console.log(sessionUser)
 
   // Grabs current logged-in user's id
-  const sessionUserId = useSelector(state => state.session.user?.id);
+  const sessionUserId = useSelector((state) => state.session.user?.id);
 
   // Checks if product-owner is also the logged-in user
   const isOwner = product && product.owner_id === sessionUserId;
   // console.log(isOwner)
 
   // Checks if logged-in user has at least 1 review for a product
-  const hasReviewed = filteredReviews.some((review) => review.userId === sessionUserId)
+  const hasReviewed = filteredReviews.some(
+    (review) => review.userId === sessionUserId
+  );
 
-  const openModal = () => { setShowModal(true) };
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   // Add Review
   const handleAddReview = async () => {
-    setModalContent(<AddReviewModal id={id} />)
+    setModalContent(<AddReviewModal id={id} />);
     openModal();
-  }
+  };
 
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
-    console.log(reviewId, "67")
-    setModalContent(<DeleteReviewModal id={reviewId} productId={id} />)
+    console.log(reviewId, "67");
+    setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
     openModal();
-  }
+  };
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -106,9 +109,9 @@ const ProductDetails = () => {
   };
 
   const handleAddtoCart = () => {
-    setModalContent(<CartAddForm id={product.id} fCls={"add"} />)
-        openModal();
-  }
+    setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
+    openModal();
+  };
 
   return (
     <div>
@@ -153,6 +156,7 @@ const ProductDetails = () => {
               <button
               id={review?.id}
               onClick={() => handleDeleteReview(review.id, product.id)}
+              // disabled={!sessionUser}
               >Delete Review
             </button>
               ):(
@@ -163,6 +167,7 @@ const ProductDetails = () => {
             ))}
 
           </div>
+
 
           {user && product && user.id === product.owner_id ? (
             <div>
