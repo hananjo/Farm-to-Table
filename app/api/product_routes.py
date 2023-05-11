@@ -163,7 +163,7 @@ def add_image(id):
 
 # DELETE Image
 @product_routes.route('/<int:id>/images', methods=["DELETE"])
-@login_required
+# @login_required
 def delete_image(id):
 
     user_id = current_user.id
