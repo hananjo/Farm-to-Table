@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, session, request, abort, redirect, url_for
 from app.models import Product, db, Review, Image
 from app.forms.product_form import ProductForm
-# from sqlalchemy.orm import joinedload
+from app.forms.image_form import ImageForm
 from app.forms.review_form import ReviewForm
 from flask_login import login_required, current_user
 
@@ -132,13 +132,13 @@ def get_reviews(id):
 
 # ADD Image
 @product_routes.route('/<int:id>/images', methods=["POST"])
-@login_required
+# @login_required
 def add_image(id):
     form = ImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     product = Product.query.get(id)
-    if not productId:
+    if not product:
         return jsonify({"error": "Product not found"}, 404)
 
     image_url = form.image_url.data
@@ -156,7 +156,7 @@ def add_image(id):
 
 # DELETE Image
 @product_routes.route('/<int:id>/images', methods=["DELETE"])
-@login_required
+# @login_required
 def delete_image(id):
 
     user_id = current_user.id
