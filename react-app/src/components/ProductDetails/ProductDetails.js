@@ -45,7 +45,9 @@ const ProductDetails = () => {
   // Grabs reviews based on product id only
   const filteredReviews = Object.values(reviews).filter((review) => review?.product_id === products?.id)
 
+ console.log(filteredReviews, "48")
 
+  // const reviewUserId = reviews[1].userId
 
   // Grab current logged-in user
   const sessionUser = useSelector(state => state?.session.user);
@@ -146,12 +148,16 @@ const ProductDetails = () => {
             <p>{review?.review}</p>
             <p>{review?.stars}</p>
 
-            <button
-            id={review?.id}
-            onClick={() => handleDeleteReview(review.id, product.id)}
-            // disabled={!sessionUser}
-            >Delete Review
+            {user && reviews && user.id === review.userId ? (
+
+              <button
+              id={review?.id}
+              onClick={() => handleDeleteReview(review.id, product.id)}
+              >Delete Review
             </button>
+              ):(
+                <br/>
+              )}
 
             </div>
             ))}

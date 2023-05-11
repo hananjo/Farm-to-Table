@@ -97,7 +97,9 @@ const initialState = {}
 const reviews = (state=initialState, action) => {
     switch(action.type) {
         case LOAD_REVIEWS:
-            return {...state, ...action.reviews}
+            const loadState = {};
+            action.reviews.forEach(review => loadState[review.id] = review);
+            return {...state, ...loadState}
 
         case ADD_REVIEW:
             return {...state, [action.review.id]: action.review}
