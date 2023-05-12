@@ -10,7 +10,7 @@ class Review(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    review = db.Column(db.String(10000))
+    review = db.Column(db.String(250))
     rating = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")))
