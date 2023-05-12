@@ -105,3 +105,9 @@
 .stars {
     width: 390px;
 }
+
+
+.avatar-and-review {
+    display: flex;
+    flex-direction: row;
+}
