@@ -14,6 +14,10 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    product = db.relationship("Product", secondary="cart_items", back_populates="owner", cascade="all")
+    cart = db.relationship("Cart_Item", back_populates="user", cascade="all, delete-orphan")
+    review = db.relationship("Review", back_populates="owner", cascade="all, delete-orphan" )
+
     @property
     def password(self):
         return self.hashed_password
@@ -31,3 +35,14 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+
+# join table between user and products
+# class Cart(db.Model):
+#     __tablename__ = 'carts'
+
+#     userId = db.Column(db.Integer, ForeignKey('users.id'))
+#     productId = db.Column(db.Integer, ForeignKey('products.id'))
+#     # quantity = db.Column(db.Integer)
+
+#     owner = db.relationship("User")
+#     product = db.relationship("Product")

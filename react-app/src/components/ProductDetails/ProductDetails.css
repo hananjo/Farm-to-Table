@@ -1,0 +1,113 @@
+.hidden {
+    display: none;
+}
+
+.detail-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image-detail {
+    width: 450px;
+    height: 400px;
+}
+
+.product-detail-information {
+    width: 450px;
+    height: 400px;
+}
+
+.product-image-and-info-container {
+    display: flex;
+    justify-content: column;
+    margin-top: 80px;
+    gap: 70px;
+}
+
+.add-to-cart {
+    border: 2px solid black;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 5px 120px 5px 120px;
+    background-color: black;
+    color: white
+
+}
+
+.add-to-cart-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.product-detail-price {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.product-detail-name {
+    font-size: 25px;
+}
+.product-detail-description {
+    font-size: 20px;
+}
+
+.review-container {
+    margin-top: 100px;
+    width: 459px;
+}
+
+.update-detail-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(110, 106, 106);
+    color: white
+}
+
+.delete-detail-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(110, 106, 106);
+    color: white
+}
+
+.review-title {
+    font-size: 25px
+}
+
+.review-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(110, 106, 106);
+    color: white
+}
+
+.delete-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(110, 106, 106);
+    color: white
+}
+
+.review-comment {
+    font-size: 25px;
+}
+
+.stars {
+    width: 390px;
+}
+
+
+.avatar-and-review {
+    display: flex;
+    flex-direction: row;
+}
