@@ -34,12 +34,7 @@ def get_product_details(id):
     product = Product.query.get(id)
     if not product:
         return jsonify({'error': 'Product not found'}), 404
-    return jsonify(id=product.id,
-                    name=product.name,
-                    description=product.description,
-                    price=product.price,
-                    type=product.type,
-                    owner_id=product.owner_id)
+    return jsonify(product.to_dict())
 
 
 @product_routes.route('/', methods=['POST'])
