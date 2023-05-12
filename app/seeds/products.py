@@ -19,7 +19,7 @@ def seed_products():
     onion = Product(
         name='Onion', description='Our onions are the perfect combination of pungent and sweet flavors. Whether you\'re looking to carmelize them for soup or use fresh in a salad, our onions are the perfect addition to your cooking needs! **10lb bag**', price=5.00, type='Vegetable', owner_id=2)
     garlic = Product(
-        name='Garlic', description='Known for its bold and aromatic flavor, our garlic is the perfect ingredient for any dish. With a unique and pungent taste, our garlic is perfect for adding depth to soups, sauces, and marinades. Also packed with antioxidants that support good health. **Comes as a pack of 10 garlic cloves**', price=3.00, type='Vegetable', owner_id=2)
+        name='Garlic', description='Our garlic is the perfect ingredient for any dish. With a unique and pungent taste, our garlic is perfect for adding depth to soups, sauces, and marinades.', price=3.00, type='Vegetable', owner_id=2)
     cucumber = Product(
         name='Cucumber', description='Crisp, refreshing, and packed with hydration, our cucumbers are te perfect summer snack.', price=3.50, type='Vegetable', owner_id=2)
     lettuce = Product(
