@@ -6,8 +6,9 @@ import { useModal } from "../../context/Modal";
 export default function CartQtyForm({ id, fCls }) {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user.id)
+    const cart = useSelector(state => state.cart)
     const [qty, setQty] = useState(1)
-    const {closeModal} = useModal()
+    const { closeModal } = useModal()
     // console.log(prod.product_id, "product");
     // console.log(fCls);
     console.log(qty, "quantity");
@@ -26,6 +27,7 @@ export default function CartQtyForm({ id, fCls }) {
             user,
             qty
         }
+
 
         if (fCls === "add") {
             console.log("dispatching add");

@@ -47,18 +47,30 @@ function Cart() {
         // setSave("")
     }
 
+    const cartContent = () => {
+        // console.log("length is ", cartArr.length);
+        // console.log(cartArr);
+        if(cartArr.length > 0) {
+            return (isLoaded && cartArr && cartArr?.map(prod => {
+                // console.log(prod.product.name);
+
+                return (
+                    <li key={prod?.id}>{prod?.product?.name} {prod?.quantity}
+                        <button id={prod.id} className={display} onClick={() => handleEdit(prod, save)}>Edit</button>
+                        <button id={prod.product?.id} onClick={onDelete}>Delete</button>
+                    </li>)
+            }))
+        }
+
+        return (<li>Your shopping cart is empty</li>)
+    }
+
     return (
         <div>
             <h1>Your Shopping Cart </h1>
             <ul>
                 {/* {cartArr > 0 ? isLoaded && cartArr?.map(prod => {return <li>{prod.id}</li>}) : <li>Shopping Cart is empty</li>} */}
-                {isLoaded && cartArr?.map(prod => {
-                    return (
-                        <li key={prod.id}>{prod.product.name} {prod.quantity}
-                            <button id={prod.id} className={display} onClick={() => handleEdit(prod, save)}>Edit</button>
-                            <button id={prod.product.id} onClick={onDelete}>Delete</button>
-                        </li>)
-                })}
+                {cartContent()}
             </ul>
         </div>
     )

@@ -11,7 +11,8 @@ import ProductDetails from "./components/ProductDetails/ProductDetails";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import UpdateProduct from "./components/UpdateProduct/UpdateProduct";
 import Cart from "./components/Cart";
-import NotFound from "./components/PageNotFound/"
+import NotFound from "./components/PageNotFound"
+import Categories from "./components/Categories";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/products/new" component={CreateProductForm} />
           <Route exact path="/products/:id" component={ProductDetails} />
           <Route exact path="/products/:id/update" component={UpdateProduct} />
+          {/* <Route exact path="/products/:category" component={Categories} /> */}
           <Route exact path="/cart" component={Cart} />
           <Route component={NotFound} />
         </Switch>
