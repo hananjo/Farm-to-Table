@@ -58,11 +58,12 @@ def create_product():
             price=price,
             type=type,
             owner_id=owner_id
+
         )
 
         db.session.add(new_product)
         db.session.commit()
-        # return redirect(url_for('get_product_details', id=new_product.id))
+
         return new_product.to_dict()
 
     # return jsonify({'message': 'Invalid data'}), 404

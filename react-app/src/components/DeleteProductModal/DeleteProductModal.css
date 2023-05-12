@@ -9,20 +9,20 @@
     margin-top: -10px
 }
 
-.review-button-container {
+.product-confirmation-buttons {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
 }
 
-.review-choices {
+.product-choices {
     background-color: rgb(225, 220, 212);
     color: black;
    border-radius: 5px;
    width: 50px;
 }
 
-.review-choices:hover {
+.product-choices:hover {
     background-color: rgb(66, 65, 65);
     color: white;
 }

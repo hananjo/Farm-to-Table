@@ -34,5 +34,6 @@ class Product(db.Model):
             'price': self.price,
             'type': self.type,
             'owner_id': self.owner_id,
-            'images': [image.to_dict() for image in self.image]
+            'images': [image.to_dict() for image in self.image],
+            'reviews': [review.to_dict() for review in self.review]
         }

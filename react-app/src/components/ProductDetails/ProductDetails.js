@@ -8,6 +8,7 @@ import { getProductDetails, deleteProduct } from "../../store/product";
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
+import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
 import { loadReviews } from "../../store/review";
 import CartQtyForm from "../CartQtyForm";
 import CartAddForm from "../CartAddForm";
@@ -96,32 +97,38 @@ const ProductDetails = () => {
     openModal();
   };
 
-  const [showMenu, setShowMenu] = useState(false);
-
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+  const handleDeleteProduct = async (id) => {
+    // console.log(reviewId, "67");
+    setModalContent(<DeleteProductModal id={id} />);
+    openModal();
   };
 
-  useEffect(() => {
-    if (!showMenu) return;
+  // const [showMenu, setShowMenu] = useState(false);
 
-    const closeMenu = (e) => {
-      setShowMenu(false);
-    };
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true);
+  // };
 
-    document.addEventListener("click", closeMenu);
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  //   const closeMenu = (e) => {
+  //     setShowMenu(false);
+  //   };
 
-  const closeMenu = () => setShowMenu(false);
+  //   document.addEventListener("click", closeMenu);
 
-  const handleDelete = () => {
-    dispatch(deleteProduct(id));
-    setShowMenu(false);
-    history.push("/");
-  };
+  //   return () => document.removeEventListener("click", closeMenu);
+  // }, [showMenu]);
+
+  // const closeMenu = () => setShowMenu(false);
+
+  // const handleDelete = () => {
+  //   dispatch(deleteProduct(id));
+  //   setShowMenu(false);
+  //   history.push("/");
+  // };
 
   const handleAddtoCart = () => {
     setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
@@ -152,38 +159,18 @@ const ProductDetails = () => {
 
               <p>Product type: {product.type}</p>
               {user && product && user.id === product.owner_id ? (
-                <div>
+                <div className="update-and-delete-buttons">
                   <NavLink to={`/products/${id}/update`}>
                     <button className="update-detail-button">Update</button>
                   </NavLink>
 
-                  <button className="delete-detail-button" onClick={openMenu}>
+                  <button
+                    className="delete-detail-button"
+                    onClick={() => handleDeleteProduct(id)}
+                    // onClick={openMenu}
+                  >
                     Delete
                   </button>
-                  {showMenu && (
-                    //   <OpenModalButton>
-                    <div className="delete-modal">
-                      <div className="delete-title">
-                        <h3> Confirm Delete</h3>
-                      </div>
-                      <div className="delete-question">
-                        <p> Are you sure you want to remove this product?</p>
-                      </div>
-                      <div className="confirmation-delete-buttons">
-                        <button
-                          className="delete-button"
-                          onClick={handleDelete}
-                        >
-                          Yes (Delete Product)
-                        </button>
-
-                        <button className="keep-button" onClick={closeMenu}>
-                          No (Keep Product)
-                        </button>
-                      </div>
-                    </div>
-                    //   </OpenModalButton>
-                  )}
                 </div>
               ) : (
                 <br />
@@ -199,16 +186,13 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* <div>
-            <NavLink to={`/products/${id}/update`}>
-              <button>Update</button>
-            </NavLink>
-            <button>Delete</button>
-          </div> */}
-
           <div className="review-container">
             <div className="review-title">
-              <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
+              <h2>
+                {" "}
+                {filteredReviews.length === 1 ? "Review" : "Reviews"} (
+                {filteredReviews.length})
+              </h2>
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
@@ -224,7 +208,7 @@ const ProductDetails = () => {
               filteredReviews.map((review) => (
                 <div key={review?.id}>
                   <p>{review?.User}</p>
-                  <div>
+                  <div className="avatar-and-review">
                     <div className="avatars">
                       <p>
                         {review?.userId === 1 && (

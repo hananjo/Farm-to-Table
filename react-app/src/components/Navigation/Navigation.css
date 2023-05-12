@@ -55,6 +55,10 @@ li {
   text-decoration: none;
   color: black
 }
+
+.post-product-label2:hover {
+  text-decoration: underline;
+}
 .navlink-drop-down {
   color: black;
   text-decoration: none;
@@ -83,10 +87,15 @@ li {
 
 .logout-button {
   width: 95px;
-  background-color: black;
-  color: white;
+  background-color: rgb(225, 220, 212);
+  color: black;
   border-top: 1px solid black;
 
+}
+
+.logout-button:hover {
+  background-color: rgb(66, 65, 65);
+   color: white
 }
 
 .logout-drop-down {
@@ -110,11 +119,18 @@ li {
 
 .buttons {
   width: 100px;
-  background-color: black;
-  color: white;
+  background-color: rgb(225, 220, 212);
+  color: black;
   margin-bottom: 3px;
   margin-top: 3px;
 }
+.buttons:hover {
+  background-color: rgb(66, 65, 65);
+   color: white
+}
+
+
+
 .login-button {
   background-color: black;
   width: 120px;
