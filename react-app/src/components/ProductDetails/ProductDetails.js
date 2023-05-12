@@ -224,8 +224,51 @@ const ProductDetails = () => {
               filteredReviews.map((review) => (
                 <div key={review?.id}>
                   <p>{review?.User}</p>
+                  <div className="stars">
+                    <p>
+                      {review?.rating === 1 && (
+                        <img
+                          style={{ width: "190px" }}
+                          src={
+                            "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/one_star_huo5jx.jpg"
+                          }
+                        />
+                      )}
+                      {review?.rating === 2 && (
+                        <img
+                          style={{ width: "190px" }}
+                          src={
+                            "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683856058/Two-star-rating-1024x238_uysm6z.png"
+                          }
+                        />
+                      )}
+                      {review?.rating === 3 && (
+                        <img
+                          style={{ width: "190px" }}
+                          src={
+                            "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683856078/three-stars_0_1_.png_pbu927.png"
+                          }
+                        />
+                      )}
+                      {review?.rating === 4 && (
+                        <img
+                          style={{ width: "190px" }}
+                          src={
+                            "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/four-stars_01_1_.png_vb8ylt.png"
+                          }
+                        />
+                      )}
+                      {review?.rating === 5 && (
+                        <img
+                          style={{ width: "190px" }}
+                          src={
+                            "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/5_star_sewzl7.jpg"
+                          }
+                        />
+                      )}
+                    </p>
+                  </div>
                   <p className="review-comment">{review?.review}</p>
-                  <p>{review?.stars}</p>
 
                   {user && reviews && user.id === review.userId ? (
                     <button

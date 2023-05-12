@@ -11,7 +11,7 @@ def seed_images():
     raspberry_image = Image(
         image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683664611/Raspberry_i67vj8.webp', product_id=3)
     blueberry_image = Image(
-        image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683664610/blueberry_fg4q3s.jpg', product_id=4)
+        image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683851469/Blueberry-1_cw5yqq.jpg', product_id=4)
     strawberry_image = Image(
         image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683664611/strawberry_osczdv.jpg', product_id=5)
     tomato_image = Image(
@@ -35,7 +35,7 @@ def seed_images():
     cheese_image = Image(
         image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683664611/cheese_y78koc.jpg', product_id=15)
     yogurt_image = Image(
-        image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683664611/yogurt_rtqnj1.jpg', product_id=16)
+        image_url='https://res.cloudinary.com/dwphwqyrn/image/upload/v1683851210/yogurt_rtqnj1.jpg', product_id=16)
 
     db.session.add(apple_image)
     db.session.add(banana_image)

@@ -55,6 +55,7 @@
 
 .review-container {
     margin-top: 100px;
+    width: 459px;
 }
 
 .update-detail-button {
@@ -99,4 +100,8 @@
 
 .review-comment {
     font-size: 25px;
+}
+
+.stars {
+    width: 390px;
 }
