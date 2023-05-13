@@ -114,9 +114,9 @@ def update_product(id):
         # product.image.append(new_image)
 
         db.session.commit()
-
         product.image.image_url = image_url
         db.session.commit()
+
         return product.to_dict()
     else:
         return None
