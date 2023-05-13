@@ -27,13 +27,13 @@ export const getAllProducts = () => async (dispatch) => {
 
   if (response.ok) {
     const list = await response.json();
-    console.log(list.products, "^^^^^^^^");
+    // console.log(list.products, "^^^^^^^^");
     dispatch(load(list.products));
   }
 };
 
 export const addNewProduct = (data) => async (dispatch) => {
-  const { owner_id, price, description, name, type } = data;
+  const { owner_id, price, description, name, type, image_url } = data;
   //   console.log(data, "*****");
   //   console.log(typeof data.price === "string");
   //   console.log(data.type);
@@ -48,12 +48,13 @@ export const addNewProduct = (data) => async (dispatch) => {
       name,
       type,
       owner_id,
+      image_url
     }),
   });
   let product;
   if (response.ok) {
     product = await response.json();
-    console.log(product, "PRODUCT");
+    // console.log(product, "PRODUCT");
     dispatch(addProduct(product));
     return product;
   }
@@ -76,7 +77,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 // };
 export const updateProduct = (id, data) => async (dispatch) => {
   const { owner_id, name, description, type, price } = data;
-  console.log(data, "DATA****");
+  // console.log(data, "DATA****");
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

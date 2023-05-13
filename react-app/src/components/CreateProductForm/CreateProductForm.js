@@ -51,7 +51,7 @@ const CreateProductForm = () => {
         price,
         type,
         owner_id: user,
-        image: image
+        image_url: image
       };
       console.log(type, "TYPE");
       let addedNewProduct;

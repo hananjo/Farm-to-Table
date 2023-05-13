@@ -33,8 +33,11 @@ const ProductDetails = () => {
   // console.log(product.description)
 
   const products = useSelector((state) => state.product);
-  // console.log(products, "PRODUCTS")
+  console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
+
+  // const productz = useSelector(state => state.products[id])
+  // console.log(productz, "PRODUCTZ")
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
@@ -59,9 +62,9 @@ const ProductDetails = () => {
     (review) => review?.product_id === products?.id
   );
 
-  console.log(filteredReviews, "48");
 
-  // const reviewUserId = reviews[1].userId
+
+
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
@@ -87,11 +90,12 @@ const ProductDetails = () => {
   const handleAddReview = async () => {
     setModalContent(<AddReviewModal id={id} />);
     openModal();
+    dispatch(loadReviews(id))
   };
 
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
-    console.log(reviewId, "67");
+
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
     openModal();
   };
@@ -127,6 +131,7 @@ const ProductDetails = () => {
     setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
     openModal();
   };
+
 
   return (
     <div className="detail-page-container">
@@ -212,13 +217,16 @@ const ProductDetails = () => {
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
-            <button
+            {sessionUser && !isOwner && !hasReviewed && (
+
+              <button
               className="review-button"
               onClick={handleAddReview}
               // disabled={!sessionUser || isOwner || hasReviewed}
-            >
+              >
               Post a Review
             </button>
+            )}
 
             {filteredReviews &&
               filteredReviews.map((review) => (
