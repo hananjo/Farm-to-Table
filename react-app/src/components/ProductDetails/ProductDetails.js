@@ -86,6 +86,7 @@ const ProductDetails = () => {
   const handleDeleteReview = async (reviewId) => {
     console.log(reviewId, "67");
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
+    // await dispatch(loadReviews(id));
     openModal();
   };
 

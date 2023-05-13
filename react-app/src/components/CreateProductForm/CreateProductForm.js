@@ -5,6 +5,7 @@ import { addNewProduct } from "../../store/product";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./CreateProductForm.css";
+import { loadReviews } from "../../store/review";
 const CreateProductForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -52,6 +53,7 @@ const CreateProductForm = () => {
       addedNewProduct = await dispatch(addNewProduct(productFormInput));
 
       if (addedNewProduct) {
+
         history.push(`/products/${addedNewProduct.id}`);
       }
     }

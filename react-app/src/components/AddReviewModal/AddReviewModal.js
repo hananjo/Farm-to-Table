@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addReview, createReview, loadReviews } from "../../store/review";
 import "./AddReviewModal.css";
+import { getProductDetails } from "../../store/product";
 const AddReviewModal = ({ reviews, id }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const { productId } = useParams();
-
+  console.log(id, "ID2");
   const product = useSelector((state) => state.product);
 
   const [review, setReview] = useState("");
@@ -33,9 +34,9 @@ const AddReviewModal = ({ reviews, id }) => {
     };
 
     console.log(newReviewInput);
-
-    dispatch(createReview(newReviewInput, id));
-
+    console.log(id, "ID");
+    await dispatch(createReview(newReviewInput, id));
+    await dispatch(getProductDetails(id));
     closeModal();
   };
 
