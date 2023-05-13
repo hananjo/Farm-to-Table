@@ -53,7 +53,6 @@ const CreateProductForm = () => {
       addedNewProduct = await dispatch(addNewProduct(productFormInput));
 
       if (addedNewProduct) {
-
         history.push(`/products/${addedNewProduct.id}`);
       }
     }
@@ -160,16 +159,6 @@ const CreateProductForm = () => {
                   onChange={(e) => setType(e.target.value)}
                 />
                 <span>Dairy</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="type"
-                  value="Bread"
-                  checked={type === "Bread"}
-                  onChange={(e) => setType(e.target.value)}
-                />
-                <span>Bread</span>
               </label>
             </div>
           </div>

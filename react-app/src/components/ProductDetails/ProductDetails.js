@@ -161,15 +161,15 @@ const ProductDetails = () => {
               </h2>
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
-            {user && (
-              <button
-                className="review-button"
-                onClick={handleAddReview}
-                // disabled={!sessionUser || isOwner || hasReviewed}
-              >
-                Post a Review
-              </button>
-            )}
+
+            <button
+              className="review-button"
+              onClick={handleAddReview}
+              // disabled={!sessionUser || isOwner || hasReviewed}
+            >
+              Post a Review
+            </button>
+
             {product_reviews &&
               product_reviews.map((review) => (
                 <div key={review?.id}>
