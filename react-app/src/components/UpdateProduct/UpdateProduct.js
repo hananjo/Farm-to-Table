@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./UpdateProductForm.css";
 
-const UpdateProductForm = () => {
+const UpdateProductForm = (product) => {
   const { id } = useParams();
   const products = useSelector((state) => {
     return state?.product.details;
@@ -21,7 +21,7 @@ const UpdateProductForm = () => {
   const [name, setName] = useState(products?.name || '');
   const [description, setDescription] = useState(products?.description || '');
   const [price, setPrice] = useState(products?.price || 0);
-  const [type, setType] = useState(products?.type || '');
+  const [type, setType] = useState(products?.type || "");
   const [image, setImage] = useState(products?.images[0]?.image_url || '');
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
@@ -53,6 +53,7 @@ const UpdateProductForm = () => {
     e.preventDefault();
     if (!errors.length) {
       const productFormInput = {
+        ...product,
         name,
         description,
         price,

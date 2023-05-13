@@ -19,6 +19,18 @@ def get_all_products():
 
     return jsonify({'products': product_list})
 
+@product_routes.route('/<category>')
+def get_products_by_category(category):
+    print("*********category received from route is", category)
+    products = Product.query.filter(Product.type == category)
+    product_list = []
+    for product in products:
+        product_dict = product.to_dict()
+        product_list.append(product_dict)
+
+    # print("route products are ", product_list)
+    return jsonify({'products': product_list})
+
 @product_routes.route('/<int:id>')
 def get_product_details(id):
     product = Product.query.get(id)
@@ -28,6 +40,7 @@ def get_product_details(id):
 
 
 @product_routes.route('/', methods=['POST'])
+@login_required
 def create_product():
 
     form = ProductForm()
@@ -50,6 +63,7 @@ def create_product():
             price=price,
             type=type,
             owner_id=owner_id
+
         )
 
         image_url = form.image_url.data

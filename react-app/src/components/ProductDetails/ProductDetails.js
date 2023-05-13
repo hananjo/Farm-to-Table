@@ -8,10 +8,14 @@ import { getProductDetails, deleteProduct } from "../../store/product";
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
+import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
 import { loadReviews } from "../../store/review";
-import CartQtyForm from "../CartQtyForm";
 import CartAddForm from "../CartAddForm";
 import "./ProductDetails.css";
+import DuplicateAdd from "../Duplicate";
+import { getCart } from "../../store/cart";
+import OwnerAdd from "../Owned";
+
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,6 +28,10 @@ const ProductDetails = () => {
     return state?.product.details;
   });
 
+  if (!product) {
+    history.push("/not_found")
+  }
+
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -33,7 +41,11 @@ const ProductDetails = () => {
   // console.log(product.description)
 
   const products = useSelector((state) => state.product);
-  console.log(products, "PRODUCTS")
+  const product_reviews = useSelector(
+    (state) => state?.product?.details?.reviews
+  );
+  // console.log(product_reviews, "REVIEWS");
+  // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
 
   // const productz = useSelector(state => state.products[id])
@@ -45,18 +57,6 @@ const ProductDetails = () => {
   // Grabs all reviews
   const reviews = useSelector((state) => state.reviews);
 
-  // stars average
-  //   const calculateAverageRating = () => {
-  //     let totalRating = 0;
-  //     for (let i = 0; i < reviews.length; i++) {
-  //       totalRating += reviews[i].rating;
-  //     }
-  //     const averageRating = totalRating / reviews.length;
-  //     return averageRating.toFixed(1);
-  //   }}
-
-  // const averageRating = calculateAverageRating()
-  // console.log(reviews)
   // Grabs reviews based on product id only
   const filteredReviews = Object.values(reviews).filter(
     (review) => review?.product_id === products?.id
@@ -97,39 +97,58 @@ const ProductDetails = () => {
   const handleDeleteReview = async (reviewId) => {
 
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
+    // await dispatch(loadReviews(id));
     openModal();
   };
 
-  const [showMenu, setShowMenu] = useState(false);
-
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+  const handleDeleteProduct = async (id) => {
+    // console.log(reviewId, "67");
+    setModalContent(<DeleteProductModal id={id} />);
+    openModal();
   };
+
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    if (!showMenu) return;
+    dispatch(getCart(user.id));
+    setIsLoaded(true)
+  }, [dispatch, user])
 
-    const closeMenu = (e) => {
-      setShowMenu(false);
-    };
+  const cart = useSelector(state => state.cart)
 
-    document.addEventListener("click", closeMenu);
+  const cartArr = isLoaded && cart && Object.values(cart)
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
-
-  const closeMenu = () => setShowMenu(false);
-
-  const handleDelete = () => {
-    dispatch(deleteProduct(id));
-    setShowMenu(false);
-    history.push("/");
-  };
+  console.log("cart items", cartArr);
 
   const handleAddtoCart = () => {
-    setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
-    openModal();
+    let isDuplicate = false
+    let cartRel = {}
+
+    console.log("Compare ", product.id, user.id);
+
+    if (user.id === product.owner_id) {
+      setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
+      openModal();
+    } else {
+      cartArr.forEach((rel) => {
+        console.log(rel.product_id, rel.user_id);
+        if (rel.product_id === product.id && rel.user_id === user.id) {
+          isDuplicate = true
+          cartRel = rel
+        }
+      })
+
+      console.log(isDuplicate);
+
+      if (isDuplicate) {
+        console.log("Duplicate");
+        setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
+        openModal();
+      } else {
+        setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
+        openModal();
+      }
+    }
   };
 
 
@@ -157,38 +176,18 @@ const ProductDetails = () => {
 
               <p>Product type: {product.type}</p>
               {user && product && user.id === product.owner_id ? (
-                <div>
+                <div className="update-and-delete-buttons">
                   <NavLink to={`/products/${id}/update`}>
                     <button className="update-detail-button">Update</button>
                   </NavLink>
 
-                  <button className="delete-detail-button" onClick={openMenu}>
+                  <button
+                    className="delete-detail-button"
+                    onClick={() => handleDeleteProduct(id)}
+                    // onClick={openMenu}
+                  >
                     Delete
                   </button>
-                  {showMenu && (
-                    //   <OpenModalButton>
-                    <div className="delete-modal">
-                      <div className="delete-title">
-                        <h3> Confirm Delete</h3>
-                      </div>
-                      <div className="delete-question">
-                        <p> Are you sure you want to remove this product?</p>
-                      </div>
-                      <div className="confirmation-delete-buttons">
-                        <button
-                          className="delete-button"
-                          onClick={handleDelete}
-                        >
-                          Yes (Delete Product)
-                        </button>
-
-                        <button className="keep-button" onClick={closeMenu}>
-                          No (Keep Product)
-                        </button>
-                      </div>
-                    </div>
-                    //   </OpenModalButton>
-                  )}
                 </div>
               ) : (
                 <br />
@@ -204,16 +203,13 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* <div>
-            <NavLink to={`/products/${id}/update`}>
-              <button>Update</button>
-            </NavLink>
-            <button>Delete</button>
-          </div> */}
-
           <div className="review-container">
             <div className="review-title">
-              <h2> {filteredReviews.length === 1 ? "Review" : "Reviews"} </h2>
+              <h2>
+                {" "}
+                {product_reviews.length === 1 ? "Review" : "Reviews"} (
+                {product_reviews.length})
+              </h2>
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
@@ -222,17 +218,17 @@ const ProductDetails = () => {
               <button
               className="review-button"
               onClick={handleAddReview}
-              // disabled={!sessionUser || isOwner || hasReviewed}
               >
+
               Post a Review
             </button>
             )}
 
-            {filteredReviews &&
-              filteredReviews.map((review) => (
+            {product_reviews &&
+              product_reviews.map((review) => (
                 <div key={review?.id}>
                   <p>{review?.User}</p>
-                  <div>
+                  <div className="avatar-and-review">
                     <div className="avatars">
                       <p>
                         {review?.userId === 1 && (
@@ -317,7 +313,7 @@ const ProductDetails = () => {
                       className="delete-button"
                       id={review?.id}
                       onClick={() => handleDeleteReview(review.id, product.id)}
-                      // disabled={!sessionUser}
+                    // disabled={!sessionUser}
                     >
                       Delete Review
                     </button>

@@ -22,12 +22,23 @@ const removeProduct = (product) => ({
   type: REMOVE_PRODUCT,
   product,
 });
+
 export const getAllProducts = () => async (dispatch) => {
   const response = await fetch("/api/products");
 
   if (response.ok) {
     const list = await response.json();
     // console.log(list.products, "^^^^^^^^");
+    dispatch(load(list.products));
+  }
+};
+
+export const getProductsByCategory = (category) => async (dispatch) => {
+  const response = await fetch(`/api/products/${category}`);
+
+  if (response.ok) {
+    const list = await response.json();
+    console.log(list.products, "^^^^^^^^");
     dispatch(load(list.products));
   }
 };

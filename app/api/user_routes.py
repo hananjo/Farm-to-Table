@@ -41,8 +41,6 @@ def cart(id):
         for rel in cartRels:
             res = rel.to_dict()
             cartProducts.append(res)
-    else:
-        cartProducts.append("Your cart is empty")
 
     return cartProducts
 
@@ -65,7 +63,7 @@ def addToCart(userId, prodId):
 
     # Return success message
 
-    return cartRel.to_dict();
+    return cartRel.to_dict()
     # Gives us:
         # {
         #     id,
@@ -104,4 +102,4 @@ def deleteFromCart(userId, prodId):
     db.session.commit()
     # test2 = cartRel.to_dict()
     # print(cartRel.to_dict(), "104")
-    return test1
+    return cartRel_query.to_dict()
