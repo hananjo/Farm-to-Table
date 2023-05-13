@@ -38,6 +38,7 @@ def get_product_details(id):
 
 
 @product_routes.route('/', methods=['POST'])
+@login_required
 def create_product():
     form = ProductForm()
     # print(form, 'FORM')

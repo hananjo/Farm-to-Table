@@ -34,6 +34,10 @@ const ProductDetails = () => {
   // console.log(product.description)
 
   const products = useSelector((state) => state.product);
+  const product_reviews = useSelector(
+    (state) => state?.product?.details?.reviews
+  );
+  // console.log(product_reviews, "REVIEWS");
   // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
 
@@ -43,18 +47,6 @@ const ProductDetails = () => {
   // Grabs all reviews
   const reviews = useSelector((state) => state.reviews);
 
-  // stars average
-  //   const calculateAverageRating = () => {
-  //     let totalRating = 0;
-  //     for (let i = 0; i < reviews.length; i++) {
-  //       totalRating += reviews[i].rating;
-  //     }
-  //     const averageRating = totalRating / reviews.length;
-  //     return averageRating.toFixed(1);
-  //   }}
-
-  // const averageRating = calculateAverageRating()
-  // console.log(reviews)
   // Grabs reviews based on product id only
   const filteredReviews = Object.values(reviews).filter(
     (review) => review?.product_id === products?.id
@@ -102,33 +94,6 @@ const ProductDetails = () => {
     setModalContent(<DeleteProductModal id={id} />);
     openModal();
   };
-
-  // const [showMenu, setShowMenu] = useState(false);
-
-  // const openMenu = () => {
-  //   if (showMenu) return;
-  //   setShowMenu(true);
-  // };
-
-  // useEffect(() => {
-  //   if (!showMenu) return;
-
-  //   const closeMenu = (e) => {
-  //     setShowMenu(false);
-  //   };
-
-  //   document.addEventListener("click", closeMenu);
-
-  //   return () => document.removeEventListener("click", closeMenu);
-  // }, [showMenu]);
-
-  // const closeMenu = () => setShowMenu(false);
-
-  // const handleDelete = () => {
-  //   dispatch(deleteProduct(id));
-  //   setShowMenu(false);
-  //   history.push("/");
-  // };
 
   const handleAddtoCart = () => {
     setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
@@ -190,22 +155,22 @@ const ProductDetails = () => {
             <div className="review-title">
               <h2>
                 {" "}
-                {filteredReviews.length === 1 ? "Review" : "Reviews"} (
-                {filteredReviews.length})
+                {product_reviews.length === 1 ? "Review" : "Reviews"} (
+                {product_reviews.length})
               </h2>
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
-
-            <button
-              className="review-button"
-              onClick={handleAddReview}
-              // disabled={!sessionUser || isOwner || hasReviewed}
-            >
-              Post a Review
-            </button>
-
-            {filteredReviews &&
-              filteredReviews.map((review) => (
+            {user && (
+              <button
+                className="review-button"
+                onClick={handleAddReview}
+                // disabled={!sessionUser || isOwner || hasReviewed}
+              >
+                Post a Review
+              </button>
+            )}
+            {product_reviews &&
+              product_reviews.map((review) => (
                 <div key={review?.id}>
                   <p>{review?.User}</p>
                   <div className="avatar-and-review">
