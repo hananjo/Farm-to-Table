@@ -14,11 +14,13 @@ import "./ProductDetails.css";
 import DuplicateAdd from "../Duplicate";
 import { getCart } from "../../store/cart";
 import OwnerAdd from "../Owned";
+import NotFound from "../PageNotFound";
 
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [loading, setLoading] = useState(false)
 
   const user = useSelector((state) => {
     return state?.session.user;
@@ -27,14 +29,11 @@ const ProductDetails = () => {
     return state?.product.details;
   });
 
-  if (!product) {
-    history.push("/not_found")
-  }
-
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(loadReviews(id));
+    setLoading(true)
   }, [dispatch, id]);
 
   // console.log(product.description)
@@ -42,6 +41,11 @@ const ProductDetails = () => {
   const products = useSelector((state) => state.product);
   // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
+
+  // if (loading && !products?.details?.id) {
+  //   console.log(products?.details?.id);
+  //   history.push("/not_found")
+  // }
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
@@ -176,7 +180,7 @@ const ProductDetails = () => {
 
   return (
     <div className="detail-page-container">
-      {product && (
+      {product && product?.id ? (
         <div>
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
@@ -366,7 +370,7 @@ const ProductDetails = () => {
               ))}
           </div>
         </div>
-      )}
+      ) : ("Page not found")}
     </div>
   );
 };
