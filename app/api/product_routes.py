@@ -149,6 +149,30 @@ def add_image(id):
     return new_image.to_dict()
 
 
+# EDIT Image
+@product_routes.route('/<int:id>/images', methods=["PUT"])
+# @login_required
+def edit_image(id):
+    image = Image.query.get(id)
+
+    form = ImageForm()
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        image_url = form.image_url.data
+        product_id = form.product_id.data
+
+        image.image_url = image_url
+        image.product_id = product_id
+
+        db.session.commit()
+
+        return image.to_dict()
+    else:
+        return None
+
+
 # DELETE Image
 @product_routes.route('/<int:id>/images', methods=["DELETE"])
 # @login_required
