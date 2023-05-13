@@ -3,7 +3,7 @@ import { addProdToCart, updateQty } from "../../store/cart"
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 
-export default function CartQtyForm({ id, fCls }) {
+export default function CartAddForm({ id, fCls }) {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user.id)
     const cart = useSelector(state => state.cart)
@@ -12,6 +12,8 @@ export default function CartQtyForm({ id, fCls }) {
     // console.log(prod.product_id, "product");
     // console.log(fCls);
     console.log(qty, "quantity");
+
+    const cartArr = Object.values(cart)
 
     const updateFQty = (e) => {
         console.log(e.target.id);
@@ -28,6 +30,11 @@ export default function CartQtyForm({ id, fCls }) {
             qty
         }
 
+        cartArr.forEach((rel) => {
+            if(rel.product_id === newCartRel.prodId && rel.user_id === newCartRel.user) {
+                
+            }
+        })
 
         if (fCls === "add") {
             console.log("dispatching add");

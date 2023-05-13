@@ -127,8 +127,10 @@ export default function cartReducer(state = initialState, action) {
             // newState = Object.values(state).filter(rel => rel.id !== action.id)
 
             newState = { ...state }
-            delete newState[action.id].id
+            console.log("old state", newState);
+            delete newState[action.id]
 
+            console.log("new state", newState);
             return newState
         default:
             return state;

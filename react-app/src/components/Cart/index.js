@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./cart.css"
 import CartQtyForm from "../CartQtyForm/"
 import { useModal } from "../../context/Modal";
+import { NavLink } from "react-router-dom";
 
 function Cart() {
     const dispatch = useDispatch()
@@ -36,7 +37,7 @@ function Cart() {
         // dispatch(getCart(user));
     }
 
-    const {setModalContent} = useModal();
+    const { setModalContent } = useModal();
 
     const openModal = () => { setShowModal(true) };
 
@@ -50,15 +51,23 @@ function Cart() {
     const cartContent = () => {
         // console.log("length is ", cartArr.length);
         // console.log(cartArr);
-        if(cartArr.length > 0) {
+        if (cartArr.length > 0) {
             return (isLoaded && cartArr && cartArr?.map(prod => {
                 // console.log(prod.product.name);
 
                 return (
-                    <li key={prod?.id}>{prod?.product?.name} {prod?.quantity}
+                    <li key={prod?.id}>
+                        <NavLink
+                            key={prod?.id}
+                            to={`/products/${prod?.product?.id}`}
+                            style={{ textDecoration: "none" }}
+                        >
+                            {prod?.product?.name} {prod?.quantity}
+                        </NavLink>
                         <button id={prod.id} className={display} onClick={() => handleEdit(prod, save)}>Edit</button>
                         <button id={prod.product?.id} onClick={onDelete}>Delete</button>
-                    </li>)
+                    </li >
+                )
             }))
         }
 
