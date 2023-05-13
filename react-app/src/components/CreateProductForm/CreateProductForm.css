@@ -177,6 +177,38 @@
 
 }
 
+.image-container {
+    padding: 2%;
+    margin-top: 20px;
+    border: .5px solid rgb(119, 114, 114);
+}
+
+.image-title {
+    font-size: 15px;
+    margin-top: -15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.image-and-input {
+    display: flex;
+    flex-direction: row;
+}
+
+.image-area {
+    width: 20%;
+}
+
+.image-input {
+    width: 75%;
+    box-sizing: border-box;
+    margin-left: 17px;
+}
+
+.image-input-area {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 17px;
+}
 .form-submit-button:hover {
    background-color: white;
     color: rgb(97, 92, 92);

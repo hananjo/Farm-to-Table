@@ -1,7 +1,7 @@
 // ACTION TYPES
 const LOAD_REVIEWS = 'review/LOAD_REVIEWS'
 const ADD_REVIEW = 'review/ADD_REVIEW'
-// const EDIT_REVIEW = 'review/EDIT_REVIEW'
+const EDIT_REVIEW = 'review/EDIT_REVIEW'
 const REMOVE_REVIEW = 'review/REMOVE_REVIEW'
 
 // ACTION CREATORS
@@ -19,10 +19,10 @@ export const addReview = (review) => ({
 })
 
 // Edit Review Action
-// export const editReview = (review) => ({
-//     type: EDIT_REVIEW,
-//     review
-// })
+export const editReview = (review) => ({
+    type: EDIT_REVIEW,
+    review
+})
 
 // Remove Review Action
 export const removeReview = (reviewId) => ({
@@ -63,21 +63,21 @@ export const createReview = (review, product_id) => async dispatch => {
 }
 
 // edit Review thunk
-// export const updateReview = (review) => async dispatch => {
-//     const res = await fetch(`/api/products/${review.productId}/reviews`, {
-//         method: "PUT",
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(review)
-//     });
+export const updateReview = (review) => async dispatch => {
+    const res = await fetch(`/api/products/${review.productId}/reviews`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(review)
+    });
 
-//     if(res.ok) {
-//         const updatedReview = await res.json();
-//         dispatch(editReview(updatedReview));
-//         return updatedReview;
-//     }
-// }
+    if(res.ok) {
+        const updatedReview = await res.json();
+        dispatch(editReview(updatedReview));
+        return updatedReview;
+    }
+}
 
 // delete Review thunk
 export const deleteReview = (reviewId) => async dispatch => {
@@ -104,9 +104,9 @@ const reviews = (state=initialState, action) => {
         case ADD_REVIEW:
             return {...state, [action.review.id]: action.review}
 
-        // case EDIT_REVIEW:
-        //     const updateRev = action.review.updateReview;
-        //     return {...state, [updateRev.id]: updateRev};
+        case EDIT_REVIEW:
+            const updateRev = action.review.updateReview;
+            return {...state, [updateRev.id]: updateRev};
 
         case REMOVE_REVIEW:
             const deleteState = {...state};

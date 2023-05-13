@@ -42,12 +42,14 @@ def get_product_details(id):
 @product_routes.route('/', methods=['POST'])
 @login_required
 def create_product():
+
     form = ProductForm()
     # print(form, 'FORM')
     # print('hello')
     # print(form.price.data, form.type.data, 'TESTING')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+
         print('hello2', '&*******')
         name = form.name.data
         description = form.description.data
@@ -64,19 +66,25 @@ def create_product():
 
         )
 
+        image_url = form.image_url.data
+        if image_url:
+            new_image = Image(image_url=image_url)
+            db.session.add(new_image)
+            new_product.image.append(new_image)
+
+
         db.session.add(new_product)
         db.session.commit()
 
         return new_product.to_dict()
-
-    # return jsonify({'message': 'Invalid data'}), 404
+    return None
 
 @product_routes.route('/<int:id>', methods=['PUT'])
 def update_product(id):
     product = Product.query.get(id)
-    print(product, 'PRODUCT_UPDATE')
+    print(product.name,"PRODUCT NAME @@@@@@@@@@@@@@@@@@@@@")
     form = ProductForm()
-    print(form, 'FORM_UPDATE')
+    print(form.image_url.data, 'FORM_IMG URL@@@@@@@@@@@@@@@@@@@@@@@@')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         name = form.name.data
@@ -84,12 +92,20 @@ def update_product(id):
         price = form.price.data
         type = form.type.data
         owner_id = form.owner_id.data
-
+        image_url = form.image_url.data
+        print(image_url, '82 HEREEEEEEEEEEEEEEEEEEEEEEEE')
         product.name = name
         product.description = description
         product.price = price
         product.type = type
         product.owner_id = owner_id
+
+        new_image = Image(image_url=image_url, product_id=product.id)
+        print(new_image.to_dict(), "*************************TODICT*****")
+        product.image_url = new_image.image_url
+        print(image_url,"IMG URL")
+        db.session.add(new_image)
+        product.image.append(new_image)
 
         db.session.commit()
 
@@ -140,27 +156,51 @@ def get_reviews(id):
 
 
 # ADD Image
-@product_routes.route('/<int:id>/images', methods=["POST"])
-# @login_required
-def add_image(id):
-    form = ImageForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+# @product_routes.route('/<int:id>/images', methods=["POST"])
+# # @login_required
+# def add_image(id):
+#     form = ImageForm()
+#     form['csrf_token'].data = request.cookies['csrf_token']
 
-    product = Product.query.get(id)
-    if not product:
-        return jsonify({"error": "Product not found"}, 404)
+#     product = Product.query.get(id)
+#     if not product:
+#         return jsonify({"error": "Product not found"}, 404)
 
-    image_url = form.image_url.data
+#     image_url = form.image_url.data
 
-    new_image = Image(
-        image_url=image_url,
-        product_id=product.id
-    )
+#     new_image = Image(
+#         image_url=image_url,
+#         product_id=product.id
+#     )
 
-    db.session.add(new_image)
-    db.session.commit()
+#     db.session.add(new_image)
+#     db.session.commit()
 
-    return jsonify({"message": "Image posted"}, 201)
+#     return new_image.to_dict()
+
+
+# EDIT Image
+# @product_routes.route('/<int:id>/images', methods=["PUT"])
+# # @login_required
+# def edit_image(id):
+#     image = Image.query.get(id)
+
+#     form = ImageForm()
+
+#     form['csrf_token'].data = request.cookies['csrf_token']
+
+#     if form.validate_on_submit():
+#         image_url = form.image_url.data
+#         product_id = form.product_id.data
+
+#         image.image_url = image_url
+#         image.product_id = product_id
+
+#         db.session.commit()
+
+#         return image.to_dict()
+#     else:
+#         return None
 
 
 # DELETE Image

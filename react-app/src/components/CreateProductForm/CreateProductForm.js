@@ -11,6 +11,7 @@ const CreateProductForm = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [type, setType] = useState("Fruit");
+  const [image, setImage] = useState('');
 
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
@@ -34,8 +35,12 @@ const CreateProductForm = () => {
     if (type === "(select one)") {
       validationErrors.push("Product type is required");
     }
+
+    if(!image) {
+      validationErrors.push("Please provide an image url")
+    }
     setErrors(validationErrors);
-  }, [name, description, price, type]);
+  }, [name, description, price, type, image]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +52,7 @@ const CreateProductForm = () => {
         price,
         type,
         owner_id: user,
+        image_url: image
       };
       console.log(type, "TYPE");
       let addedNewProduct;
@@ -61,6 +67,7 @@ const CreateProductForm = () => {
     setDescription("");
     setPrice(0);
     setType("");
+    setImage("");
   };
 
   return (
@@ -220,6 +227,32 @@ const CreateProductForm = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="description-input-area2"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="image-container">
+          <div className="image-title">
+              <h2>Image</h2>
+
+          </div>
+
+          <div className="image-and-input">
+            <div className="image-area">
+              <h3>Upload Image *</h3>
+              <p>Upload an image of your product. </p>
+            </div>
+
+            <div className="image-input">
+              <input
+                style={{ height: "40px" }}
+                type="text"
+                name="image"
+                placeholder="Show us what your product looks like!"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+                className="image-input-area"
               />
             </div>
           </div>

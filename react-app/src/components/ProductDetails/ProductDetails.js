@@ -47,11 +47,6 @@ const ProductDetails = () => {
   // console.log(products, "PRODUCTS")
   // console.log(products.details.owner_id)
 
-  // if (loading && !products?.details?.id) {
-  //   console.log(products?.details?.id);
-  //   history.push("/not_found")
-  // }
-
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
 
@@ -63,9 +58,9 @@ const ProductDetails = () => {
     (review) => review?.product_id === products?.id
   );
 
-  console.log(filteredReviews, "48");
 
-  // const reviewUserId = reviews[1].userId
+
+
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
@@ -91,11 +86,12 @@ const ProductDetails = () => {
   const handleAddReview = async () => {
     setModalContent(<AddReviewModal id={id} />);
     openModal();
+    dispatch(loadReviews(id))
   };
 
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
-    console.log(reviewId, "67");
+
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
     // await dispatch(loadReviews(id));
     openModal();
@@ -151,6 +147,7 @@ const ProductDetails = () => {
     }
   };
 
+
   return (
     <div className="detail-page-container">
       {product && product?.id ? (
@@ -158,7 +155,7 @@ const ProductDetails = () => {
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
               <img
-                src={product && product.images && product?.images[0]?.image_url}
+                src={product && product?.images && product?.images[0]?.image_url}
                 style={{ width: "450px", height: "400px" }}
               />
             </div>
@@ -212,13 +209,16 @@ const ProductDetails = () => {
               {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
-            <button
+            {sessionUser && !isOwner && !hasReviewed && (
+
+              <button
               className="review-button"
               onClick={handleAddReview}
-            // disabled={!sessionUser || isOwner || hasReviewed}
-            >
+              >
+
               Post a Review
             </button>
+            )}
 
             {product_reviews &&
               product_reviews.map((review) => (

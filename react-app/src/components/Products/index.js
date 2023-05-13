@@ -16,7 +16,7 @@ const Products = () => {
 
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const user = useSelector(state => state.session.user.id)
+  const user = useSelector(state => state?.session?.user?.id)
 
   const products = useSelector((state) => {
     console.log(state.product, "%%%%%");

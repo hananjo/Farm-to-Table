@@ -12,18 +12,22 @@ const UpdateProductForm = (product) => {
   const products = useSelector((state) => {
     return state?.product.details;
   });
-  console.log(products, "PRODUCTS STATE");
+  console.log(products?.images[0]?.image_url, "PRODUCTS IMG");
+
   const user = useSelector((state) => {
     return state.session.user.id;
   });
   console.log(user, "USER STATE");
-  const [name, setName] = useState(products?.name || "");
-  const [description, setDescription] = useState(products?.description || "");
+  const [name, setName] = useState(products?.name || '');
+  const [description, setDescription] = useState(products?.description || '');
   const [price, setPrice] = useState(products?.price || 0);
   const [type, setType] = useState(products?.type || "");
+  const [image, setImage] = useState(products?.images[0]?.image_url || '');
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  console.log(image,'IMAGE')
 
   useEffect(() => {
     const validationErrors = [];
@@ -39,8 +43,11 @@ const UpdateProductForm = (product) => {
     if (type === "(select one)") {
       validationErrors.push("Product type is required");
     }
+    if(!image) {
+      validationErrors.push("Please provide an image url")
+    }
     setErrors(validationErrors);
-  }, [name, description, price, type]);
+  }, [name, description, price, type, image]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +59,7 @@ const UpdateProductForm = (product) => {
         price,
         type,
         owner_id: user,
+        image_url: image
       };
       let updatedProduct;
 
@@ -62,8 +70,8 @@ const UpdateProductForm = (product) => {
       }
     }
   };
-  // product ? after return removed
-  return (
+
+  return  (
     <form onSubmit={handleSubmit}>
       <div className="form-title-banner"></div>
       <div className="form-container">
@@ -214,6 +222,34 @@ const UpdateProductForm = (product) => {
             </div>
           </div>
         </div>
+
+        <div className="image-container">
+          <div className="image-title">
+              <h2>Image</h2>
+
+          </div>
+
+          <div className="image-and-input">
+            <div className="image-area">
+              <h3>Upload Image *</h3>
+              <p>Upload an image of your product. </p>
+            </div>
+
+            <div className="image-input">
+              <input
+                style={{ height: "40px" }}
+                type="text"
+                name="image"
+                placeholder="Show us what your product looks like!"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+                className="image-input-area"
+              />
+            </div>
+          </div>
+        </div>
+
+
         <div className="form-submit">
           <button
             className="form-submit-button"
@@ -225,10 +261,9 @@ const UpdateProductForm = (product) => {
         </div>
       </div>
     </form>
-  );
-  // : (
-  //   <div>Product Loading...</div>
-  // );
+  )
+
+
 };
 
 export default UpdateProductForm;
