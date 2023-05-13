@@ -38,6 +38,7 @@ function App() {
           <Route exact path="/products/:id" component={ProductDetails} />
           <Route exact path="/products/:id/update" component={UpdateProduct} />
           <Route exact path="/cart" component={Cart} />
+          <Route path="/not_found" component={NotFound} />
           <Route component={NotFound} />
         </Switch>
       )}

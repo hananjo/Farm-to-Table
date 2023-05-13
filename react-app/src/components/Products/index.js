@@ -51,9 +51,10 @@ const Products = () => {
   const handleAddtoCart = (prodId, ownerId) => {
     let isDuplicate = false
     let cartRel = {}
+    // let userId = isLoaded && user.id
 
-
-    if (user.id === ownerId) {
+    console.log("ids", user, ownerId);
+    if (user === ownerId) {
       setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
       openModal();
     } else {

@@ -27,6 +27,10 @@ const ProductDetails = () => {
     return state?.product.details;
   });
 
+  if (!product) {
+    history.push("/not_found")
+  }
+
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));

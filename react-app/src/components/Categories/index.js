@@ -37,6 +37,10 @@ const Categories = () => {
         return Object.values(state?.product);
     });
 
+    if(products.length < 1) {
+        history.push("/not_found")
+    }
+
     console.log("The products in this category are ", products);
 
     useEffect(() => {

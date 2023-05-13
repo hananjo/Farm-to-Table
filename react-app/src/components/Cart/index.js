@@ -56,17 +56,17 @@ function Cart() {
                 // console.log(prod.product.name);
 
                 return (
-                    <li key={prod?.id}>
+                    <div className="cart-prod" key={prod?.id}>
                         <NavLink
                             key={prod?.id}
                             to={`/products/${prod?.product?.id}`}
                             style={{ textDecoration: "none" }}
                         >
-                            {prod?.product?.name} {prod?.quantity}
+                            {prod?.product?.name} Qty: {prod?.quantity}
                         </NavLink>
                         <button id={prod.id} className={display} onClick={() => handleEdit(prod, save)}>Edit</button>
                         <button id={prod.product?.id} onClick={onDelete}>Delete</button>
-                    </li >
+                    </div >
                 )
             }))
         }
@@ -75,12 +75,12 @@ function Cart() {
     }
 
     return (
-        <div>
+        <div className="cart-container">
             <h1>Your Shopping Cart </h1>
-            <ul>
+            <div className="cart-list">
                 {/* {cartArr > 0 ? isLoaded && cartArr?.map(prod => {return <li>{prod.id}</li>}) : <li>Shopping Cart is empty</li>} */}
                 {cartContent()}
-            </ul>
+            </div>
         </div>
     )
 }
