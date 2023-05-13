@@ -31,7 +31,7 @@ function Navigation({ isLoaded }) {
           <div className="cart-label">
             <li>
               <NavLink exact to="/cart">
-                Cart
+              <i class="fa-solid fa-cart-shopping"></i>
               </NavLink>
             </li>
           </div>

@@ -10,9 +10,12 @@ import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
 import { loadReviews } from "../../store/review";
-import CartQtyForm from "../CartQtyForm";
 import CartAddForm from "../CartAddForm";
 import "./ProductDetails.css";
+import DuplicateAdd from "../Duplicate";
+import { getCart } from "../../store/cart";
+import OwnerAdd from "../Owned";
+
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,6 +27,10 @@ const ProductDetails = () => {
   const product = useSelector((state) => {
     return state?.product.details;
   });
+
+  if (!product) {
+    history.push("/not_found")
+  }
 
   // console.log(product, "PRODUCTDeT");
   useEffect(() => {
@@ -96,9 +103,48 @@ const ProductDetails = () => {
     openModal();
   };
 
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    dispatch(getCart(user.id));
+    setIsLoaded(true)
+  }, [dispatch, user])
+
+  const cart = useSelector(state => state.cart)
+
+  const cartArr = isLoaded && cart && Object.values(cart)
+
+  console.log("cart items", cartArr);
+
   const handleAddtoCart = () => {
-    setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
-    openModal();
+    let isDuplicate = false
+    let cartRel = {}
+
+    console.log("Compare ", product.id, user.id);
+
+    if (user.id === product.owner_id) {
+      setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
+      openModal();
+    } else {
+      cartArr.forEach((rel) => {
+        console.log(rel.product_id, rel.user_id);
+        if (rel.product_id === product.id && rel.user_id === user.id) {
+          isDuplicate = true
+          cartRel = rel
+        }
+      })
+
+      console.log(isDuplicate);
+
+      if (isDuplicate) {
+        console.log("Duplicate");
+        setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
+        openModal();
+      } else {
+        setModalContent(<CartAddForm id={product.id} fCls={"add"} />);
+        openModal();
+      }
+    }
   };
 
   return (
@@ -165,7 +211,7 @@ const ProductDetails = () => {
             <button
               className="review-button"
               onClick={handleAddReview}
-              // disabled={!sessionUser || isOwner || hasReviewed}
+            // disabled={!sessionUser || isOwner || hasReviewed}
             >
               Post a Review
             </button>
@@ -259,7 +305,7 @@ const ProductDetails = () => {
                       className="delete-button"
                       id={review?.id}
                       onClick={() => handleDeleteReview(review.id, product.id)}
-                      // disabled={!sessionUser}
+                    // disabled={!sessionUser}
                     >
                       Delete Review
                     </button>

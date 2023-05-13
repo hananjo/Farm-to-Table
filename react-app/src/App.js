@@ -34,10 +34,11 @@ function App() {
           </Route>
           <Route exact path="/" component={Products} />
           <Route exact path="/products/new" component={CreateProductForm} />
+          <Route exact path="/category/:category" component={Categories} />
           <Route exact path="/products/:id" component={ProductDetails} />
           <Route exact path="/products/:id/update" component={UpdateProduct} />
-          {/* <Route exact path="/products/:category" component={Categories} /> */}
           <Route exact path="/cart" component={Cart} />
+          <Route path="/not_found" component={NotFound} />
           <Route component={NotFound} />
         </Switch>
       )}
