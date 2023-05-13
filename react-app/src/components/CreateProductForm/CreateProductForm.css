@@ -167,12 +167,27 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: black;
-    color: white;
+    background-color: rgb(245, 240, 232);
+    color: black;
     height: 40px;
     width: 130px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 17px;
     border-radius: 3px;
 
+}
+
+.form-submit-button:hover {
+   background-color: white;
+    color: rgb(97, 92, 92);
+}
+
+
+.form-submit-button:disabled:hover{
+    background-color: white;
+    color: black
+}
+.form-submit-button:disabled:hover {
+    background-color: white;
+    color: black
 }

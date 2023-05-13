@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./UpdateProductForm.css";
 
-const UpdateProductForm = () => {
+const UpdateProductForm = (product) => {
   const { id } = useParams();
   const products = useSelector((state) => {
     return state?.product.details;
@@ -17,10 +17,10 @@ const UpdateProductForm = () => {
     return state.session.user.id;
   });
   console.log(user, "USER STATE");
-  const [name, setName] = useState(products.name);
-  const [description, setDescription] = useState(products.description);
-  const [price, setPrice] = useState(products.price);
-  const [type, setType] = useState(products.type);
+  const [name, setName] = useState(products?.name || "");
+  const [description, setDescription] = useState(products?.description || "");
+  const [price, setPrice] = useState(products?.price || 0);
+  const [type, setType] = useState(products?.type || "");
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -46,6 +46,7 @@ const UpdateProductForm = () => {
     e.preventDefault();
     if (!errors.length) {
       const productFormInput = {
+        ...product,
         name,
         description,
         price,
@@ -61,8 +62,8 @@ const UpdateProductForm = () => {
       }
     }
   };
-
-  return products ? (
+  // product ? after return removed
+  return (
     <form onSubmit={handleSubmit}>
       <div className="form-title-banner"></div>
       <div className="form-container">
@@ -224,9 +225,10 @@ const UpdateProductForm = () => {
         </div>
       </div>
     </form>
-  ) : (
-    <div>Product Loading...</div>
   );
+  // : (
+  //   <div>Product Loading...</div>
+  // );
 };
 
 export default UpdateProductForm;
