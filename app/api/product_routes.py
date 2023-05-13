@@ -146,7 +146,7 @@ def add_image(id):
     db.session.add(new_image)
     db.session.commit()
 
-    return jsonify({"message": "Image posted"}, 201)
+    return new_image.to_dict()
 
 
 # DELETE Image
