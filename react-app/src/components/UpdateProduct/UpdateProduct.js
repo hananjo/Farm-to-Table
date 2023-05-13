@@ -158,16 +158,6 @@ const UpdateProductForm = (product) => {
                 />
                 <span>Dairy</span>
               </label>
-              <label>
-                <input
-                  type="radio"
-                  name="type"
-                  value="Bread"
-                  checked={type === "Bread"}
-                  onChange={(e) => setType(e.target.value)}
-                />
-                <span>Bread</span>
-              </label>
             </div>
           </div>
         </div>
