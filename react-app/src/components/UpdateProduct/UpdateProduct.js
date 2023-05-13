@@ -17,10 +17,10 @@ const UpdateProductForm = () => {
     return state.session.user.id;
   });
   console.log(user, "USER STATE");
-  const [name, setName] = useState(products.name);
-  const [description, setDescription] = useState(products.description);
-  const [price, setPrice] = useState(products.price);
-  const [type, setType] = useState(products.type);
+  const [name, setName] = useState(products?.name || '');
+  const [description, setDescription] = useState(products?.description || '');
+  const [price, setPrice] = useState(products?.price || 0);
+  const [type, setType] = useState(products?.type || '');
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -62,7 +62,7 @@ const UpdateProductForm = () => {
     }
   };
 
-  return products ? (
+  return  (
     <form onSubmit={handleSubmit}>
       <div className="form-title-banner"></div>
       <div className="form-container">
@@ -224,9 +224,9 @@ const UpdateProductForm = () => {
         </div>
       </div>
     </form>
-  ) : (
-    <div>Product Loading...</div>
-  );
+  )
+
+
 };
 
 export default UpdateProductForm;
