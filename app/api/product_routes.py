@@ -68,9 +68,9 @@ def create_product():
 @product_routes.route('/<int:id>', methods=['PUT'])
 def update_product(id):
     product = Product.query.get(id)
-    print(product, 'PRODUCT_UPDATE')
+    print(product.name,"PRODUCT NAME @@@@@@@@@@@@@@@@@@@@@")
     form = ProductForm()
-    print(form, 'FORM_UPDATE')
+    print(form.image_url.data, 'FORM_IMG URL@@@@@@@@@@@@@@@@@@@@@@@@')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         name = form.name.data
@@ -78,12 +78,20 @@ def update_product(id):
         price = form.price.data
         type = form.type.data
         owner_id = form.owner_id.data
-
+        image_url = form.image_url.data
+        print(image_url, '82 HEREEEEEEEEEEEEEEEEEEEEEEEE')
         product.name = name
         product.description = description
         product.price = price
         product.type = type
         product.owner_id = owner_id
+
+        new_image = Image(image_url=image_url, product_id=product.id)
+        print(new_image.to_dict(), "*************************TODICT*****")
+        product.image_url = new_image.image_url
+        print(image_url,"IMG URL")
+        db.session.add(new_image)
+        product.image.append(new_image)
 
         db.session.commit()
 

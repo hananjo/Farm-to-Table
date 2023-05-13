@@ -76,7 +76,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 //   }
 // };
 export const updateProduct = (id, data) => async (dispatch) => {
-  const { owner_id, name, description, type, price } = data;
+  const { owner_id, name, description, type, price, image_url } = data;
   // console.log(data, "DATA****");
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
@@ -87,6 +87,7 @@ export const updateProduct = (id, data) => async (dispatch) => {
       price: Number(price),
       type,
       owner_id,
+      image_url
     }),
   });
   if (response.ok) {

@@ -12,7 +12,8 @@ const UpdateProductForm = () => {
   const products = useSelector((state) => {
     return state?.product.details;
   });
-  console.log(products, "PRODUCTS STATE");
+  console.log(products?.images[0]?.image_url, "PRODUCTS IMG");
+
   const user = useSelector((state) => {
     return state.session.user.id;
   });
@@ -21,10 +22,12 @@ const UpdateProductForm = () => {
   const [description, setDescription] = useState(products?.description || '');
   const [price, setPrice] = useState(products?.price || 0);
   const [type, setType] = useState(products?.type || '');
-  const [image, setImage] = useState(products?.images || '');
+  const [image, setImage] = useState(products?.images[0]?.image_url || '');
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  console.log(image,'IMAGE')
 
   useEffect(() => {
     const validationErrors = [];
@@ -55,7 +58,7 @@ const UpdateProductForm = () => {
         price,
         type,
         owner_id: user,
-        image: image
+        image_url: image
       };
       let updatedProduct;
 

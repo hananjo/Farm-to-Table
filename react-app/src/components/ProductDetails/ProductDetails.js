@@ -140,7 +140,7 @@ const ProductDetails = () => {
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
               <img
-                src={product && product.images && product?.images[0]?.image_url}
+                src={product && product?.images && product?.images[0]?.image_url}
                 style={{ width: "450px", height: "400px" }}
               />
             </div>
