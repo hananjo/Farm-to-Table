@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useModal } from "../../context/Modal";
 import CartQtyForm from "../CartQtyForm";
+import "./Duplicate.css"
 
 function DuplicateAdd({ prod, fCls }) {
     const { setModalContent, closeModal } = useModal();
@@ -20,10 +21,18 @@ function DuplicateAdd({ prod, fCls }) {
     }
 
     return (
-        <div>
-            <h1>You already added this to your cart</h1>
-            <h2>Would you like to change the quantity?</h2>
-            <button onClick={handleYes}>Yes</button> <button onClick={handleNo}>No</button>
+        <div className="modal-container">
+            <div className="modal-title">
+                <h1>You already added this to your cart</h1>
+            </div>
+            <div className="content-container">
+                <div className="content">
+                    <h2>Would you like to change the quantity?</h2>
+                </div>
+                <div className="con-buttons">
+                    <button className="confirmation" onClick={handleYes}>Yes</button> <button className="confirmation" onClick={handleNo}>No</button>
+                </div>
+            </div>
         </div>
     )
 }
