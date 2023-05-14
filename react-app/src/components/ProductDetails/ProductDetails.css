@@ -29,9 +29,12 @@
     border: 2px solid black;
     border-radius: 20px;
     font-size: 20px;
-    padding: 5px 120px 5px 120px;
+    padding: 5px 100px 5px 100px;
     background-color: black;
-    color: white
+    color: white;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
 }
 
 .add-to-cart:hover {

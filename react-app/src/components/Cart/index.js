@@ -98,14 +98,19 @@ function Cart() {
 
     return (
         <div>
-            <div className="cart-page-container">
+            <div className="cart-page-banner">
+
+            </div>
+            {/* <div className="tester"> */}
+                {/* <div className="cart-page-container"> */}
                 <div className="title-container">
                     <h1>Your Shopping Cart </h1>
                 </div>
-                {sessionUser && user ? (<div className="cart-container">
+                {sessionUser && user ? (<div className="cart-container-item-list">
                     {cartContent()}
                 </div>) : (<h1>Please Log in to View Your Cart</h1>)}
-            </div>
+                {/* </div> */}
+            {/* </div> */}
         </div>
     )
 }

@@ -192,7 +192,7 @@ const ProductDetails = () => {
                   className="add-to-cart"
                   onClick={() => handleAddtoCart()}
                 >
-                  Add to Cart
+                  Add to cart
                 </button>
               </div>)}
             </div>

@@ -38,7 +38,7 @@ const Categories = () => {
         return Object.values(state?.product);
     });
 
-    if(products.length < 1) {
+    if (products.length < 1) {
         history.push("/not_found")
     }
 
@@ -98,27 +98,29 @@ const Categories = () => {
                     <h2>Groceries delivered fresh right to your door!</h2>
                 </div>
                 <div className="categories-and-names">
-                    <NavLink
-                        to={`/category/Fruit`}
-                        style={{ textDecoration: "none" }}
-                    >
-                        <div id="Fruit" className="category" onClick={handleClick}>
-                            <img
-                                src={
-                                    "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
-                                }
-                                style={{
-                                    clipPath: "circle(38%)",
-                                    width: "310px",
-                                }}
-                                alt="image1"
-                                className="image-categories"
-                            />
-                            <div className="category-names">
-                                <p>Fruits</p>
+                    <div className="fruits-page-container">
+                        <NavLink
+                            to={`/category/Fruit`}
+                            style={{ textDecoration: "none" }}
+                        >
+                            <div id="Fruit" className="category" onClick={handleClick}>
+                                <img
+                                    src={
+                                        "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
+                                    }
+                                    style={{
+                                        clipPath: "circle(38%)",
+                                        width: "100px",
+                                    }}
+                                    alt="image1"
+                                    className="image-categories"
+                                />
+                                <div className="category-names">
+                                    <p>Fruits</p>
+                                </div>
                             </div>
-                        </div>
-                    </NavLink>
+                        </NavLink>
+                    </div>
                     <NavLink
                         to={`/category/Vegetable`}
                         style={{ textDecoration: "none" }}
@@ -147,7 +149,7 @@ const Categories = () => {
                                     src={
                                         "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/meat_products_jfojgq.jpg"
                                     }
-                                    style={{ clipPath: "circle(30%)", width: "400px" }}
+                                    style={{ clipPath: "circle(38%)", width: "100px" }}
                                     alt="image3"
                                     className="image-categories"
                                 />
@@ -204,9 +206,11 @@ const Categories = () => {
                                 <div className="product-pricing-images">
                                     ${product?.price.toFixed(2)}
                                 </div>
-                                {sessionUser && (<div className="product-add-buttons">
-                                    <button onClick={() => handleAddtoCart(product.id, product.owner_id)}><i class="fa-solid fa-plus"></i></button>
-                                </div>)}
+                                {sessionUser && (
+                                    <button className="category-page-add-button"
+                                        onClick={() => handleAddtoCart(product.id, product.owner_id)}
+                                        style={{ clipPath: "circle(40%)" }}><i class="fa-solid fa-plus"></i></button>
+                                )}
                             </NavLink>
                         </div>
                     );
