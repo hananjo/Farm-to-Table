@@ -30,9 +30,9 @@ function Navigation({ isLoaded }) {
           )}
           <div className="cart-label">
             <li>
-              <NavLink exact to="/cart">
+              {sessionUser && (<NavLink exact to="/cart">
               <i class="fa-solid fa-cart-shopping"></i>
-              </NavLink>
+              </NavLink>)}
             </li>
           </div>
           <div className="post-product-label">

@@ -106,11 +106,11 @@ const ProductDetails = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(getCart(user.id));
+    dispatch(getCart(user?.id));
     setIsLoaded(true)
   }, [dispatch, user])
 
-  const cart = useSelector(state => state.cart)
+  const cart = useSelector(state => state?.cart)
 
   const cartArr = isLoaded && cart && Object.values(cart)
 
@@ -146,7 +146,6 @@ const ProductDetails = () => {
       }
     }
   };
-
 
   return (
     <div className="detail-page-container">
@@ -188,14 +187,14 @@ const ProductDetails = () => {
               ) : (
                 <br />
               )}
-              <div className="add-to-cart-button">
+              {sessionUser && (<div className="add-to-cart-button">
                 <button
                   className="add-to-cart"
                   onClick={() => handleAddtoCart()}
                 >
                   Add to Cart
                 </button>
-              </div>
+              </div>)}
             </div>
           </div>
 

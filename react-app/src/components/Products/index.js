@@ -17,6 +17,7 @@ const Products = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const user = useSelector(state => state?.session?.user?.id)
+  const sessionUser = useSelector(state => state?.session?.user)
 
   const products = useSelector((state) => {
     console.log(state.product, "%%%%%");
@@ -48,10 +49,11 @@ const Products = () => {
     setShowModal(true);
   };
 
-  const handleAddtoCart = (prodId, ownerId) => {
+  const handleAddtoCart = (e, prodId, ownerId) => {
     let isDuplicate = false
     let cartRel = {}
     // let userId = isLoaded && user.id
+    e.preventDefault();
 
     console.log("ids", user, ownerId);
     if (user === ownerId) {
@@ -59,7 +61,7 @@ const Products = () => {
       openModal();
     } else {
       cartArr.forEach((rel) => {
-        if (rel.product_id === prodId && rel.user_id === user.id) {
+        if (rel.product_id === prodId && rel.user_id === user) {
           isDuplicate = true
           cartRel = rel
         }
@@ -82,7 +84,7 @@ const Products = () => {
           <h2>Groceries delivered fresh right to your door!</h2>
         </div>
         <div className="categories-and-names">
-          <NavLink to={`/category/Fruit`}>
+          <NavLink to={`/category/Fruit`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
                 src={
@@ -100,7 +102,7 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink to={`/category/Vegetable`}>
+          <NavLink to={`/category/Vegetable`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
                 src={
@@ -115,7 +117,7 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink to={`/category/Meat`}>
+          <NavLink to={`/category/Meat`} style={{ textDecoration: "none" }}>
             <div className="category">
               <div className="image-meat">
                 <img
@@ -132,7 +134,7 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink to={`/category/Dairy`}>
+          <NavLink to={`/category/Dairy`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
                 src={
@@ -176,10 +178,10 @@ const Products = () => {
                 <div className="product-pricing-images">
                   ${product.price.toFixed(2)}
                 </div>
+                {sessionUser && (<div className="product-add-buttons">
+                <button className="add-to-cart" onClick={(e) => handleAddtoCart(e, product.id, product.owner_id)}><i class="fa-solid fa-plus"></i></button>
+              </div>)}
               </NavLink>
-              <div className="product-add-buttons">
-                <button onClick={() => handleAddtoCart(product.id, product.owner_id)}><i class="fa-solid fa-plus"></i></button>
-              </div>
             </div>
           );
         })}

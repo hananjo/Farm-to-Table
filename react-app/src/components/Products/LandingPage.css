@@ -24,7 +24,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
 }
 
 .category {
@@ -34,6 +33,9 @@
  text-align: center;
 }
 
+.category:hover {
+    text-decoration: underline;
+}
 
 .category-names {
     font-size: 25px
@@ -42,6 +44,10 @@
 .category-name-meat {
     font-size: 25px;
     margin-top: -22px;
+}
+
+a:visited {
+    color: black
 }
 
 
@@ -81,4 +87,18 @@
     background-color: white;
     text-align: center;
     color: black;
+}
+
+.add-to-cart {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 0;
+    margin-left: 140px;
+    font-size: 15px;
+    position: relative;
+    top: -80px;
+    background-color: black;
+    text-align: center;
+    color: white;
+    width: 10px;
 }

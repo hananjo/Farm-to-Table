@@ -15,7 +15,8 @@ const Categories = () => {
     const dispatch = useDispatch();
     const { category } = useParams();
     const history = useHistory();
-    const user = useSelector(state => state.session.user.id)
+    const user = useSelector(state => state.session?.user?.id)
+    const sessionUser = useSelector(state => state?.session?.user)
     const [isLoaded, setIsLoaded] = useState(false)
 
     console.log("The category is ", category);
@@ -203,9 +204,9 @@ const Categories = () => {
                                 <div className="product-pricing-images">
                                     ${product?.price.toFixed(2)}
                                 </div>
-                                <div className="product-add-buttons">
+                                {sessionUser && (<div className="product-add-buttons">
                                     <button onClick={() => handleAddtoCart(product.id, product.owner_id)}><i class="fa-solid fa-plus"></i></button>
-                                </div>
+                                </div>)}
                             </NavLink>
                         </div>
                     );
