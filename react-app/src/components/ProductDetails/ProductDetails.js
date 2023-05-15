@@ -106,7 +106,9 @@ const ProductDetails = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(getCart(user?.id));
+    if(sessionUser) {
+      dispatch(getCart(user?.id));
+    }
     setIsLoaded(true)
   }, [dispatch, user])
 
