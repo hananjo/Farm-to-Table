@@ -1,5 +1,5 @@
 .image-categories {
-    width: 310px;
+    width: 100px;
     border: 2px solid green
 }
 
@@ -24,7 +24,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
+    gap: 30px;
 }
 
 .category {
@@ -34,22 +34,39 @@
  text-align: center;
 }
 
+.category:hover {
+    text-decoration: underline;
+}
 
 .category-names {
-    font-size: 25px
+    font-size: 15px
 }
 
 .category-name-meat {
-    font-size: 25px;
-    margin-top: -22px;
+    font-size: 15px;
+    margin-top: -3px;
+}
+
+a:visited {
+    color: black
 }
 
 
 .image-meat {
     margin-left: -40px;
     margin-right: -40px;
-    margin-top: -20px
+    margin-top: -2px;
 }
+
+.fruits-nav-container {
+    margin-right: -35px;
+}
+
+/* .veggie-dairy-container {
+    display: flex;
+    flex-direction: row;
+    margin-left: -20px;
+} */
 
 .product-image-listing {
     display: flex;
@@ -81,4 +98,27 @@
     background-color: white;
     text-align: center;
     color: black;
+    width: 50px;
+}
+
+.product-add-buttons {
+    /* border: 1px solid black; */
+    /* border-radius: 20px; */
+    /* padding: 2px; */
+    margin-left: 80px;
+    font-size: 15px;
+    position: relative;
+    top: -110px;
+    /* background-color: black; */
+    text-align: center;
+    color: white;
+}
+
+.add-to-cart-2 {
+    /* border-radius: 20px; */
+    padding-top: 10px;
+    padding-bottom: 8px;
+    background-color: black;
+    color: white;
+    width: 40px;
 }

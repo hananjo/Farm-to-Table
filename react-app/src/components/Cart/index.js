@@ -12,7 +12,8 @@ function Cart() {
     const [display, setDisplay] = useState("")
     const [save, setSave] = useState("hidden")
     const [showModal, setShowModal] = useState(false);
-    const user = useSelector(state => state.session.user.id)
+    const user = useSelector(state => state.session?.user?.id)
+    const sessionUser = useSelector(state => state.session?.user)
 
     // const handleDeleteReview = async (reviewId) => {
     //     console.log(reviewId, "67")
@@ -57,15 +58,36 @@ function Cart() {
 
                 return (
                     <div className="cart-prod" key={prod?.id}>
-                        <NavLink
-                            key={prod?.id}
-                            to={`/products/${prod?.product?.id}`}
-                            style={{ textDecoration: "none" }}
-                        >
-                            {prod?.product?.name} Qty: {prod?.quantity}
-                        </NavLink>
-                        <button id={prod.id} className={display} onClick={() => handleEdit(prod, save)}>Edit</button>
-                        <button id={prod.product?.id} onClick={onDelete}>Delete</button>
+                        <div className="product-info">
+                            <NavLink
+                                key={prod?.id}
+                                to={`/products/${prod?.product?.id}`}
+                                style={{ textDecoration: "none" }}
+                                className="prod-link"
+                            >
+                                <div className="prod-img">
+                                    <img
+                                        src={
+                                            prod && prod?.product?.images && prod?.product?.images[0]?.image_url
+                                        }
+                                        style={{ clipPath: "circle(38%)" }}
+                                    />
+                                </div>
+                                <div className="prod-text">
+                                    <div className="name">
+                                        {prod?.product?.name}
+                                    </div>
+                                    <div className="price">
+                                        $ {prod?.product?.price.toFixed(2)}
+                                    </div>
+                                </div>
+                            </NavLink>
+                        </div>
+                        <div className="qty">Qty: {prod?.quantity}</div>
+                        <div className="edit-section">
+                            <button id={prod.id} className={display + " update-button"} onClick={() => handleEdit(prod, save)}>Edit</button>
+                            <button id={prod.product?.id} className="update-button delete" onClick={onDelete}>Delete</button>
+                        </div>
                     </div >
                 )
             }))
@@ -75,12 +97,20 @@ function Cart() {
     }
 
     return (
-        <div className="cart-container">
-            <h1>Your Shopping Cart </h1>
-            <div className="cart-list">
-                {/* {cartArr > 0 ? isLoaded && cartArr?.map(prod => {return <li>{prod.id}</li>}) : <li>Shopping Cart is empty</li>} */}
-                {cartContent()}
+        <div>
+            <div className="cart-page-banner">
+
             </div>
+            {/* <div className="tester"> */}
+                {/* <div className="cart-page-container"> */}
+                <div className="title-container">
+                    <h1>Your Shopping Cart </h1>
+                </div>
+                {sessionUser && user ? (<div className="cart-container-item-list">
+                    {cartContent()}
+                </div>) : (<h1>Please Log in to View Your Cart</h1>)}
+                {/* </div> */}
+            {/* </div> */}
         </div>
     )
 }

@@ -16,6 +16,7 @@ function LoginFormModal() {
     setEmail("demo@aa.io");
     setPassword("password");
     dispatch(login("demo@aa.io", "password"));
+    closeModal();
   };
 
   const handleSubmit = async (e) => {

@@ -17,6 +17,7 @@ const Products = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const user = useSelector(state => state?.session?.user?.id)
+  const sessionUser = useSelector(state => state?.session?.user)
 
   const products = useSelector((state) => {
     console.log(state.product, "%%%%%");
@@ -48,10 +49,11 @@ const Products = () => {
     setShowModal(true);
   };
 
-  const handleAddtoCart = (prodId, ownerId) => {
+  const handleAddtoCart = (e, prodId, ownerId) => {
     let isDuplicate = false
     let cartRel = {}
     // let userId = isLoaded && user.id
+    e.preventDefault();
 
     console.log("ids", user, ownerId);
     if (user === ownerId) {
@@ -59,7 +61,7 @@ const Products = () => {
       openModal();
     } else {
       cartArr.forEach((rel) => {
-        if (rel.product_id === prodId && rel.user_id === user.id) {
+        if (rel.product_id === prodId && rel.user_id === user) {
           isDuplicate = true
           cartRel = rel
         }
@@ -82,25 +84,28 @@ const Products = () => {
           <h2>Groceries delivered fresh right to your door!</h2>
         </div>
         <div className="categories-and-names">
-          <NavLink to={`/category/Fruit`}>
-            <div className="category">
-              <img
-                src={
-                  "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
-                }
-                style={{
-                  clipPath: "circle(38%)",
-                  width: "310px",
-                }}
-                alt="image1"
-                className="image-categories"
-              />
-              <div className="category-names">
-                <p>Fruits</p>
+          <div className="fruits-nav-container">
+            <NavLink to={`/category/Fruit`} style={{ textDecoration: "none" }}>
+              <div className="category">
+                <img
+                  src={
+                    "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/Fruits_xat3pu.jpg"
+                  }
+                  style={{
+                    clipPath: "circle(38%)",
+                    width: "100px",
+                  }}
+                  alt="image1"
+                  className="image-categories"
+                />
+                <div className="category-names">
+                  <p>Fruits</p>
+                </div>
               </div>
-            </div>
-          </NavLink>
-          <NavLink to={`/category/Vegetable`}>
+            </NavLink>
+          </div>
+          {/* <div className="veggie-dairy-conatiner"> */}
+          <NavLink to={`/category/Vegetable`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
                 src={
@@ -115,14 +120,14 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink to={`/category/Meat`}>
+          <NavLink to={`/category/Meat`} style={{ textDecoration: "none" }}>
             <div className="category">
               <div className="image-meat">
                 <img
                   src={
                     "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683739735/meat_products_jfojgq.jpg"
                   }
-                  style={{ clipPath: "circle(30%)", width: "400px" }}
+                  style={{ clipPath: "circle(38%)", width: "100px" }}
                   alt="image3"
                   className="image-categories"
                 />
@@ -132,7 +137,7 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          <NavLink to={`/category/Dairy`}>
+          <NavLink to={`/category/Dairy`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
                 src={
@@ -147,6 +152,7 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
+          {/* </div> */}
         </div>
       </div>
       <div className="product-and-pricing">
@@ -157,6 +163,7 @@ const Products = () => {
                 key={product.id}
                 to={`/products/${product.id}`}
                 style={{ textDecoration: "none" }}
+                className="product-link"
               >
                 <div className="product-image-listing">
                   <img
@@ -176,10 +183,19 @@ const Products = () => {
                 <div className="product-pricing-images">
                   ${product.price.toFixed(2)}
                 </div>
+                <div className="product-add-buttons">
+                  {sessionUser && (
+                    <button
+                      className="add-to-cart-2"
+                      onClick={(e) => handleAddtoCart(e, product.id, product.owner_id)}
+                      style={{
+                        clipPath: "circle(40%)",
+                        // width: "20px",
+                      }}
+                    ><i class="fa-solid fa-plus"></i></button>
+                  )}
+                </div>
               </NavLink>
-              <div className="product-add-buttons">
-                <button onClick={() => handleAddtoCart(product.id, product.owner_id)}><i class="fa-solid fa-plus"></i></button>
-              </div>
             </div>
           );
         })}

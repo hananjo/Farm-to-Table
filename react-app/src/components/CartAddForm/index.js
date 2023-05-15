@@ -2,6 +2,7 @@ import { useState } from "react"
 import { addProdToCart, updateQty } from "../../store/cart"
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import "../CartQtyForm/cartForm.css"
 
 export default function CartAddForm({ id, fCls }) {
     const dispatch = useDispatch()
@@ -31,8 +32,8 @@ export default function CartAddForm({ id, fCls }) {
         }
 
         cartArr.forEach((rel) => {
-            if(rel.product_id === newCartRel.prodId && rel.user_id === newCartRel.user) {
-                
+            if (rel.product_id === newCartRel.prodId && rel.user_id === newCartRel.user) {
+
             }
         })
 
@@ -50,9 +51,17 @@ export default function CartAddForm({ id, fCls }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input id="quantity-input" type="number" step={1} placeholder={qty} min={1} max={15} value={qty} onChange={updateFQty}></input>
-            <button type="submit">Save</button>
-        </form>
+        <div className="cart-form-containter">
+            <div className="cart-form-title">
+                <h1>How many would you like to buy?</h1>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <div className="qty-input-container">
+                    <label for="quantity-input">Qty:</label>
+                    <input id="quantity-input" type="number" step={1} placeholder={qty} min={1} max={15} value={qty} onChange={updateFQty}></input>
+                    <button className="cart-save-button" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
     )
 }
