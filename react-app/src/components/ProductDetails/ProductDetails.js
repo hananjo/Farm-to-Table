@@ -21,7 +21,7 @@ const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const user = useSelector((state) => {
     return state?.session.user;
@@ -34,7 +34,7 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(loadReviews(id));
-    setLoading(true)
+    setLoading(true);
   }, [dispatch, id]);
 
   // console.log(product.description)
@@ -57,10 +57,6 @@ const ProductDetails = () => {
   const filteredReviews = Object.values(reviews).filter(
     (review) => review?.product_id === products?.id
   );
-
-
-
-
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
@@ -86,12 +82,11 @@ const ProductDetails = () => {
   const handleAddReview = async () => {
     setModalContent(<AddReviewModal id={id} />);
     openModal();
-    dispatch(loadReviews(id))
+    dispatch(loadReviews(id));
   };
 
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
-
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
     // await dispatch(loadReviews(id));
     openModal();
@@ -103,24 +98,24 @@ const ProductDetails = () => {
     openModal();
   };
 
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if(sessionUser) {
+    if (sessionUser) {
       dispatch(getCart(user?.id));
     }
-    setIsLoaded(true)
-  }, [dispatch, user])
+    setIsLoaded(true);
+  }, [dispatch, user]);
 
-  const cart = useSelector(state => state?.cart)
+  const cart = useSelector((state) => state?.cart);
 
-  const cartArr = isLoaded && cart && Object.values(cart)
+  const cartArr = isLoaded && cart && Object.values(cart);
 
   console.log("cart items", cartArr);
 
   const handleAddtoCart = () => {
-    let isDuplicate = false
-    let cartRel = {}
+    let isDuplicate = false;
+    let cartRel = {};
 
     console.log("Compare ", product.id, user.id);
 
@@ -131,10 +126,10 @@ const ProductDetails = () => {
       cartArr.forEach((rel) => {
         console.log(rel.product_id, rel.user_id);
         if (rel.product_id === product.id && rel.user_id === user.id) {
-          isDuplicate = true
-          cartRel = rel
+          isDuplicate = true;
+          cartRel = rel;
         }
-      })
+      });
 
       console.log(isDuplicate);
 
@@ -156,7 +151,9 @@ const ProductDetails = () => {
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
               <img
-                src={product && product?.images && product?.images[0]?.image_url}
+                src={
+                  product && product?.images && product?.images[0]?.image_url
+                }
                 style={{ width: "450px", height: "400px" }}
               />
             </div>
@@ -189,14 +186,16 @@ const ProductDetails = () => {
               ) : (
                 <br />
               )}
-              {sessionUser && (<div className="add-to-cart-button">
-                <button
-                  className="add-to-cart"
-                  onClick={() => handleAddtoCart()}
-                >
-                  Add to cart
-                </button>
-              </div>)}
+              {sessionUser && (
+                <div className="add-to-cart-button">
+                  <button
+                    className="add-to-cart"
+                    onClick={() => handleAddtoCart()}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -211,14 +210,9 @@ const ProductDetails = () => {
             </div>
 
             {sessionUser && !isOwner && !hasReviewed && (
-
-              <button
-              className="review-button"
-              onClick={handleAddReview}
-              >
-
-              Post a Review
-            </button>
+              <button className="review-button" onClick={handleAddReview}>
+                Post a Review
+              </button>
             )}
 
             {product_reviews &&
@@ -310,7 +304,7 @@ const ProductDetails = () => {
                       className="delete-button"
                       id={review?.id}
                       onClick={() => handleDeleteReview(review.id, product.id)}
-                    // disabled={!sessionUser}
+                      // disabled={!sessionUser}
                     >
                       Delete Review
                     </button>
@@ -321,7 +315,9 @@ const ProductDetails = () => {
               ))}
           </div>
         </div>
-      ) : ("Page not found")}
+      ) : (
+        "Page not found"
+      )}
     </div>
   );
 };
