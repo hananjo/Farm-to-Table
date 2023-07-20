@@ -22,7 +22,7 @@ https://dhl-groceries.onrender.com/
 
 Farm-to-Table is a seller/buyer app that allows users to retrieve, create, update and delete products. A a logged in buyer can browse through products on the landing page and add any items in their shopping cart. The user can also select a quantity of each item added. Users can click on individual products to redirect to a product detail page, where they can read reviews left by other users. A user can add, update and delete a review with a 1-5 star rating feature.
 
-## Landing Page:
+# Landing Page:
 
 # Logged out:
 
@@ -65,24 +65,3 @@ https://github.com/hananjo/Python-Project-.wiki.git
 
 https://github.com/hananjo/Python-Project-.wiki.git
 
-## Component List:
-
-- AddReviewModal
-- Cart
-- CartAddForm
-- CartQtyForm
-- Categories
-- CreateProductForm
-- DeleteProductModal
-- DeleteReviewModal
-- Duplicate
-- LoginFormModal
-- Navigation
-- OpenModalButton
-- Owned
-- PageNotFound
-- ProductDetails
-- Products
-- Reviews
-- SignupFormModal
-- UpdateProduct
