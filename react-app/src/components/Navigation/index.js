@@ -58,19 +58,7 @@ function Navigation({ isLoaded }) {
           </li>
         </div>
 
-        <div className="search-container">
-          <li>
 
-            <input type='search'
-              placeholder="Search an item "
-              className="prodsearch"
-              value={searchTerm}
-              onChange={handleInput}
-              onKeyPress={keyPress}
-            />
-          </li>
-
-        </div>
 
         <div className="nav-right">
           {isLoaded && (
@@ -85,6 +73,20 @@ function Navigation({ isLoaded }) {
               </NavLink>)}
             </li>
           </div>
+
+          <div className="search-container">
+          <li>
+
+            <input type='search'
+              placeholder="Search an item "
+              className="prodsearch"
+              value={searchTerm}
+              onChange={handleInput}
+              onKeyPress={keyPress}
+            />
+          </li>
+
+        </div>
           <div className="post-product-label">
             {sessionUser && (
               <li>
