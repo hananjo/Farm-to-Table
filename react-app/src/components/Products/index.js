@@ -20,7 +20,7 @@ const Products = () => {
   const sessionUser = useSelector(state => state?.session?.user)
 
   const products = useSelector((state) => {
-    console.log(state.product, "%%%%%");
+    // console.log(state.product, "%%%%%");
     return Object.values(state?.product);
   });
 
@@ -36,7 +36,7 @@ const Products = () => {
   // const images = useSelector((state) => {
   //   return Object.values(state?.images);
   // });
-  console.log(products, "PRODUCTS***");
+  // console.log(products, "PRODUCTS***");
   useEffect(() => {
     dispatch(getAllProducts());
     // dispatch(getProductImages());

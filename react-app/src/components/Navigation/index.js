@@ -1,11 +1,46 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const foods = useSelector(state => state?.product)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [grocery, setGrocery] = useState([])
+  // console.log("FOOD", food)
   const sessionUser = useSelector((state) => state.session.user);
+
+
+  useEffect(() => {
+    if(foods) {
+      const filtered = Object.values(foods).filter(food =>
+        food.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()))
+        setGrocery(filtered)
+    }
+  }, [foods, searchTerm])
+
+  const handleInput = e => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(grocery.length > 0) {
+      const foodId = grocery[0].id
+      history.push(`/products/${foodId}`)
+    }
+
+  }
+
+  const keyPress = (e) => {
+    if(e.key === "Enter") {
+      handleSearch(e)
+    }
+  }
 
   return (
     <ul className="navbar">
@@ -22,6 +57,21 @@ function Navigation({ isLoaded }) {
             </NavLink>
           </li>
         </div>
+
+        <div className="search-container">
+          <li>
+
+            <input type='search'
+              placeholder="Search an item "
+              className="prodsearch"
+              value={searchTerm}
+              onChange={handleInput}
+              onKeyPress={keyPress}
+            />
+          </li>
+
+        </div>
+
         <div className="nav-right">
           {isLoaded && (
             <li>
