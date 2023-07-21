@@ -29,13 +29,8 @@ def user(id):
 @user_routes.route('<int:id>/cart')
 # @login_required
 def cart(id):
-    # Get the current user
-    # currUser = current_user.to_dict().id
-
     cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == id)
-    # print("**********", products_query)
     cartRels = cartRel_query.all()
-    # print('----------', products)
     cartProducts = []
     if (len(cartRels) > 0):
         for rel in cartRels:
@@ -48,11 +43,7 @@ def cart(id):
 # This is going to be a button on the product detail page where a user can click and add that product to the cart
 @user_routes.route('<int:userId>/cart/<int:prodId>', methods=['POST'])
 def addToCart(userId, prodId):
-    # currUser = current_user.id
-
     form = CartForm()
-
-    # print("************", form.quantity.data, form.user_id.data)
 
     # Creating the cart relationship
     cartRel = Cart_Item(product_id=prodId, user_id=userId, quantity=form.quantity.data)
@@ -61,21 +52,11 @@ def addToCart(userId, prodId):
     db.session.add(cartRel)
     db.session.commit()
 
-    # Return success message
-
     return cartRel.to_dict()
-    # Gives us:
-        # {
-        #     id,
-        #     prodId,
-        #     userId
-        # }
 
 # Edit the quantity of a certain product in the cart
 @user_routes.route('<int:userId>/cart/<int:prodId>', methods=['PUT'])
 def updateCart(userId, prodId):
-    # currUser = current_user.id
-
     form = CartForm()
 
     cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
@@ -85,21 +66,16 @@ def updateCart(userId, prodId):
 
     db.session.commit()
 
-    # print("-----------", cartRel.to_dict())
-
     return cartRel.to_dict()
 
 @user_routes.route('<int:userId>/cart/<int:prodId>', methods=['DELETE'])
 def deleteFromCart(userId, prodId):
-    # currUser = current_user.id
 
     cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId).one()
-    # cartRel = cartRel_query.one()
 
-    test1 = cartRel_query.to_dict() # print(cartRel.to_dict(), "101")
+    test1 = cartRel_query.to_dict()
     db.session.delete(cartRel_query)
 
     db.session.commit()
-    # test2 = cartRel.to_dict()
-    # print(cartRel.to_dict(), "104")
+
     return cartRel_query.to_dict()

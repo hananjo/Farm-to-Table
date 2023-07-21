@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory, useParams } from "react-router-dom";
-// import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductDetails, deleteProduct } from "../../store/product";
-// import { addToCart } from "../../store/cart"
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
@@ -30,22 +28,17 @@ const ProductDetails = () => {
     return state?.product.details;
   });
 
-  // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(loadReviews(id));
     setLoading(true)
   }, [dispatch, id]);
 
-  // console.log(product.description)
 
   const products = useSelector((state) => state.product);
   const product_reviews = useSelector(
     (state) => state?.product?.details?.reviews
   );
-  // console.log(product_reviews, "REVIEWS");
-  // console.log(products, "PRODUCTS")
-  // console.log(products.details.owner_id)
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
@@ -64,14 +57,12 @@ const ProductDetails = () => {
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
-  // console.log(sessionUser)
 
   // Grabs current logged-in user's id
   const sessionUserId = useSelector((state) => state.session.user?.id);
 
   // Checks if product-owner is also the logged-in user
   const isOwner = product && product.owner_id === sessionUserId;
-  // console.log(isOwner)
 
   // Checks if logged-in user has at least 1 review for a product
   const hasReviewed = filteredReviews.some(
@@ -93,12 +84,10 @@ const ProductDetails = () => {
   const handleDeleteReview = async (reviewId) => {
 
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
-    // await dispatch(loadReviews(id));
     openModal();
   };
 
   const handleDeleteProduct = async (id) => {
-    // console.log(reviewId, "67");
     setModalContent(<DeleteProductModal id={id} />);
     openModal();
   };
@@ -116,30 +105,23 @@ const ProductDetails = () => {
 
   const cartArr = isLoaded && cart && Object.values(cart)
 
-  console.log("cart items", cartArr);
-
   const handleAddtoCart = () => {
     let isDuplicate = false
     let cartRel = {}
 
-    console.log("Compare ", product.id, user.id);
 
     if (user.id === product.owner_id) {
       setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
       openModal();
     } else {
       cartArr.forEach((rel) => {
-        console.log(rel.product_id, rel.user_id);
         if (rel.product_id === product.id && rel.user_id === user.id) {
           isDuplicate = true
           cartRel = rel
         }
       })
 
-      console.log(isDuplicate);
-
       if (isDuplicate) {
-        console.log("Duplicate");
         setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
         openModal();
       } else {
@@ -181,7 +163,6 @@ const ProductDetails = () => {
                   <button
                     className="delete-detail-button"
                     onClick={() => handleDeleteProduct(id)}
-                    // onClick={openMenu}
                   >
                     Delete
                   </button>
@@ -207,7 +188,6 @@ const ProductDetails = () => {
                 {product_reviews.length === 1 ? "Review" : "Reviews"} (
                 {product_reviews.length})
               </h2>
-              {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
             {sessionUser && !isOwner && !hasReviewed && (
@@ -310,7 +290,6 @@ const ProductDetails = () => {
                       className="delete-button"
                       id={review?.id}
                       onClick={() => handleDeleteReview(review.id, product.id)}
-                    // disabled={!sessionUser}
                     >
                       Delete Review
                     </button>

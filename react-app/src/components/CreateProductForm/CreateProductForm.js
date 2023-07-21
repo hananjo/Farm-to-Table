@@ -54,7 +54,6 @@ const CreateProductForm = () => {
         owner_id: user,
         image_url: image
       };
-      console.log(type, "TYPE");
       let addedNewProduct;
       addedNewProduct = await dispatch(addNewProduct(productFormInput));
 
@@ -95,12 +94,10 @@ const CreateProductForm = () => {
           <div className="name-and-input">
             <div className="name-area">
               <h3>Name *</h3>
-              {/* <div className='name-sub-area'> */}
               <p>
                 What is the name of your product? Choose a name that best
                 represents your product.
               </p>
-              {/* </div> */}
             </div>
 
             <div className="name-input-area2">
@@ -170,18 +167,6 @@ const CreateProductForm = () => {
             </div>
           </div>
         </div>
-        {/* <select
-          style={{ width: "200px", height: "20px" }}
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          <option value={"Fruit"}>Fruit</option>
-          <option value={"Vegetable"}>Vegetable</option>
-          <option value={"Dairy"}>Dairy</option>
-          <option value={"Meat"}>Meat</option>
-          <option value={"Bakery"}>Bakery</option>
-        </select> */}
         <div className="price-container">
           <div className="pricing-title">
             <h2>Pricing</h2>

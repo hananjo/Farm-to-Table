@@ -36,13 +36,3 @@ class User(db.Model, UserMixin):
             'email': self.email
         }
 
-# join table between user and products
-# class Cart(db.Model):
-#     __tablename__ = 'carts'
-
-#     userId = db.Column(db.Integer, ForeignKey('users.id'))
-#     productId = db.Column(db.Integer, ForeignKey('products.id'))
-#     # quantity = db.Column(db.Integer)
-
-#     owner = db.relationship("User")
-#     product = db.relationship("Product")

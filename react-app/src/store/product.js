@@ -28,7 +28,6 @@ export const getAllProducts = () => async (dispatch) => {
 
   if (response.ok) {
     const list = await response.json();
-    // console.log(list.products, "^^^^^^^^");
     dispatch(load(list.products));
   }
 };
@@ -38,17 +37,12 @@ export const getProductsByCategory = (category) => async (dispatch) => {
 
   if (response.ok) {
     const list = await response.json();
-    console.log(list.products, "^^^^^^^^");
     dispatch(load(list.products));
   }
 };
 
 export const addNewProduct = (data) => async (dispatch) => {
   const { owner_id, price, description, name, type, image_url } = data;
-  //   console.log(data, "*****");
-  //   console.log(typeof data.price === "string");
-  //   console.log(data.type);
-  //   data.price = parseFloat(data.price);
 
   const response = await fetch("/api/products/", {
     method: "POST",
@@ -65,7 +59,6 @@ export const addNewProduct = (data) => async (dispatch) => {
   let product;
   if (response.ok) {
     product = await response.json();
-    // console.log(product, "PRODUCT");
     dispatch(addProduct(product));
     return product;
   }
@@ -79,16 +72,8 @@ export const getProductDetails = (id) => async (dispatch) => {
   }
 };
 
-// export const getProductImage = (id) => async (dispatch) => {
-//   const response = await fetch(`/api/products/${id}/images`);
-//   if (response.ok) {
-//     const product = await response.json();
-//     dispatch(loadDetails(product));
-//   }
-// };
 export const updateProduct = (id, data) => async (dispatch) => {
   const { owner_id, name, description, type, price, image_url } = data;
-  // console.log(data, "DATA****");
   const response = await fetch(`/api/products/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -113,7 +98,6 @@ export const deleteProduct = (id) => async (dispatch) => {
   const response = await fetch(`/api/products/${id}`, {
     method: "DELETE",
   });
-  console.log(response, "DELETE RESPONSE");
   if (response.ok) {
     const product = await response.json();
     dispatch(removeProduct(product));

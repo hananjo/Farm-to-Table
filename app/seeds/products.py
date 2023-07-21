@@ -1,8 +1,6 @@
 from app.models import db, Product, environment, SCHEMA
 from sqlalchemy.sql import text
 
-
-# Adds a demo user, you can add other users here if you want
 def seed_products():
     apple = Product(
         name='Apple', description='Our apples are picked straight from the orchard and ready for you to enjoy! Our appless are carefully selected for their vibrant red and green colors, crisp texture and juicy sweetness!', price=1.50, type='Fruit', owner_id=1)
@@ -54,14 +52,7 @@ def seed_products():
     db.session.add(cheese)
     db.session.add(yogurt)
     db.session.commit()
- ## fruit, veg, dairy, meat, bakery
-
-# Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
-# have a built in function to do this. With postgres in production TRUNCATE
-# removes all the data from the table, and RESET IDENTITY resets the auto
-# incrementing primary key, CASCADE deletes any dependent entities.  With
-# sqlite3 in development you need to instead use DELETE to remove all data and
-# it will reset the primary keys for you as well.
+    
 def undo_products():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")

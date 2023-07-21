@@ -13,8 +13,6 @@ const DeleteReviewModal = ({ id, productId }) => {
     e.preventDefault();
     await dispatch(deleteReview(id && id));
     await dispatch(getProductDetails(productId));
-    // await dispatch(getProductDetails(productId));
-    // await dispatch(loadReviews(productId))
     closeModal();
   };
 

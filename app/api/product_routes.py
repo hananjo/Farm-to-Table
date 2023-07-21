@@ -5,9 +5,7 @@ from app.forms.image_form import ImageForm
 from app.forms.review_form import ReviewForm
 from flask_login import login_required, current_user
 
-product_routes = Blueprint('products', __name__,
-# url_prefix='/products'
-)
+product_routes = Blueprint('products', __name__)
 
 @product_routes.route('/')
 def get_all_products():
@@ -28,7 +26,6 @@ def get_products_by_category(category):
         product_dict = product.to_dict()
         product_list.append(product_dict)
 
-    # print("route products are ", product_list)
     return jsonify({'products': product_list})
 
 @product_routes.route('/<int:id>')
@@ -44,9 +41,6 @@ def get_product_details(id):
 def create_product():
 
     form = ProductForm()
-    # print(form, 'FORM')
-    # print('hello')
-    # print(form.price.data, form.type.data, 'TESTING')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
 
@@ -105,11 +99,8 @@ def update_product(id):
 
 
         image.image_url = image_url
-        print(image.image_url, "@@@@@@@@@@@@@@@@@ IMAGE URL 108 @@@@@@@@@@@@@@@@@@@")
         # new_image = Image(image_url=image_url, product_id=product.id)
-        # print(new_image.to_dict(), "*************************TODICT*****")
         # product.image_url = new_image.image_url
-        # print(image_url,"IMG URL")
         # db.session.add(new_image)
         # product.image.append(new_image)
 

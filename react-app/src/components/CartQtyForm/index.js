@@ -9,12 +9,8 @@ export default function CartQtyForm({ prod, fCls }) {
     const user = useSelector(state => state.session.user.id)
     const [qty, setQty] = useState(prod.quantity)
     const { closeModal } = useModal()
-    // console.log(prod.product_id, "product");
-    console.log(fCls);
-    console.log(qty, "quantity");
 
     const updateFQty = (e) => {
-        console.log(e.target.id);
         setQty(e.target.value)
 
     }
@@ -29,16 +25,13 @@ export default function CartQtyForm({ prod, fCls }) {
         }
 
         if (fCls === "add") {
-            console.log("dispatching add");
             dispatch(addProdToCart(newCartRel))
         } else if (fCls === "update") {
-            console.log("dispatching update");
             dispatch(updateQty(newCartRel))
         }
 
         closeModal()
 
-        // setDisplay("hidden")
     }
 
     return (

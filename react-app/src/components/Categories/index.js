@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductsByCategory } from "../../store/product";
 import "./categories.css";
@@ -19,30 +18,12 @@ const Categories = () => {
     const sessionUser = useSelector(state => state?.session?.user)
     const [isLoaded, setIsLoaded] = useState(false)
 
-    console.log("The category is ", category);
-
-
-
-    // const images = useSelector((state) => {
-    //   return Object.values(state?.images);
-    // });
-
     useEffect(() => {
         dispatch(getProductsByCategory(category));
-        console.log("hit", category);
-        // dispatch(getProductImages());
     }, [dispatch, category]);
 
-    const products = useSelector((state) => {
-        console.log(state.product, "%%%%%");
-        return Object.values(state?.product);
-    });
-
-    if (products.length < 1) {
-        history.push("/not_found")
-    }
-
-    console.log("The products in this category are ", products);
+    const products = useSelector(state => state?.product)
+    const prodArr = products && Object.values(products)
 
     useEffect(() => {
         dispatch(getCart(user));
@@ -87,7 +68,6 @@ const Categories = () => {
     };
 
     const handleClick = (e) => {
-        console.log(e.target.id);
         history.push(`/products/${e.target.id}`)
     }
 
@@ -180,7 +160,7 @@ const Categories = () => {
                 </div>
             </div>
             <div className="product-and-pricing">
-                {products?.map((product) => {
+                {prodArr?.map((product) => {
                     return (
                         <div>
                             <NavLink
@@ -194,8 +174,6 @@ const Categories = () => {
                                             product && product.images && product?.images[0]?.image_url
                                         }
                                         style={{
-                                            // width: "200px",
-                                            // marginLeft: "400px",
                                             marginRight: "30px",
                                             marginBottom: "30px",
                                             marginTop: "30px",

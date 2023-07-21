@@ -20,7 +20,6 @@ const Products = () => {
   const sessionUser = useSelector(state => state?.session?.user)
 
   const products = useSelector((state) => {
-    console.log(state.product, "%%%%%");
     return Object.values(state?.product);
   });
 
@@ -33,13 +32,8 @@ const Products = () => {
 
   const cartArr = Object.values(cart)
 
-  // const images = useSelector((state) => {
-  //   return Object.values(state?.images);
-  // });
-  console.log(products, "PRODUCTS***");
   useEffect(() => {
     dispatch(getAllProducts());
-    // dispatch(getProductImages());
   }, [dispatch]);
 
   const { setModalContent } = useModal();
@@ -52,10 +46,8 @@ const Products = () => {
   const handleAddtoCart = (e, prodId, ownerId) => {
     let isDuplicate = false
     let cartRel = {}
-    // let userId = isLoaded && user.id
     e.preventDefault();
 
-    console.log("ids", user, ownerId);
     if (user === ownerId) {
       setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
       openModal();
@@ -104,7 +96,6 @@ const Products = () => {
               </div>
             </NavLink>
           </div>
-          {/* <div className="veggie-dairy-conatiner"> */}
           <NavLink to={`/category/Vegetable`} style={{ textDecoration: "none" }}>
             <div className="category">
               <img
@@ -152,7 +143,6 @@ const Products = () => {
               </div>
             </div>
           </NavLink>
-          {/* </div> */}
         </div>
       </div>
       <div className="product-and-pricing">
@@ -171,8 +161,6 @@ const Products = () => {
                       product && product.images && product?.images[0]?.image_url
                     }
                     style={{
-                      // width: "200px",
-                      // marginLeft: "400px",
                       marginRight: "30px",
                       marginBottom: "30px",
                       marginTop: "30px",
@@ -190,7 +178,6 @@ const Products = () => {
                       onClick={(e) => handleAddtoCart(e, product.id, product.owner_id)}
                       style={{
                         clipPath: "circle(40%)",
-                        // width: "20px",
                       }}
                     ><i class="fa-solid fa-plus"></i></button>
                   )}
