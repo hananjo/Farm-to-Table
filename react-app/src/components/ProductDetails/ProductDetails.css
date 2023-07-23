@@ -135,9 +135,17 @@
     width: 390px;
 }
 
+.page-not-found-detail {
+    font-size: 35px;
+    margin-top: 120px;
+}
 
 .avatar-and-review {
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+.loader {
+    margin-top: 120px;
 }

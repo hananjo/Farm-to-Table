@@ -1,6 +1,6 @@
 .image-categories {
     width: 100px;
-    border: 2px solid green
+    border: 2px solid green;
 }
 
 .category-container {
@@ -13,6 +13,7 @@
     margin-top: 30px;
     margin-left: -30px;
     margin-right: -20px;
+
 }
 .categories-title {
     font-size: 20px;
@@ -35,7 +36,7 @@
 }
 
 .category:hover {
-    text-decoration: underline;
+    color: black;
 }
 
 .category-names {
@@ -45,8 +46,13 @@
 .category-name-meat {
     font-size: 15px;
     margin-top: -3px;
+    color: black;
 }
 
+.category-name-meat:hover{
+    text-decoration: underline;
+    color:rgb(255, 121, 49)
+}
 a:visited {
     color: black
 }
@@ -121,4 +127,16 @@ a:visited {
     background-color: black;
     color: white;
     width: 40px;
+}
+
+.your-product-landing{
+    position: absolute;
+    font-size: 14px;
+    margin-top: 5px;
+    background: white;
+    border: 1px solid black;
+    width: 80px;
+    height: 18px;
+    text-align: center;
+    color: black;
 }

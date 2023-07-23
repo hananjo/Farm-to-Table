@@ -16,7 +16,7 @@ import DuplicateAdd from "../Duplicate";
 import { getCart } from "../../store/cart";
 import OwnerAdd from "../Owned";
 import NotFound from "../PageNotFound";
-
+import FadeLoader from "react-spinners/FadeLoader";
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -37,6 +37,12 @@ const ProductDetails = () => {
     setLoading(true);
   }, [dispatch, id]);
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1900);
+  }, []);
   // console.log(product.description)
 
   const products = useSelector((state) => state.product);
@@ -146,7 +152,13 @@ const ProductDetails = () => {
 
   return (
     <div className="detail-page-container">
-      {product && product?.id ? (
+      {loading ? (
+        <>
+          <div className="loader">
+            <FadeLoader color="#eb803d" height={20} width={6} />
+          </div>
+        </>
+      ) : product && product?.id ? (
         <div>
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
@@ -316,7 +328,7 @@ const ProductDetails = () => {
           </div>
         </div>
       ) : (
-        "Page not found"
+        <div className="page-not-found-detail">Page not found</div>
       )}
     </div>
   );

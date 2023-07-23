@@ -10,14 +10,14 @@ import CartQtyForm from "../CartQtyForm";
 import DuplicateAdd from "../Duplicate";
 import { getCart } from "../../store/cart";
 import OwnerAdd from "../Owned";
-
+// import FadeLoader from "react-spinners/FadeLoader";
 const Products = () => {
   const dispatch = useDispatch();
 
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  const user = useSelector(state => state?.session?.user?.id)
-  const sessionUser = useSelector(state => state?.session?.user)
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state?.session?.user?.id);
+  const sessionUser = useSelector((state) => state?.session?.user);
 
   const products = useSelector((state) => {
     console.log(state.product, "%%%%%");
@@ -26,12 +26,18 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(getCart(user));
-    setIsLoaded(true)
-  }, [dispatch, user])
+    setIsLoaded(true);
+  }, [dispatch, user]);
 
-  const cart = useSelector(state => state.cart)
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1900);
+  // }, []);
+  const cart = useSelector((state) => state.cart);
 
-  const cartArr = Object.values(cart)
+  const cartArr = Object.values(cart);
 
   // const images = useSelector((state) => {
   //   return Object.values(state?.images);
@@ -50,8 +56,8 @@ const Products = () => {
   };
 
   const handleAddtoCart = (e, prodId, ownerId) => {
-    let isDuplicate = false
-    let cartRel = {}
+    let isDuplicate = false;
+    let cartRel = {};
     // let userId = isLoaded && user.id
     e.preventDefault();
 
@@ -62,10 +68,10 @@ const Products = () => {
     } else {
       cartArr.forEach((rel) => {
         if (rel.product_id === prodId && rel.user_id === user) {
-          isDuplicate = true
-          cartRel = rel
+          isDuplicate = true;
+          cartRel = rel;
         }
-      })
+      });
 
       if (isDuplicate) {
         setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
@@ -85,6 +91,13 @@ const Products = () => {
         </div>
         <div className="categories-and-names">
           <div className="fruits-nav-container">
+            {/* {loading ? (
+              <>
+                <div className="loader">
+                  <FadeLoader color="#eb803d" height={20} width={6} />
+                </div>
+              </>
+            ) : ( */}
             <NavLink to={`/category/Fruit`} style={{ textDecoration: "none" }}>
               <div className="category">
                 <img
@@ -103,9 +116,13 @@ const Products = () => {
                 </div>
               </div>
             </NavLink>
+            {/* )} */}
           </div>
           {/* <div className="veggie-dairy-conatiner"> */}
-          <NavLink to={`/category/Vegetable`} style={{ textDecoration: "none" }}>
+          <NavLink
+            to={`/category/Vegetable`}
+            style={{ textDecoration: "none" }}
+          >
             <div className="category">
               <img
                 src={
@@ -157,6 +174,7 @@ const Products = () => {
       </div>
       <div className="product-and-pricing">
         {products?.map((product) => {
+          const isOwner = product.owner_id === user;
           return (
             <div>
               <NavLink
@@ -184,15 +202,21 @@ const Products = () => {
                   ${product.price.toFixed(2)}
                 </div>
                 <div className="product-add-buttons">
-                  {sessionUser && (
+                  {sessionUser && !isOwner ? (
                     <button
                       className="add-to-cart-2"
-                      onClick={(e) => handleAddtoCart(e, product.id, product.owner_id)}
+                      onClick={(e) =>
+                        handleAddtoCart(e, product.id, product.owner_id)
+                      }
                       style={{
                         clipPath: "circle(40%)",
                         // width: "20px",
                       }}
-                    ><i class="fa-solid fa-plus"></i></button>
+                    >
+                      <i class="fa-solid fa-plus"></i>
+                    </button>
+                  ) : (
+                    <div className="your-product-landing">Your product</div>
                   )}
                 </div>
               </NavLink>
