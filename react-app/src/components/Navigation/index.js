@@ -7,11 +7,10 @@ import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const history = useHistory();
-  const dispatch = useDispatch();
   const foods = useSelector(state => state?.product)
   const [searchTerm, setSearchTerm] = useState("");
   const [grocery, setGrocery] = useState([])
-  // console.log("FOOD", food)
+
   const sessionUser = useSelector((state) => state.session.user);
 
 
@@ -23,7 +22,7 @@ function Navigation({ isLoaded }) {
     }
   }, [foods, searchTerm])
 
-  const handleInput = e => {
+  const handleInput = (e) => {
     setSearchTerm(e.target.value);
   };
 
@@ -33,7 +32,6 @@ function Navigation({ isLoaded }) {
       const foodId = grocery[0].id
       history.push(`/products/${foodId}`)
     }
-
   }
 
   const keyPress = (e) => {
