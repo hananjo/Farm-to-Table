@@ -14,11 +14,13 @@ import DuplicateAdd from "../Duplicate";
 import { getCart } from "../../store/cart";
 import OwnerAdd from "../Owned";
 import NotFound from "../PageNotFound";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [isLoaded, setIsLoaded] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const user = useSelector((state) => {
@@ -31,14 +33,23 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(loadReviews(id));
+    setIsLoaded(true)
     setLoading(true)
   }, [dispatch, id]);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
 
 
   const products = useSelector((state) => state.product);
   const product_reviews = useSelector(
     (state) => state?.product?.details?.reviews
   );
+
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
@@ -92,10 +103,8 @@ const ProductDetails = () => {
     openModal();
   };
 
-  const [isLoaded, setIsLoaded] = useState(false)
-
   useEffect(() => {
-    if(sessionUser) {
+    if (sessionUser) {
       dispatch(getCart(user?.id));
     }
     setIsLoaded(true)
@@ -133,7 +142,13 @@ const ProductDetails = () => {
 
   return (
     <div className="detail-page-container">
-      {product && product?.id ? (
+      {loading ? (
+        <>
+          <div className="loader">
+            <FadeLoader color="#eb803d" height={20} width={6} />
+          </div>
+        </>
+      ) : isLoaded && product ? (
         <div>
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
@@ -144,17 +159,17 @@ const ProductDetails = () => {
             </div>
             <div className="product-detail-information">
               <div className="product-detail-price">
-                <p>${product.price.toFixed(2)}</p>
+                <p>${product?.price.toFixed(2)}</p>
               </div>
               <div className="product-detail-name">
-                <p>{product.name}</p>
+                <p>{product?.name}</p>
               </div>
               <div className="product-detail-description">
-                <p>{product.description}</p>
+                <p>{product?.description}</p>
               </div>
 
-              <p>Product type: {product.type}</p>
-              {user && product && user.id === product.owner_id ? (
+              <p>Product type: {product?.type}</p>
+              {user && product && user?.id === product?.owner_id ? (
                 <div className="update-and-delete-buttons">
                   <NavLink to={`/products/${id}/update`}>
                     <button className="update-detail-button">Update</button>
@@ -185,20 +200,20 @@ const ProductDetails = () => {
             <div className="review-title">
               <h2>
                 {" "}
-                {product_reviews.length === 1 ? "Review" : "Reviews"} (
-                {product_reviews.length})
+                {product_reviews?.length === 1 ? "Review" : "Reviews"} (
+                {product_reviews?.length})
               </h2>
             </div>
 
             {sessionUser && !isOwner && !hasReviewed && (
 
               <button
-              className="review-button"
-              onClick={handleAddReview}
+                className="review-button"
+                onClick={handleAddReview}
               >
 
-              Post a Review
-            </button>
+                Post a Review
+              </button>
             )}
 
             {product_reviews &&
@@ -285,11 +300,11 @@ const ProductDetails = () => {
                   </div>
                   <p className="review-comment">{review?.review}</p>
 
-                  {user && reviews && user.id === review.userId ? (
+                  {user && reviews && user?.id === review?.userId ? (
                     <button
                       className="delete-button"
                       id={review?.id}
-                      onClick={() => handleDeleteReview(review.id, product.id)}
+                      onClick={() => handleDeleteReview(review?.id, product?.id)}
                     >
                       Delete Review
                     </button>
@@ -300,7 +315,7 @@ const ProductDetails = () => {
               ))}
           </div>
         </div>
-      ) : ("Page not found")}
+      ) : (<NotFound />)}
     </div>
   );
 };
