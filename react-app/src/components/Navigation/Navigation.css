@@ -158,6 +158,29 @@ li {
   margin-left: -10px;
 }
 
-.search-container {
+.search-container{
+  margin-top: -6px;
+}
+.search-container input {
+  background-color: rgb(239, 236, 234);
+  border-radius: 5px;
+  height: 23px;
+  padding: 6px;
+  border: 1px solid rgb(237, 221, 190);
+ outline-color: rgb(120, 120, 120);
+ font-size: 15px;
+
+
+}
+
+
+.search-and-profile{
+  display: flex;
+gap: 40px;
+
+
+}
+
+input.prodsearch {
 
 }
