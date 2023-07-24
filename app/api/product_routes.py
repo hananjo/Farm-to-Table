@@ -3,7 +3,9 @@ from app.models import Product, db, Review, Image
 from app.forms.product_form import ProductForm
 from app.forms.image_form import ImageForm
 from app.forms.review_form import ReviewForm
+from app.forms import NewImageForm
 from flask_login import login_required, current_user
+from app.aws import (upload_file_to_s3, get_unique_filename)
 
 product_routes = Blueprint('products', __name__)
 
@@ -57,7 +59,6 @@ def create_product():
             price=price,
             type=type,
             owner_id=owner_id
-
         )
 
         image_url = form.image_url.data
@@ -225,3 +226,25 @@ def delete_image(id):
 def get_images(id):
     images = Image.query.filter_by(product_id=id).all()
     return jsonify([image.to_dict() for image in images])
+
+@product_routes.route('/newImg', methods=["POST"])
+def add_url():
+    iForm = NewImageForm()
+
+    image = iForm.data['image']
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", image)
+
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2", upload)
+
+    # url = upload["url"]
+
+    # newImg = Image(url = url, product_id = id)
+
+    # db.session.add(newImg)
+    # db.session.commit()
+
+    return upload
