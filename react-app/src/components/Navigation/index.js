@@ -1,11 +1,43 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
+  const foods = useSelector((state) => state?.product);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [grocery, setGrocery] = useState([]);
+
+  useEffect(() => {
+    if (foods) {
+      const filtered = Object.values(foods).filter((food) =>
+        food.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+      );
+      setGrocery(filtered);
+    }
+  }, [foods, searchTerm]);
+
+  const handleInput = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (grocery.length > 0) {
+      const foodId = grocery[0].id;
+      history.push(`/products/${foodId}`);
+    }
+  };
+
+  const keyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(e);
+    }
+  };
 
   return (
     <ul className="navbar">
@@ -28,13 +60,28 @@ function Navigation({ isLoaded }) {
               <ProfileButton user={sessionUser} />
             </li>
           )}
-          <div className="cart-label">
+          <div className="search-container">
             <li>
-              {sessionUser && (<NavLink exact to="/cart">
-              <i class="fa-solid fa-cart-shopping"></i>
-              </NavLink>)}
+              <input
+                type="search"
+                placeholder="Search an item "
+                className="prodsearch"
+                value={searchTerm}
+                onChange={handleInput}
+                onKeyPress={keyPress}
+              />
             </li>
           </div>
+          <div className="cart-label">
+            <li>
+              {sessionUser && (
+                <NavLink exact to="/cart">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </NavLink>
+              )}
+            </li>
+          </div>
+
           <div className="post-product-label">
             {sessionUser && (
               <li>

@@ -32,6 +32,7 @@ li {
 .navbar {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 10px;
 
 }
 
@@ -78,7 +79,8 @@ li {
   border: 2px solid black;
   background-color: white;
   padding: 10px;
-  margin-left: -40px;
+  /* margin-left: -40px; */
+  margin-left: -105px;
 
 
 }
@@ -99,6 +101,7 @@ li {
 .logout-drop-down {
   border: 2px solid black;
   padding: 1px;
+  margin-left: -90px;
   margin-right: 50px;
   margin-top: 2px;
   background-color: white;
@@ -140,4 +143,21 @@ li {
 
 .fa-cart-shopping {
   color: rgb(234, 61, 90);
+}
+
+.fas.fa-user-circle {
+  font-size: 30px;
+  margin-top: -40px;
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.fa-solid.fa-cart-shopping{
+  font-size: 25px;
+  margin-top: -40px;
+  margin-left: -10px;
+}
+
+.search-container {
+
 }

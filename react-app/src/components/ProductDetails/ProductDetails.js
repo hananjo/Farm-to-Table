@@ -45,6 +45,7 @@ const ProductDetails = () => {
   }, []);
 
 
+
   const products = useSelector((state) => state.product);
   const product_reviews = useSelector(
     (state) => state?.product?.details?.reviews
@@ -61,10 +62,6 @@ const ProductDetails = () => {
   const filteredReviews = Object.values(reviews).filter(
     (review) => review?.product_id === products?.id
   );
-
-
-
-
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
@@ -88,12 +85,11 @@ const ProductDetails = () => {
   const handleAddReview = async () => {
     setModalContent(<AddReviewModal id={id} />);
     openModal();
-    dispatch(loadReviews(id))
+    dispatch(loadReviews(id));
   };
 
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
-
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
     openModal();
   };
@@ -107,16 +103,16 @@ const ProductDetails = () => {
     if (sessionUser) {
       dispatch(getCart(user?.id));
     }
-    setIsLoaded(true)
-  }, [dispatch, user])
+    setIsLoaded(true);
+  }, [dispatch, user]);
 
-  const cart = useSelector(state => state?.cart)
+  const cart = useSelector((state) => state?.cart);
 
-  const cartArr = isLoaded && cart && Object.values(cart)
+  const cartArr = isLoaded && cart && Object.values(cart);
 
   const handleAddtoCart = () => {
-    let isDuplicate = false
-    let cartRel = {}
+    let isDuplicate = false;
+    let cartRel = {};
 
 
     if (user.id === product.owner_id) {
@@ -125,10 +121,10 @@ const ProductDetails = () => {
     } else {
       cartArr.forEach((rel) => {
         if (rel.product_id === product.id && rel.user_id === user.id) {
-          isDuplicate = true
-          cartRel = rel
+          isDuplicate = true;
+          cartRel = rel;
         }
-      })
+      });
 
       if (isDuplicate) {
         setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
@@ -149,11 +145,14 @@ const ProductDetails = () => {
           </div>
         </>
       ) : isLoaded && product ? (
+
         <div>
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
               <img
-                src={product && product?.images && product?.images[0]?.image_url}
+                src={
+                  product && product?.images && product?.images[0]?.image_url
+                }
                 style={{ width: "450px", height: "400px" }}
               />
             </div>
@@ -185,14 +184,16 @@ const ProductDetails = () => {
               ) : (
                 <br />
               )}
-              {sessionUser && (<div className="add-to-cart-button">
-                <button
-                  className="add-to-cart"
-                  onClick={() => handleAddtoCart()}
-                >
-                  Add to cart
-                </button>
-              </div>)}
+              {sessionUser && (
+                <div className="add-to-cart-button">
+                  <button
+                    className="add-to-cart"
+                    onClick={() => handleAddtoCart()}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -206,12 +207,10 @@ const ProductDetails = () => {
             </div>
 
             {sessionUser && !isOwner && !hasReviewed && (
-
               <button
                 className="review-button"
                 onClick={handleAddReview}
               >
-
                 Post a Review
               </button>
             )}
@@ -305,6 +304,7 @@ const ProductDetails = () => {
                       className="delete-button"
                       id={review?.id}
                       onClick={() => handleDeleteReview(review?.id, product?.id)}
+
                     >
                       Delete Review
                     </button>
@@ -316,6 +316,7 @@ const ProductDetails = () => {
           </div>
         </div>
       ) : (<NotFound />)}
+
     </div>
   );
 };
