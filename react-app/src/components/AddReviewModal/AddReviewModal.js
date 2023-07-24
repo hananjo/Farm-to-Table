@@ -10,7 +10,6 @@ const AddReviewModal = ({ reviews, id }) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const { productId } = useParams();
-  console.log(id, "ID2");
   const product = useSelector((state) => state.product);
 
   const [review, setReview] = useState("");
@@ -33,8 +32,6 @@ const AddReviewModal = ({ reviews, id }) => {
       rating: rating,
     };
 
-    console.log(newReviewInput);
-    console.log(id, "ID");
     await dispatch(createReview(newReviewInput, id));
     await dispatch(getProductDetails(id));
     closeModal();

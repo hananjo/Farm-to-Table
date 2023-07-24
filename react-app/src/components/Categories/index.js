@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductsByCategory } from "../../store/product";
 import "./categories.css";
@@ -12,6 +11,7 @@ import OwnerAdd from "../Owned";
 import DuplicateAdd from "../Duplicate";
 import FadeLoader from "react-spinners/FadeLoader";
 const Categories = () => {
+  
   const dispatch = useDispatch();
   const { category } = useParams();
   const history = useHistory();

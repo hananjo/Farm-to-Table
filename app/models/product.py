@@ -15,7 +15,6 @@ class Product(db.Model):
     name = db.Column(db.Text(50), nullable=False, unique=True)
     description = db.Column(db.Text(250))
     price = db.Column(db.Float, nullable=False)
-    # rating = db.Column(db.Integer)
     type = db.Column(db.Text(250), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
 

@@ -24,6 +24,7 @@ python-editor = "==1.0.4"
 greenlet = "==2.0.1"
 Mako = "==1.2.4"
 flask = "*"
+boto3 = "*"
 
 [dev-packages]
 

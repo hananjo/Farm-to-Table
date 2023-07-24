@@ -12,12 +12,10 @@ const UpdateProductForm = (product) => {
   const products = useSelector((state) => {
     return state?.product.details;
   });
-  console.log(products?.images[0]?.image_url, "PRODUCTS IMG");
 
   const user = useSelector((state) => {
     return state.session.user.id;
   });
-  console.log(user, "USER STATE");
   const [name, setName] = useState(products?.name || '');
   const [description, setDescription] = useState(products?.description || '');
   const [price, setPrice] = useState(products?.price || 0);
@@ -26,8 +24,6 @@ const UpdateProductForm = (product) => {
   const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  console.log(image,'IMAGE')
 
   useEffect(() => {
     const validationErrors = [];
@@ -52,27 +48,42 @@ const UpdateProductForm = (product) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!errors.length) {
-      const productFormInput = {
-        ...product,
-        name,
-        description,
-        price,
-        type,
-        owner_id: user,
-        image_url: image
-      };
-      let updatedProduct;
+      const formData = new FormData()
 
-      updatedProduct = await dispatch(updateProduct(id, productFormInput));
+      formData.append("image", image)
 
-      if (updatedProduct) {
-        history.push(`/products/${id}`);
+      const res = await fetch('/api/products/newImg', {
+        method: 'POST',
+        body: formData
+      })
+
+      if(res.ok) {
+        let url = await res.json()
+        let img_url = url.url
+
+        const productFormInput = {
+          ...product,
+          name,
+          description,
+          price,
+          type,
+          owner_id: user,
+          image_url: img_url
+        };
+
+        let updatedProduct;
+
+        updatedProduct = await dispatch(updateProduct(id, productFormInput));
+
+        if (updatedProduct) {
+          history.push(`/products/${id}`);
+        }
       }
     }
   };
 
   return  (
-    <form onSubmit={handleSubmit}>
+    <form action="/posts/new" method="POST" enctype="multipart/form-data" onSubmit={handleSubmit}>
       <div className="form-title-banner"></div>
       <div className="form-container">
         <h2 className="title">Edit your product</h2>
@@ -216,7 +227,6 @@ const UpdateProductForm = (product) => {
         <div className="image-container">
           <div className="image-title">
               <h2>Image</h2>
-
           </div>
 
           <div className="image-and-input">
@@ -228,11 +238,12 @@ const UpdateProductForm = (product) => {
             <div className="image-input">
               <input
                 style={{ height: "40px" }}
-                type="text"
+                type="file"
                 name="image"
-                placeholder="Show us what your product looks like!"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                accept="image/*"
+                // placeholder="Show us what your product looks like!"
+                // value={image}
+                onChange={(e) => setImage(e.target.files[0])}
                 className="image-input-area"
               />
             </div>

@@ -3,11 +3,11 @@ from app.models import Product, db, Review, Image
 from app.forms.product_form import ProductForm
 from app.forms.image_form import ImageForm
 from app.forms.review_form import ReviewForm
+from app.forms import NewImageForm
 from flask_login import login_required, current_user
+from app.aws import (upload_file_to_s3, get_unique_filename)
 
-product_routes = Blueprint('products', __name__,
-# url_prefix='/products'
-)
+product_routes = Blueprint('products', __name__)
 
 @product_routes.route('/')
 def get_all_products():
@@ -28,7 +28,6 @@ def get_products_by_category(category):
         product_dict = product.to_dict()
         product_list.append(product_dict)
 
-    # print("route products are ", product_list)
     return jsonify({'products': product_list})
 
 @product_routes.route('/<int:id>')
@@ -44,9 +43,6 @@ def get_product_details(id):
 def create_product():
 
     form = ProductForm()
-    # print(form, 'FORM')
-    # print('hello')
-    # print(form.price.data, form.type.data, 'TESTING')
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
 
@@ -63,7 +59,6 @@ def create_product():
             price=price,
             type=type,
             owner_id=owner_id
-
         )
 
         image_url = form.image_url.data
@@ -105,11 +100,8 @@ def update_product(id):
 
 
         image.image_url = image_url
-        print(image.image_url, "@@@@@@@@@@@@@@@@@ IMAGE URL 108 @@@@@@@@@@@@@@@@@@@")
         # new_image = Image(image_url=image_url, product_id=product.id)
-        # print(new_image.to_dict(), "*************************TODICT*****")
         # product.image_url = new_image.image_url
-        # print(image_url,"IMG URL")
         # db.session.add(new_image)
         # product.image.append(new_image)
 
@@ -234,3 +226,25 @@ def delete_image(id):
 def get_images(id):
     images = Image.query.filter_by(product_id=id).all()
     return jsonify([image.to_dict() for image in images])
+
+@product_routes.route('/newImg', methods=["POST"])
+def add_url():
+    iForm = NewImageForm()
+
+    image = iForm.data['image']
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", image)
+
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2", upload)
+
+    # url = upload["url"]
+
+    # newImg = Image(url = url, product_id = id)
+
+    # db.session.add(newImg)
+    # db.session.commit()
+
+    return upload

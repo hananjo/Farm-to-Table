@@ -36,7 +36,7 @@ const CreateProductForm = () => {
       validationErrors.push("Product type is required");
     }
 
-    if(!image) {
+    if (!image) {
       validationErrors.push("Please provide an image url")
     }
     setErrors(validationErrors);
@@ -46,21 +46,51 @@ const CreateProductForm = () => {
     e.preventDefault();
 
     if (!errors.length) {
-      const productFormInput = {
-        name,
-        description,
-        price,
-        type,
-        owner_id: user,
-        image_url: image
-      };
-      console.log(type, "TYPE");
       let addedNewProduct;
-      addedNewProduct = await dispatch(addNewProduct(productFormInput));
 
-      if (addedNewProduct) {
-        history.push(`/products/${addedNewProduct.id}`);
+      const formData = new FormData()
+
+      formData.append("image", image)
+
+      const res = await fetch('/api/products/newImg', {
+        method: 'POST',
+        body: formData
+      })
+
+      console.log("new image url fetch called", res.url);
+
+      if (res.ok) {
+        let url = await res.json()
+        let img_url = url.url
+
+        console.log(img_url);
+
+        const productFormInput = {
+          name,
+          description,
+          price,
+          type,
+          owner_id: user,
+          image_url: img_url
+        };
+
+        addedNewProduct = await dispatch(addNewProduct(productFormInput));
+
+        if (addedNewProduct) {
+          history.push(`/products/${addedNewProduct.id}`);
+        }
       }
+
+      // const productFormInput = {
+      //   name,
+      //   description,
+      //   price,
+      //   type,
+      //   owner_id: user,
+      //   image_url: image
+      // };
+      // let addedNewProduct;
+      // addedNewProduct = await dispatch(addNewProduct(productFormInput));
     }
 
     setName("");
@@ -71,7 +101,8 @@ const CreateProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action="/posts/new" method="POST" enctype="multipart/form-data" onSubmit={handleSubmit}>
+
       <div className="form-title-banner"></div>
       <div className="form-container">
         <div className="form-title">
@@ -95,12 +126,10 @@ const CreateProductForm = () => {
           <div className="name-and-input">
             <div className="name-area">
               <h3>Name *</h3>
-              {/* <div className='name-sub-area'> */}
               <p>
                 What is the name of your product? Choose a name that best
                 represents your product.
               </p>
-              {/* </div> */}
             </div>
 
             <div className="name-input-area2">
@@ -170,18 +199,6 @@ const CreateProductForm = () => {
             </div>
           </div>
         </div>
-        {/* <select
-          style={{ width: "200px", height: "20px" }}
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          <option value={"Fruit"}>Fruit</option>
-          <option value={"Vegetable"}>Vegetable</option>
-          <option value={"Dairy"}>Dairy</option>
-          <option value={"Meat"}>Meat</option>
-          <option value={"Bakery"}>Bakery</option>
-        </select> */}
         <div className="price-container">
           <div className="pricing-title">
             <h2>Pricing</h2>
@@ -234,7 +251,7 @@ const CreateProductForm = () => {
 
         <div className="image-container">
           <div className="image-title">
-              <h2>Image</h2>
+            <h2>Image</h2>
 
           </div>
 
@@ -247,11 +264,13 @@ const CreateProductForm = () => {
             <div className="image-input">
               <input
                 style={{ height: "40px" }}
-                type="text"
+                type="file"
                 name="image"
-                placeholder="Show us what your product looks like!"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                accept="image/*"
+                // placeholder="Show us what your product looks like!"
+                // value={image}
+                onChange={(e) => setImage(e.target.files[0])}
+                required
                 className="image-input-area"
               />
             </div>

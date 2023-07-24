@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory, useParams } from "react-router-dom";
-// import { NavLink } from "react-router-dom";
 import React from "react";
 import { getProductDetails, deleteProduct } from "../../store/product";
-// import { addToCart } from "../../store/cart"
 import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
@@ -17,11 +15,13 @@ import { getCart } from "../../store/cart";
 import OwnerAdd from "../Owned";
 import NotFound from "../PageNotFound";
 import FadeLoader from "react-spinners/FadeLoader";
+
 const ProductDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const user = useSelector((state) => {
     return state?.session.user;
@@ -30,28 +30,27 @@ const ProductDetails = () => {
     return state?.product.details;
   });
 
-  // console.log(product, "PRODUCTDeT");
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(loadReviews(id));
-    setLoading(true);
+    setIsLoaded(true)
+    setLoading(true)
   }, [dispatch, id]);
 
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 1900);
+    }, 1500);
   }, []);
-  // console.log(product.description)
+
+
 
   const products = useSelector((state) => state.product);
   const product_reviews = useSelector(
     (state) => state?.product?.details?.reviews
   );
-  // console.log(product_reviews, "REVIEWS");
-  // console.log(products, "PRODUCTS")
-  // console.log(products.details.owner_id)
+
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);
@@ -66,14 +65,12 @@ const ProductDetails = () => {
 
   // Grab current logged-in user
   const sessionUser = useSelector((state) => state?.session.user);
-  // console.log(sessionUser)
 
   // Grabs current logged-in user's id
   const sessionUserId = useSelector((state) => state.session.user?.id);
 
   // Checks if product-owner is also the logged-in user
   const isOwner = product && product.owner_id === sessionUserId;
-  // console.log(isOwner)
 
   // Checks if logged-in user has at least 1 review for a product
   const hasReviewed = filteredReviews.some(
@@ -94,17 +91,13 @@ const ProductDetails = () => {
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
-    // await dispatch(loadReviews(id));
     openModal();
   };
 
   const handleDeleteProduct = async (id) => {
-    // console.log(reviewId, "67");
     setModalContent(<DeleteProductModal id={id} />);
     openModal();
   };
-
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (sessionUser) {
@@ -117,30 +110,23 @@ const ProductDetails = () => {
 
   const cartArr = isLoaded && cart && Object.values(cart);
 
-  console.log("cart items", cartArr);
-
   const handleAddtoCart = () => {
     let isDuplicate = false;
     let cartRel = {};
 
-    console.log("Compare ", product.id, user.id);
 
     if (user.id === product.owner_id) {
       setModalContent(<OwnerAdd prod={cartRel} fCls={"update"} />);
       openModal();
     } else {
       cartArr.forEach((rel) => {
-        console.log(rel.product_id, rel.user_id);
         if (rel.product_id === product.id && rel.user_id === user.id) {
           isDuplicate = true;
           cartRel = rel;
         }
       });
 
-      console.log(isDuplicate);
-
       if (isDuplicate) {
-        console.log("Duplicate");
         setModalContent(<DuplicateAdd prod={cartRel} fCls={"update"} />);
         openModal();
       } else {
@@ -158,7 +144,8 @@ const ProductDetails = () => {
             <FadeLoader color="#eb803d" height={20} width={6} />
           </div>
         </>
-      ) : product && product?.id ? (
+      ) : isLoaded && product ? (
+
         <div>
           <div className="product-image-and-info-container">
             <div className="product-image-detail">
@@ -171,17 +158,17 @@ const ProductDetails = () => {
             </div>
             <div className="product-detail-information">
               <div className="product-detail-price">
-                <p>${product.price.toFixed(2)}</p>
+                <p>${product?.price.toFixed(2)}</p>
               </div>
               <div className="product-detail-name">
-                <p>{product.name}</p>
+                <p>{product?.name}</p>
               </div>
               <div className="product-detail-description">
-                <p>{product.description}</p>
+                <p>{product?.description}</p>
               </div>
 
-              <p>Product type: {product.type}</p>
-              {user && product && user.id === product.owner_id ? (
+              <p>Product type: {product?.type}</p>
+              {user && product && user?.id === product?.owner_id ? (
                 <div className="update-and-delete-buttons">
                   <NavLink to={`/products/${id}/update`}>
                     <button className="update-detail-button">Update</button>
@@ -190,7 +177,6 @@ const ProductDetails = () => {
                   <button
                     className="delete-detail-button"
                     onClick={() => handleDeleteProduct(id)}
-                    // onClick={openMenu}
                   >
                     Delete
                   </button>
@@ -215,14 +201,16 @@ const ProductDetails = () => {
             <div className="review-title">
               <h2>
                 {" "}
-                {product_reviews.length === 1 ? "Review" : "Reviews"} (
-                {product_reviews.length})
+                {product_reviews?.length === 1 ? "Review" : "Reviews"} (
+                {product_reviews?.length})
               </h2>
-              {/* <h2> Average Rating: {averageRating}</h2> */}
             </div>
 
             {sessionUser && !isOwner && !hasReviewed && (
-              <button className="review-button" onClick={handleAddReview}>
+              <button
+                className="review-button"
+                onClick={handleAddReview}
+              >
                 Post a Review
               </button>
             )}
@@ -311,12 +299,12 @@ const ProductDetails = () => {
                   </div>
                   <p className="review-comment">{review?.review}</p>
 
-                  {user && reviews && user.id === review.userId ? (
+                  {user && reviews && user?.id === review?.userId ? (
                     <button
                       className="delete-button"
                       id={review?.id}
-                      onClick={() => handleDeleteReview(review.id, product.id)}
-                      // disabled={!sessionUser}
+                      onClick={() => handleDeleteReview(review?.id, product?.id)}
+
                     >
                       Delete Review
                     </button>
@@ -327,9 +315,8 @@ const ProductDetails = () => {
               ))}
           </div>
         </div>
-      ) : (
-        <div className="page-not-found-detail">Page not found</div>
-      )}
+      ) : (<NotFound />)}
+
     </div>
   );
 };
