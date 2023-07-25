@@ -54,14 +54,11 @@ function Navigation({ isLoaded }) {
             </NavLink>
           </li>
         </div>
+
         <div className="nav-right">
-          {isLoaded && (
-            <li>
-              <ProfileButton user={sessionUser} />
-            </li>
-          )}
-          <div className="search-container">
-            <li>
+          <div className="search-and-profile">
+            <div className="search-container">
+              {/* <li> */}
               <input
                 type="search"
                 placeholder="Search an item "
@@ -70,7 +67,13 @@ function Navigation({ isLoaded }) {
                 onChange={handleInput}
                 onKeyPress={keyPress}
               />
-            </li>
+              {/* </li> */}
+            </div>
+            {isLoaded && (
+              <li>
+                <ProfileButton user={sessionUser} />
+              </li>
+            )}
           </div>
           <div className="cart-label">
             <li>

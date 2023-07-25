@@ -73,3 +73,11 @@ A cateogry listing shown at the top center of the landing page allows a user to 
 # Wiki:
 
 https://github.com/hananjo/Python-Project-/wiki
+
+# Future Implementation:
+
+Add a total in the cart page
+
+Fix the loading page with the split second 404 page when clicking on the product detail page
+
+Have the search feature work on every page rather than just the landing page
