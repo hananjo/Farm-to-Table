@@ -204,8 +204,10 @@ const Products = () => {
                     >
                       <i class="fa-solid fa-plus"></i>
                     </button>
-                  ) : (
+                  ) : sessionUser ? (
                     <div className="your-product-landing">Your product</div>
+                  ) : (
+                    <br />
                   )}
                 </div>
               </NavLink>
