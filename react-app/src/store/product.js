@@ -37,8 +37,12 @@ export const getProductsByCategory = (category) => async (dispatch) => {
 
   if (response.ok) {
     const list = await response.json();
+    console.log("cate prods thunk successful");
     dispatch(load(list.products));
+    return "success"
   }
+
+  return "failed"
 };
 
 export const addNewProduct = (data) => async (dispatch) => {
