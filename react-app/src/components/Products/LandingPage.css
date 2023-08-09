@@ -130,3 +130,63 @@ a:visited {
     text-align: center;
     color: black;
 }
+
+.landing-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background: linear-gradient(to bottom, #f2e8d6 60%, white 40%); */
+    background-color: #f2e8d6;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: -20px;
+    margin-right: -30px;
+    margin-bottom: -50px;
+    border-top: 1px solid rgb(211, 209, 209);
+    border-bottom: 1px solid rgb(211, 209, 209);
+
+
+}
+
+.social-links-landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group-members-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 90px;
+}
+
+.member-name {
+    font-size: 18px;
+}
+.fa.fa-github {
+    font-size: 20px;
+}
+
+.fa.fa-github:hover {
+    color:rgb(255, 121, 49)
+}
+.fa.fa-linkedin-square {
+    font-size: 20px;
+}
+
+.fa.fa-linkedin-square:hover {
+    color:rgb(255, 121, 49)
+}
+
+
+.member {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.github-and-linkedin{
+    display: flex;
+    justify-content: center;
+    gap: 13px;
+}

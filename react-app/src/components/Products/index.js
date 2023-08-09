@@ -215,6 +215,63 @@ const Products = () => {
           );
         })}
       </div>
+      <div className="landing-footer">
+        <div className="social-links-landing-container">
+          <div>
+            <a href="https://github.com/hananjo/Python-Project-">
+              <i class="fa fa-github" aria-hidden="true">
+                {" "}
+                Farm-To-Table
+              </i>
+            </a>
+          </div>
+          <div className="group-members-container">
+            <div className="member">
+              <div className="member-name">
+                <p>Hanan Jomaa</p>
+              </div>
+              <div className="github-and-linkedin">
+                <a href="https://github.com/hananjo">
+                  <i class="fa fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/hanan-jomaa-94350192/">
+                  <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div className="member">
+              <div className="member-name">
+                <p>Laila Denman</p>
+              </div>
+              <div className="github-and-linkedin">
+                <div className="member-github">
+                  <a href="https://github.com/Lailadenman">
+                    <i class="fa fa-github" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div className="member-linkedin">
+                  <a href="https://www.linkedin.com/in/laila-denman-888968190/">
+                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="member">
+              <div className="member-name">
+                <p>David Chu</p>
+              </div>
+              <div className="github-and-linkedin">
+                <a href="https://github.com/Chumean">
+                  <i class="fa fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/davidchu007/">
+                  <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
