@@ -179,7 +179,13 @@ a:visited {
     color:rgb(255, 121, 49)
 }
 
+.fa.fa-angellist{
+    font-size: 20px;
+}
 
+.fa.fa-angellist:hover {
+    color:rgb(255, 121, 49)
+}
 .member {
     display: flex;
     justify-content: center;
