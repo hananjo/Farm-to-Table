@@ -11,8 +11,8 @@ import OwnerAdd from "../Owned";
 import DuplicateAdd from "../Duplicate";
 import FadeLoader from "react-spinners/FadeLoader";
 const Categories = () => {
-  
   const dispatch = useDispatch();
+
   const { category } = useParams();
   const history = useHistory();
   const user = useSelector((state) => state.session?.user?.id);
@@ -21,14 +21,25 @@ const Categories = () => {
   const [loading, setLoading] = useState(false);
   console.log("The category is ", category);
 
-  // const images = useSelector((state) => {
-  //   return Object.values(state?.images);
-  // });
+  // useEffect(() => {
+  //   dispatch(getCart(user));
+  //   setIsLoaded(true);
+  // }, [dispatch, user]);
 
-  useEffect(() => {
-    dispatch(getProductsByCategory(category));
+  const cart = useSelector((state) => state.cart);
+
+  const cartArr = Object.values(cart);
+
+  useEffect(async () => {
+    let res = await dispatch(getProductsByCategory(category));
     console.log("hit", category);
-    // dispatch(getProductImages());
+
+    // This is what I added to get the refresh to work correctly
+    if (res === "success") {
+      setIsLoaded(true)
+    }
+    //
+
   }, [dispatch, category]);
 
   useEffect(() => {
@@ -43,20 +54,12 @@ const Categories = () => {
     return Object.values(state?.product);
   });
 
-  if (products.length < 1) {
+  // I also added "isLoaded && " to the "if" condition and that is what seems to have fixed it
+  if (isLoaded && products.length < 1) {
     history.push("/not_found");
   }
 
   console.log("The products in this category are ", products);
-
-  useEffect(() => {
-    dispatch(getCart(user));
-    setIsLoaded(true);
-  }, [dispatch, user]);
-
-  const cart = useSelector((state) => state.cart);
-
-  const cartArr = Object.values(cart);
 
   const { setModalContent } = useModal();
   const [showModal, setShowModal] = useState(false);

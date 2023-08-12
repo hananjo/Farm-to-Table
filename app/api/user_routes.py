@@ -46,7 +46,8 @@ def addToCart(userId, prodId):
     form = CartForm()
 
     # Creating the cart relationship
-    cartRel = Cart_Item(product_id=prodId, user_id=userId, quantity=form.quantity.data)
+    cartRel = Cart_Item(product_id=prodId, user_id=userId,
+                        quantity=form.quantity.data)
 
     # Add the cart relationship to the table
     db.session.add(cartRel)
@@ -55,11 +56,14 @@ def addToCart(userId, prodId):
     return cartRel.to_dict()
 
 # Edit the quantity of a certain product in the cart
+
+
 @user_routes.route('<int:userId>/cart/<int:prodId>', methods=['PUT'])
 def updateCart(userId, prodId):
     form = CartForm()
 
-    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
+    cartRel_query = Cart_Item.query.filter(
+        Cart_Item.user_id == userId, Cart_Item.product_id == prodId)
     cartRel = cartRel_query.one()
 
     cartRel.quantity = form.quantity.data
@@ -68,10 +72,12 @@ def updateCart(userId, prodId):
 
     return cartRel.to_dict()
 
+
 @user_routes.route('<int:userId>/cart/<int:prodId>', methods=['DELETE'])
 def deleteFromCart(userId, prodId):
 
-    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId, Cart_Item.product_id == prodId).one()
+    cartRel_query = Cart_Item.query.filter(
+        Cart_Item.user_id == userId, Cart_Item.product_id == prodId).one()
 
     test1 = cartRel_query.to_dict()
     db.session.delete(cartRel_query)
@@ -79,3 +85,21 @@ def deleteFromCart(userId, prodId):
     db.session.commit()
 
     return cartRel_query.to_dict()
+
+
+@user_routes.route('<int:userId>/cart/checkout', methods=['DELETE'])
+def checkout(userId):
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    cartRel_query = Cart_Item.query.filter(Cart_Item.user_id == userId)
+
+    # db.session.execute(cartRel_query.delete())
+
+    delete_query = cartRel_query.all()
+
+    for rel in delete_query:
+        # db.session.execute(cartRel_query.delete(rel))
+        db.session.delete(rel)
+
+    db.session.commit()
+
+    return "cart cleared"
