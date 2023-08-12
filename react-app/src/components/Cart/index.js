@@ -36,6 +36,11 @@ function Cart() {
         dispatch(deleteFromCart(user, e.target.id))
     }
 
+    const handleCheckout = () => {
+        // dispatch(getCart(user))
+        dispatch(checkoutCart(user))
+    }
+
     const { setModalContent } = useModal();
 
     const openModal = () => { setShowModal(true) };
@@ -43,12 +48,6 @@ function Cart() {
     const handleEdit = (prod, save) => {
         setModalContent(<CartQtyForm prod={prod} fCls={"update"} />)
         openModal();
-    }
-
-    const handleCheckout = () => {
-        // console.log("checkout clicked");
-        // dispatch(checkoutCart(user))
-        dispatch(getCart(user))
     }
 
     // useEffect(() => {
@@ -122,7 +121,7 @@ function Cart() {
                 </div>) : (<h1>Please Log in to View Your Cart</h1>)}
             </div>
             <div className="checkout-info-container">
-                Total: {cart?.total ? cart?.total : 0}
+                Total: {cart?.total ? cart?.total : (0).toFixed(2)}
                 <button onClick={handleCheckout}>Checkout</button>
             </div>
         </div>
