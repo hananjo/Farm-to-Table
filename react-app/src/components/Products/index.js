@@ -257,7 +257,7 @@ const Products = () => {
                     <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                   </a>
                 </div>
-                <a href="">
+                <a href="https://wellfound.com/u/laila-denmanf">
                   <i class="fa fa-angellist" aria-hidden="true"></i>
                 </a>
               </div>
@@ -273,7 +273,7 @@ const Products = () => {
                 <a href="https://www.linkedin.com/in/davidchu007/">
                   <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                 </a>
-                <a href="">
+                <a href="https://wellfound.com/u/david-chu-30">
                   <i class="fa fa-angellist" aria-hidden="true"></i>
                 </a>
               </div>
