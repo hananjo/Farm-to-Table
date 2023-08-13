@@ -148,7 +148,7 @@ export const checkoutCart = (userId) => async (dispatch) => {
         method: 'DELETE'
     })
 
-    console.log("checkout thunk clicked");
+    console.log("checkout thunk reached");
 
     if (res.ok) {
         const cartRel = await res.json()
@@ -156,7 +156,6 @@ export const checkoutCart = (userId) => async (dispatch) => {
         console.log("checkout thunk completed");
 
         dispatch(clearCart())
-
     }
 }
 

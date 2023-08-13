@@ -5,6 +5,8 @@ import "./cart.css"
 import CartQtyForm from "../CartQtyForm/"
 import { useModal } from "../../context/Modal";
 import { NavLink } from "react-router-dom";
+import ClearModal from "../ClearModal";
+import CheckoutModal from "../CheckoutModal";
 
 function Cart() {
     const dispatch = useDispatch()
@@ -24,7 +26,7 @@ function Cart() {
 
     const cart = useSelector(state => state?.cart)
 
-    console.log(cart && cart, "cart");
+    // console.log(cart && cart, "cart");
 
     const cartArr = Object.values(cart)
 
@@ -36,6 +38,29 @@ function Cart() {
         dispatch(deleteFromCart(user, e.target.id))
     }
 
+    const handleCheckout = () => {
+        // dispatch(getCart(user))
+        let hasStuff = false
+
+        console.log("the cart arr has ", cartArr.length);
+
+        if (cartArr.length > 0) {
+            console.log("the array has stuff");
+            hasStuff = true
+            dispatch(checkoutCart(user))
+        }
+
+
+
+        setModalContent(<CheckoutModal isFull={hasStuff} />)
+        openModal();
+    }
+
+    const handleClear = () => {
+        setModalContent(<ClearModal id={user} />)
+        openModal();
+    }
+
     const { setModalContent } = useModal();
 
     const openModal = () => { setShowModal(true) };
@@ -43,12 +68,6 @@ function Cart() {
     const handleEdit = (prod, save) => {
         setModalContent(<CartQtyForm prod={prod} fCls={"update"} />)
         openModal();
-    }
-
-    const handleCheckout = () => {
-        // console.log("checkout clicked");
-        // dispatch(checkoutCart(user))
-        dispatch(getCart(user))
     }
 
     // useEffect(() => {
@@ -60,6 +79,20 @@ function Cart() {
     // const handleTotal = (price) => {
     //     setCartTotal(cartTotal + price)
     // }
+    const totalContent = () => {
+        if (cartArr.length > 0) {
+            return (isLoaded && cartArr && cartArr?.map(prod => {
+                let itemTotal = Number(prod?.product?.price) * Number(prod?.quantity)
+                console.log("this items price is", prod?.product?.price, prod?.quantity);
+                return (
+                    <div className="price-info">
+                        <p>{prod?.product?.name} x {prod?.quantity}</p>
+                        <p>${(itemTotal).toFixed(2)}</p>
+                    </div>
+                )
+            }))
+        }
+    }
 
     const cartContent = () => {
         if (cartArr.length > 0) {
@@ -68,6 +101,7 @@ function Cart() {
                 // cartTotal = (cartTotal + Number(prod?.product?.price.toFixed(2)))
                 // const prodPrice = prod?.product?.price.toFixed(2)
                 // handleTotal(prodPrice)
+
                 return (
                     <div className="cart-prod" key={prod?.id}>
                         <div className="product-info">
@@ -110,20 +144,38 @@ function Cart() {
 
     return (
         <div className="cart-page">
-            <div className="cart-info-container">
+            <div className="top-part">
                 <div className="cart-page-banner">
 
                 </div>
                 <div className="title-container">
                     <h1>Your Shopping Cart </h1>
                 </div>
-                {sessionUser && user ? (<div className="cart-container-item-list">
-                    {cartContent()}
-                </div>) : (<h1>Please Log in to View Your Cart</h1>)}
             </div>
-            <div className="checkout-info-container">
-                Total: {cart?.total ? cart?.total : 0}
-                <button onClick={handleCheckout}>Checkout</button>
+            <div className="bottom-part">
+                <div className="empty-space"></div>
+                <div className="cart-info-container">
+                    {sessionUser && user ? (<div className="cart-container-item-list">
+                        {cartContent()}
+                    </div>) : (<h1>Please Log in to View Your Cart</h1>)}
+                </div>
+                <div className="checkout-info-container">
+                    {cartArr.length ? (<>
+                        <div className="total-content">
+                            <div className="cart-total-header">Cart Total</div>
+                            {sessionUser && user && (
+                                <div>
+                                    {totalContent()}
+                                </div>
+                            )}
+                            <p className="total"><strong>Total:</strong> ${cart?.total ? cart?.total : (0).toFixed(2)}</p>
+                        </div>
+                        <div className="checkout-buttons">
+                            <button onClick={handleCheckout} className="checkout">Checkout</button>
+                            <button onClick={handleClear} className="clear">Clear</button>
+                        </div>
+                    </>) : (<br/>)}
+                </div>
             </div>
         </div>
     )

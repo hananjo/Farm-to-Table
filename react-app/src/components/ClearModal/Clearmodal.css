@@ -1,0 +1,28 @@
+.clear-buttons {
+    border: 2px solid black;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 15px 5px 15px;
+    background-color: rgb(225, 220, 212);
+    color: black;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+.clear-buttons:hover {
+    cursor: pointer;
+    background-color: rgb(66, 65, 65);
+    color: white;
+}
+
+.confirm-clear-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    width: 300px;
+}
+
+.confirm-clear-message {
+    margin-top: 0;
+}

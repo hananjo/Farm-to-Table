@@ -102,4 +102,4 @@ def checkout(userId):
 
     db.session.commit()
 
-    return "cart cleared"
+    return {"message": "cart cleared"}
