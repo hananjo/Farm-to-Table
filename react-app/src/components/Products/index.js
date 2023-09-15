@@ -218,7 +218,7 @@ const Products = () => {
       <div className="landing-footer">
         <div className="social-links-landing-container">
           <div>
-            <a href="https://github.com/hananjo/Python-Project-">
+            <a href="https://github.com/hananjo/Farm-to-Table">
               <i class="fa fa-github" aria-hidden="true">
                 {" "}
                 Farm-To-Table
@@ -234,7 +234,7 @@ const Products = () => {
                 <a href="https://github.com/hananjo">
                   <i class="fa fa-github" aria-hidden="true"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/hanan-jomaa-94350192/">
+                <a href="https://www.linkedin.com/in/hanan-jomaa/">
                   <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                 </a>
                 <a href="https://wellfound.com/u/hanan-jomaa">
@@ -253,11 +253,11 @@ const Products = () => {
                   </a>
                 </div>
                 <div className="member-linkedin">
-                  <a href="https://www.linkedin.com/in/laila-denman-888968190/">
+                  <a href="https://www.linkedin.com/in/laila-denman/">
                     <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                   </a>
                 </div>
-                <a href="https://wellfound.com/u/laila-denmanf">
+                <a href="https://wellfound.com/u/laila-denman">
                   <i class="fa fa-angellist" aria-hidden="true"></i>
                 </a>
               </div>
