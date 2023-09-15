@@ -256,7 +256,7 @@ const ProductDetails = () => {
                       <p>
                         {review?.rating === 1 && (
                           <img
-                            style={{ width: "190px" }}
+                            style={{ objectFit: "cover"  }}
                             src={
                               "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/one_star_huo5jx.jpg"
                             }
@@ -264,7 +264,7 @@ const ProductDetails = () => {
                         )}
                         {review?.rating === 2 && (
                           <img
-                            style={{ width: "190px" }}
+                            style={{ objectFit: "cover"  }}
                             src={
                               "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683856058/Two-star-rating-1024x238_uysm6z.png"
                             }
@@ -272,7 +272,7 @@ const ProductDetails = () => {
                         )}
                         {review?.rating === 3 && (
                           <img
-                            style={{ width: "190px" }}
+                            style={{objectFit: "cover"  }}
                             src={
                               "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683856078/three-stars_0_1_.png_pbu927.png"
                             }
@@ -280,7 +280,7 @@ const ProductDetails = () => {
                         )}
                         {review?.rating === 4 && (
                           <img
-                            style={{ width: "190px" }}
+                            style={{ objectFit: "contain", width: "350px"  }}
                             src={
                               "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/four-stars_01_1_.png_vb8ylt.png"
                             }
@@ -288,7 +288,7 @@ const ProductDetails = () => {
                         )}
                         {review?.rating === 5 && (
                           <img
-                            style={{ width: "190px" }}
+                            style={{ objectFit: "cover"  }}
                             src={
                               "https://res.cloudinary.com/dwphwqyrn/image/upload/v1683855981/5_star_sewzl7.jpg"
                             }
