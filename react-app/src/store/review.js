@@ -83,6 +83,7 @@ export const deleteReview = (reviewId) => async dispatch => {
     });
 
     if(res.ok) {
+        console.log("delete review thunk hit");
         const review = await res.json()
         dispatch(removeReview(review))
     }
@@ -94,8 +95,22 @@ const initialState = {}
 const reviews = (state=initialState, action) => {
     switch(action.type) {
         case LOAD_REVIEWS:
-            const loadState = {};
-            return {...state, ...action.reviews}
+            const loadState = {...initialState};
+            // console.log("here's what's being set up", action.reviews);
+            // action.reviews.forEach((review) => {
+            //     // loadState[review.id] = review
+            //     console.log("each review", review);
+            // })
+            // return {...state, ...action.reviews}
+
+            // const loadState = {initialState}
+
+            action.reviews.forEach((review) => {
+                loadState[review.id] = review
+                // console.log("now each review", review);
+            })
+
+            return loadState
 
         case ADD_REVIEW:
             return {...state, [action.review.id]: action.review}
@@ -106,6 +121,9 @@ const reviews = (state=initialState, action) => {
 
         case REMOVE_REVIEW:
             const deleteState = {...state};
+            // console.log("current",deleteState);
+            // console.log("what we're lookng for", action.reviewId.id);
+            // console.log("what is found", deleteState[action.reviewId.id]);
             delete deleteState[action.reviewId.id]
             return deleteState;
         default:
