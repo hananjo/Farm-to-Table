@@ -7,7 +7,7 @@ import { useModal } from "../../context/Modal";
 import AddReviewModal from "../AddReviewModal/AddReviewModal";
 import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
-import { loadReviews } from "../../store/review";
+import { deleteReview, loadReviews } from "../../store/review";
 import CartAddForm from "../CartAddForm";
 import "./ProductDetails.css";
 import DuplicateAdd from "../Duplicate";
@@ -35,7 +35,7 @@ const ProductDetails = () => {
     dispatch(loadReviews(id));
     setIsLoaded(true)
     setLoading(true)
-  }, [dispatch, id]);
+  }, [dispatch, id, deleteReview]);
 
   useEffect(() => {
     setLoading(true);
@@ -91,6 +91,7 @@ const ProductDetails = () => {
   // Delete Review
   const handleDeleteReview = async (reviewId) => {
     setModalContent(<DeleteReviewModal id={reviewId} productId={id} />);
+    history.push(`/products/${id}`)
     openModal();
   };
 

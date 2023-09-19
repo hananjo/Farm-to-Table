@@ -11,9 +11,10 @@ const DeleteReviewModal = ({ id, productId }) => {
 
   const removeReview = async (e) => {
     e.preventDefault();
+    closeModal();
     await dispatch(deleteReview(id && id));
     await dispatch(getProductDetails(productId));
-    closeModal();
+    history.push(`/products/${productId}`)
   };
 
   return (
