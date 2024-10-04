@@ -12,7 +12,7 @@ class Product(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text(50), nullable=False, unique=True)
+    name = db.Column(db.Text(250), nullable=False, unique=True)
     description = db.Column(db.Text(250))
     price = db.Column(db.Float, nullable=False)
     type = db.Column(db.Text(250), nullable=False)
