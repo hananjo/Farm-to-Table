@@ -22,10 +22,10 @@ depends_on = None
 def upgrade():
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=False),
+    sa.Column('name', sa.String(length=250), nullable=False),
     sa.Column('description', sa.String(length=250), nullable=True),
     sa.Column('price', sa.Float(), nullable=False),
-    sa.Column('type', sa.String(), nullable=False),
+    sa.Column('type', sa.String(length=250), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
